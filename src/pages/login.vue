@@ -2,15 +2,19 @@
     import { motion } from 'motion-v';
     import {log_box1,log_box2} from '../animations_config/anime_def'
     import {ref} from 'vue'
+    import {useAuthencationStore} from "../store/useAuthencationStore"
+    import {useAlertModalComposable} from "../Composables/useComposables"
+
+    const authStore = useAuthencationStore()
 
     let username = ref<string>("")
     let password = ref<string>("")
 
     function login(){
         if(username.value === "" || password.value === ""){
-
+            useAlertModalComposable("Please ensure username or password are enterd.")
         }else{
-
+            authStore.signInWithEmail(username.value,password.value)
         }
     }
 </script>

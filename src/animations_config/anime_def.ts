@@ -68,3 +68,22 @@ export const log_box2:Motion ={
         opacity:0
     }
 }
+
+export const modal_movement = {
+    initial:{
+        opacity:0,
+        filter: "blur(8px)"
+    },
+    animate:{
+        opacity:1,
+        filter: "blur(0px)"
+    },
+    transition:{
+        duration: 0.8,
+        ease: 'easeInOut'
+    },
+    exist:{
+        opacity:0,
+        filter: "blur(8px)"
+    }
+}
