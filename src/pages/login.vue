@@ -52,6 +52,10 @@
 
             <div class="w-full flex flex-col space-y-8 py-2 px-12">
 
+                <router-link to="/registry">
+                    <h2>registry</h2>
+                </router-link>
+
                 <div class="flex flex-col space-y-1.5 p-0.5 max-w-full">
                     <label for="_username_">
                         Username

@@ -6,6 +6,13 @@ const routes:Array<RouteRecordRaw> =[
         name:'degateFrom',
         component:function(){
             return import("../pages/login.vue")
+        },
+    },
+    {
+        path:'/registry',
+        name:"Registry",
+        component: function(){
+            return import("../pages/Registry.vue")
         }
     }
 ]
