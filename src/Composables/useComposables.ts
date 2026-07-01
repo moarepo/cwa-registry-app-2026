@@ -1,4 +1,4 @@
-import {useThemeStore} from "../store/usethemeStore"
+import {useThemeStore} from "../store/useThemeStore"
 import {useDisplayStore} from "../store/useDisplayStore"
 import {computed} from "vue"
 

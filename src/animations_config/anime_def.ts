@@ -5,27 +5,37 @@ type Motion={
     exist:{}
 }
 
-export const staggered_animation = (delay:number, duration:number, x:number, y:number) =>{
+export const staggered_animation = (
+    delay: number = 0, 
+    duration: number = 0.5, 
+    x: number = 0, 
+    y: number = 0
+) => {
     return {
-        initial:{
-            x: x || 0,
-            y: y || 0,
+        initial: {
+            x, // shorthand for x: x
+            y,
             opacity: 0,
         },
-        animate:{
+        animate: {
             x: 0,
             y: 0,
-            opacity: 1
+            opacity: 1,
+            transition: {
+                duration,
+                delay, // Applies the stagger delay on enter
+                ease: [0, 0.71, 0.2, 1.01]
+            }
         },
-        transition:{
-            duration: duration,
-            delay: delay,
-            ease: [0, 0.71, 0.2, 1.01]
-        },
-        exist:{
-            x: x || 0,
-            y: y || 0,
+        exit: { // Fixed typo from 'exist'
+            x,
+            y,
             opacity: 0,
+            transition: {
+                duration: duration * 0.5, // Optional: make exits slightly faster
+                ease: "easeOut"
+                // No delay here, so they all exit smoothly at once
+            }
         }
     } 
 }

@@ -34,7 +34,7 @@
       @click="closeOnOutsideClick"
     >
 
-      <section
+      <motion.section
         id="alert-modal-content"
         class="lg:w-1/4 rounded-lg py-2 px-4 flex flex-col space-y-4 border "
         :class="useThemeComposable() ? 'bg-Dark border-indigo-500 text-indigo-500'
@@ -80,7 +80,7 @@
             <h2 class="font-medium">Close</h2>
           </button>
         </div>
-      </section>
+      </motion.section>
 
     </motion.div>
   </AnimatePresence>

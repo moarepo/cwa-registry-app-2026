@@ -41,19 +41,18 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
 
         async registerUserWithEmail(emailAddress:string,password:string){
 
-
             const {data,error} = await supabase.auth.signUp({
                 email: emailAddress,
                 password: password
             })
 
             if(error){
+                switch (error.message) {
 
+                }
             }
 
-            if(data){
-
-            }
+            if(data){ this.user = data }
         }
     }
 })
