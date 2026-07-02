@@ -1,14 +1,16 @@
 import {defineStore} from "pinia"
 import {supabase} from "../supabase_config/supabaseConfig"
 import {useDisplayStore} from "../store/useDisplayStore"
+import type{user} from "../utils/Types"
+import router from "../router/router"
 
 export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
     state:()=>({
-        user:{}
+       User: {} as user
     }),
 
     getters:{
-        get_user_info: (state) => state.user
+        get_user_info: (state) => state.User
     },
 
     actions:{
@@ -36,7 +38,13 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
                 display.change_status(error.message)
             }
 
-            if(data){ this.user = data }
+            if(data){
+                this.User.email_address = data.session?.user.email as string
+                this.User.is_authenicated = data.user?.aud === "authenticated" ? true : false
+                this.User.session_token = data.session?.access_token as string
+                display.change_layout_display()
+                router.push("/dashborad")
+            }
         },
 
         async registerUserWithEmail(emailAddress:string,password:string){
@@ -52,7 +60,12 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
                 }
             }
 
-            if(data){ this.user = data }
+            if(data){ 
+                this.User.email_address = data.session?.user.email as string
+                this.User.is_authenicated = data.user?.aud === "authenticated" ? true : false
+                this.User.session_token = data.session?.access_token as string
+                router.push("/dashborad")
+            }
         }
     }
 })

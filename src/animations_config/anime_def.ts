@@ -82,18 +82,72 @@ export const log_box2:Motion ={
 export const modal_movement = {
     initial:{
         opacity:0,
-        filter: "blur(8px)"
+        filter: "blur(4px)"
     },
     animate:{
         opacity:1,
         filter: "blur(0px)"
     },
     transition:{
-        duration: 0.8,
+        duration: 0.6,
         ease: 'easeInOut'
     },
     exist:{
         opacity:0,
-        filter: "blur(8px)"
+        filter: "blur(4px)"
+    }
+}
+
+export const button_animation = {
+    initial:{
+        scale:1
+    },
+    hover:{ 
+        scale: 1.1,
+    },
+    pressed:{ 
+        scale: 0.4
+    },
+    transition:{
+        duration: 0.15,
+        ease: 'easeInOut'
+    }
+}
+
+export const side_nav_animation = {
+    initial: {
+        x:100,
+        opacity:0
+    },
+    animate: {
+        x: 0,
+        opacity:1
+    },
+    transition: {
+        duration: 0.5,
+        ease: 'easeInOut'
+    },
+    exist:{
+        x:-100,
+        opacity:0
+    }
+}
+
+export const dash_animation = {
+    initial: {
+        y:-100,
+        opacity:0
+    },
+    animate: {
+        y: 0,
+        opacity:1
+    },
+    transition: {
+        duration: 0.8,
+        ease: 'easeInOut'
+    },
+    exist:{
+        y:100,
+        opacity:0
     }
 }

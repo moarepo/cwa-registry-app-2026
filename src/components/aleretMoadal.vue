@@ -22,14 +22,14 @@
 </script>
 
 <template>
-  <AnimatePresence>
+  <AnimatePresence :initial="false">
     <motion.div
       v-if="status"
       :initial="modal_movement.initial"
       :animate="modal_movement.animate"
       :transition="modal_movement.transition"
       :exit="modal_movement.exist"
-      class="fixed inset-0 flex flex-col space-y-4 p-4 justify-center items-center overflow-hidden z-20"
+      class="fixed inset-0 flex flex-col space-y-4 p-2 justify-center items-center overflow-hidden z-20"
       :class="useThemeComposable() ? 'bg-innerDark/50 ' : 'bg-Dark/10'"
       @click="closeOnOutsideClick"
     >

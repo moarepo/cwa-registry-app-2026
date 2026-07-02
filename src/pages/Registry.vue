@@ -12,7 +12,7 @@
 
  function Register(){
     if(email.value === "" || password.value === "" || re_password.value === ""){
-            useAlertModalComposable("empty")
+        useAlertModalComposable("Please ensure that your email or password are entered.")
     }else{
         if(password.value != re_password.value){
             useAlertModalComposable("password does not match!!")

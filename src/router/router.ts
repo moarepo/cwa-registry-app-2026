@@ -14,6 +14,13 @@ const routes:Array<RouteRecordRaw> =[
         component: function(){
             return import("../pages/Registry.vue")
         }
+    },
+    {
+        path:'/dashborad',
+        name:"Dashborad",
+        component: function(){
+            return import("../pages/Dashborad.vue")
+        }
     }
 ]
 
