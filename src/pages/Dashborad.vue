@@ -38,7 +38,7 @@
                    
                     <motion.div
                      :initial="staggered_animation(0.2,2,0,-10).initial"
-                     :animate="staggered_animation(0.4,2,0,-10).animate"
+                     :animate="staggered_animation(0.6,3,0,-10).animate"
                      :exit="staggered_animation(0.6,2,0,-10).exit"
                      class="flex justify-center items-center p-2 rounded-2xl text-center space-x-4 border cursor-pointer"
                      :class="useThemeComposable() ? 'bg-Dark border-teal-950'
@@ -61,8 +61,8 @@
                     </motion.div>
 
                     <motion.div
-                     :initial="staggered_animation(0.4,2,0,-10).initial"
-                     :animate="staggered_animation(0.9,2,0,-10).animate"
+                     :initial="staggered_animation(0.2,2,0,-10).initial"
+                     :animate="staggered_animation(0.8,2,0,-10).animate"
                      :exit="staggered_animation(0.6,2,0,-10).exit"
                      class="flex justify-center items-center p-2 rounded-2xl text-center space-x-4 border cursor-pointer"
                      :class="useThemeComposable() ? 'bg-Dark border-teal-950'
