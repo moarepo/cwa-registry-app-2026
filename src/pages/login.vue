@@ -22,7 +22,7 @@
 <template>
     <AnimatePresence>
         <motion.section
-         class="flex w-full h-screen space-x-2 p-1 overflow-hidden"
+         class="flex w-full min-h-full space-x-2 p-1 overflow-hidden"
         >
             <motion.div
              :initial="log_box1.initial"
@@ -30,8 +30,8 @@
              :transition="log_box1.transition"
              :exit="log_box1.exist"
              class="rounded-md border  w-full flex flex-col justify-center items-center space-y-8 shadow-md"
-             :class="useThemeComposable() ? ''
-             :'border-gray-100 bg-white'"
+              :class="useThemeComposable() ? 'text-white border-teal-950 bg-Dark'
+             :'border-gray-100 w-full bg-off_white shadow-md'"
             >
                 <h2> CWA Registration PORTAL 2026</h2>
     
@@ -46,7 +46,9 @@
              :animate="log_box2.animate"
              :transition="log_box2.transition"
              :exit="log_box1.exist"
-             class="rounded-md border border-gray-100 w-full bg-off_white shadow-md flex flex-col justify-center items-start p-2"
+             class="rounded-md border flex flex-col justify-center items-start p-2 w-full"
+             :class="useThemeComposable() ? 'text-white border-teal-950 bg-Dark'
+             :'border-gray-100 w-full bg-off_white shadow-md'"
             >
     
                 <div class="w-full p-1.5 flex justify-center items-center">

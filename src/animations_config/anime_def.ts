@@ -114,6 +114,22 @@ export const button_animation = {
     }
 }
 
+export const button_animation_normal = {
+    initial:{
+        scale:1
+    },
+    hover:{ 
+        scale: 1.1,
+    },
+    pressed:{ 
+        scale: 0.4
+    },
+    transition:{
+        duration: 0.2,
+        ease: 'easeInOut'
+    }
+}
+
 export const side_nav_animation = {
     initial: {
         x:100,

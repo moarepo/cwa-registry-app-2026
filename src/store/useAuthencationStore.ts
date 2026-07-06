@@ -66,6 +66,20 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
                 this.User.session_token = data.session?.access_token as string
                 router.push("/dashborad")
             }
+        },
+
+        async signOutUser(){
+            const display = useDisplayStore()
+
+            const {error} = await supabase.auth.signOut()
+
+            if(error){ 
+                display.change_status(error.message) 
+            }else{
+                this.User = {} as user
+                display.change_layout_display()
+                router.push("/")
+            }
         }
     }
 })
