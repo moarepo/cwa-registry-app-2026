@@ -1,29 +1,44 @@
 import {defineStore} from "pinia"
 import {supabase} from "../supabase_config/supabaseConfig"
-import {useDisplayStore} from "../store/useDisplayStore"
+import {useAlertModalComposable} from "../Composables/useComposables"
 import type {Database} from '../utils/database.types'
 
 export const useStore = defineStore('useStore',{
     state:()=>({
+        d_limit:9 as number,
+        d_offset: 0 as number,
+        d_page: 1,
 
         delegate_count: 0 as number | null,
+        delegate_male_count: 0 as number | null,
+        delegate_female_count: 0 as number | null,
+
         exhibitors_count: 0 as number | null,
+        exhibitors_male_count: 0 as number | null,
+        exhibitors_female_count: 0 as number | null,
+
         media_count: 0 as number | null,
         Total_country_count: 0 as number | null,
 
         Delegates: [] as Database['public']['Tables']['registration_table']['Row'][],
-        Exhibitor: [] as Database['public']['Tables']['exhibitor_table']['Row'][]
+        Exhibitor: [] as Database['public']['Tables']['exhibitor_table']['Row'][],
+        Media: [] as Database['public']['Tables']['media_table']['Row'][]
     }),
     getters:{
         get_delegate_count: (state) => state.delegate_count,
         get_exhibitors_count: (state) => state.exhibitors_count,
         get_media_count: (state) => state.media_count,
+
         get_Delegates: (state) => state.Delegates,
+        get_delegate_male_count: (state) => state.delegate_male_count,
+        get_delegate_female_count: (state) => state.delegate_female_count,
+
+
         get_Exhibitor: (state) => state.Exhibitor,
+        get_Media_info: (state) => state.Media,
     },
     actions:{
         async fetch_registion_count(){
-            const show = useDisplayStore()
 
             const {count,error} = await supabase.from('registration_table')
             .select("*",{ count: 'exact', head: true })
@@ -40,14 +55,12 @@ export const useStore = defineStore('useStore',{
                 this.media_count = media_count.count
             }
 
-            if(error){ show.change_status(`${error.message}`) }
-            if(exhibitors_count.error){ show.change_status(`${exhibitors_count.error.message}`) }
-            if(media_count.error){ show.change_status(`${media_count.error.message}`) }
+            if(error){ useAlertModalComposable(`${error.message}`) }
+            if(exhibitors_count.error){ useAlertModalComposable(`${exhibitors_count.error.message}`) }
+            if(media_count.error){ useAlertModalComposable(`${media_count.error.message}`) }
         },
 
         async fetch_data_base_on_conutry(country:string){
-
-            const show = useDisplayStore()
 
             const {count, error} = await supabase
             .from('registration_table')
@@ -55,26 +68,48 @@ export const useStore = defineStore('useStore',{
             .ilike('country_of_residence',country)
 
             if(error){
-                show.change_status(`${error.message}`)
+                useAlertModalComposable(`${error.message}`)
             }else{
                 this.Total_country_count = count
             }
         },
 
         async fetch_from_data(option:string){
-
-            const show = useDisplayStore()
-
             switch(option){
                 case "delegates":
                     const {data,error} = await supabase
                     .from('registration_table')
                     .select()
+                    .range(this.d_offset,this.d_limit)
 
-                    if(error){
-                        show.change_status(`${error.message}`)
+                    const delegate_gender_male_count = await supabase
+                    .from('registration_table')
+                    .select('*',{ count: 'exact', head: true })
+                    .ilike('gender','male')
+
+                    const delegate_gender_female_count = await supabase
+                    .from('registration_table')
+                    .select('*',{ count: 'exact', head: true })
+                    .ilike('gender','female')
+
+                    if(error != null || delegate_gender_male_count.error != null || delegate_gender_female_count.error != null){
+                        let error_message:string = ""
+
+                        if(error != null){
+                            error_message = error.message
+                        }else{
+                            if(delegate_gender_male_count.error != null){
+                                error_message = delegate_gender_male_count.error.message
+                            }else{
+                                error_message = ''+delegate_gender_female_count.error?.message
+                            }
+                        }
+
+                        useAlertModalComposable(error_message)
                     }else{
                         this.Delegates = data
+                        this.delegate_male_count = delegate_gender_male_count.count
+                        this.delegate_female_count = delegate_gender_female_count.count
                     }
                     break;
                 case "exhibitor":
@@ -83,11 +118,111 @@ export const useStore = defineStore('useStore',{
                     .select()
 
                     if(request.error){
-                        show.change_status(`${request.error.message}`)
+                        useAlertModalComposable(`${request.error.message}`)
                     }else{
                         this.Exhibitor = request.data
                     }
-                    break;  
+                    break; 
+                case "media":
+                    const mediarequest = await supabase
+                    .from('media_table')
+                    .select()
+
+                    if(mediarequest.error){
+                        useAlertModalComposable(`${mediarequest.error.message}`)
+                    }else{
+                       this.Media = mediarequest.data
+                    }
+                    break;   
+            }
+        },
+
+        async next_from_data(option:string){
+            switch(option){
+                case "delegates":
+                    this.d_offset += 9
+                    this.d_limit += 9
+
+                    const {data,error} = await supabase
+                    .from('registration_table')
+                    .select()
+                    .range(this.d_offset,this.d_limit)
+
+                    if(error){
+                        useAlertModalComposable(error.message)
+                    }else{
+                        this.Delegates = data
+                        this.d_page += 1
+                    }
+                                       
+                    break;
+                case "exhibitor":
+                    const request = await supabase
+                    .from('exhibitor_table')
+                    .select()
+
+                    if(request.error){
+                        useAlertModalComposable(`${request.error.message}`)
+                    }else{
+                        this.Exhibitor = request.data
+                    }
+                    break; 
+                case "media":
+                    const mediarequest = await supabase
+                    .from('media_table')
+                    .select()
+
+                    if(mediarequest.error){
+                        useAlertModalComposable(`${mediarequest.error.message}`)
+                    }else{
+                       this.Media = mediarequest.data
+                    }
+                    break;   
+            }
+        },
+
+        async pervoius_from_data(option:string){
+            switch(option){
+                case "delegates":
+                    if(this.d_offset != 0){
+                        this.d_offset -= 9
+                        this.d_limit -= 9
+
+                        const {data,error} = await supabase
+                        .from('registration_table')
+                        .select()
+                        .range(this.d_offset,this.d_limit)
+
+                        if(error){
+                            useAlertModalComposable(error.message)
+                        }else{
+                            this.Delegates = data
+                            this.d_page -= 1
+                        }
+                    }         
+                    break;
+                case "exhibitor":
+                    // const request = await supabase
+                    // .from('exhibitor_table')
+                    // .select()
+
+                    // if(request.error){
+                    //     useAlertModalComposable(`${request.error.message}`)
+                    // }else{
+                    //     this.Exhibitor = request.data
+                    // }
+                    break; 
+                case "media":
+                    // const mediarequest = await supabase
+                    // .from('media_table')
+                    // .select()
+
+                    // if(mediarequest.error){
+                    //     useAlertModalComposable(`${mediarequest.error.message}`)
+                    // }else{
+                    //    this.Media = mediarequest.data
+                    // }
+                    break;   
             }
         }
     }

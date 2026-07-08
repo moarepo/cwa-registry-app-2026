@@ -1,5 +1,7 @@
 import {useThemeStore} from "../store/useThemeStore"
 import {useDisplayStore} from "../store/useDisplayStore"
+import {useStore} from "../store/useStore"
+import {useDelegateMeetingStore} from "../store/useDelegateMeetingStore"
 import {computed} from "vue"
 
 export function useThemeComposable():boolean{
@@ -12,3 +14,60 @@ export function useAlertModalComposable(meassage:string){
   const display = useDisplayStore()
   display.change_status(meassage)
 }
+
+export const useChartOptions = ()=>{
+  return { responsive: true, maintainAspectRatio: false }
+}
+
+export function usePieChartData(){
+  let store = useStore() 
+
+  let male_count = computed(()=>{ return store.get_delegate_male_count})
+  let female_count = computed(()=>{ return store.get_delegate_female_count})
+  
+  return{
+    labels: ["Male #","Female #"],
+    datasets: [
+      {
+        backgroundColor: ["#155dfc","#f6339a"],
+        data: [Number(male_count.value),Number(female_count.value)]
+      }
+    ]
+  }
+}
+
+export function useBarChartData(){
+
+  let meetingData = useDelegateMeetingStore()
+
+  let CeremonyandReception = computed(()=>{ return meetingData.get_ceremony_and_reception_count}) 
+  let MinisterialMeetings  = computed(()=>{ return meetingData.get_ministerial_meetings_count})
+  let TechnicalSessions    = computed(()=>{ return meetingData.get_technical_sessions_count})
+  let ExhibitionTradeShow  = computed(()=>{ return meetingData.get_exhibition_n_trade_show_count})
+  let Field_Trips_num      = computed(()=>{ return meetingData.get_field_trips})
+
+  return{
+    labels: [
+      "Opening Ceremony and Reception",
+      "Ministerial Meetings",
+      "Technical Sessions",
+      "Exhibition and Trade Show",
+      "Field Trips",
+    ],
+    datasets:[
+      {
+        label: 'Participation Information',
+        backgroundColor: '#f87979',
+        data:[
+          Number(CeremonyandReception.value),
+          Number(MinisterialMeetings.value),
+          Number(TechnicalSessions.value),
+          Number(ExhibitionTradeShow.value),
+          Number(Field_Trips_num.value)
+        ]
+      }
+    ]
+  }
+
+}
+

@@ -1,24 +1,69 @@
 <script lang="ts" setup>
+    import { Pie, Bar } from 'vue-chartjs'
+    import { Chart as 
+        ChartJS, 
+        ArcElement, 
+        Tooltip,
+        Legend,
+        BarElement,
+        CategoryScale,
+        LinearScale
+    } from 'chart.js'
     import { onMounted, computed, ref } from "vue"
-    import { useThemeComposable } from '../Composables/useComposables'
+    import { useThemeComposable, useChartOptions, usePieChartData, useBarChartData } from '../Composables/useComposables'
     import { motion, AnimatePresence } from 'motion-v';
     import { dash_animation,staggered_animation } from "../animations_config/anime_def"
     import { useStore } from "../store/useStore"
+    import { useDelegateMeetingStore } from "../store/useDelegateMeetingStore"
+
+    ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale,LinearScale,)
 
     const _store_ = useStore()
-    onMounted(async()=>{  await _store_.fetch_registion_count() })
+    const meet = useDelegateMeetingStore()
+    
+    onMounted(async()=>{ 
+       await _store_.fetch_registion_count() 
+       await meet.fetch_meetings_count() 
+    })
 
     let delegate_info = computed(()=>{ return _store_.get_Delegates })
     let exhibitor_info = computed(()=>{ return _store_.get_Exhibitor })
+    let media_info =  computed(()=>{ return _store_.get_Media_info })
+    
+    let show_exhibitor_info = ref<boolean>(false)
+    let show_delegate_info =  ref<boolean>(false)
+    let show_media_info =  ref<boolean>(false)
 
     let delegate_amout = computed<number|null>(()=>{ return _store_.get_delegate_count})
     let exhibitor_amout = computed<number|null>(()=>{ return _store_.get_exhibitors_count})
     let media_amout = computed<number|null>(()=>{ return _store_.get_media_count })
 
     let d_table_head = ["Title","First Name","Middle Initial","Last Name","Gender","Nationality","country_of_residence"]
+    let e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","Address","Country","Exhibitor Product"]
+    let m_table_head = ["Name","Email","Position","Organization Name","Media Category","Address","Country","Nationality"]
 
-    function get_data(option:string){ _store_.fetch_from_data(option) }
+    function get_data(option:string){ 
 
+        if(option === 'delegates'){
+            show_delegate_info.value = true
+        }else{
+            show_delegate_info.value = false
+        }
+
+        if(option === 'exhibitor'){
+            show_exhibitor_info.value = true
+        }else{
+            show_exhibitor_info.value = false
+        }
+
+        if(option === 'media'){
+            show_media_info.value = true
+        }else{
+            show_media_info.value = false
+        }
+
+        _store_.fetch_from_data(option) 
+    }
 </script>
 
 <template>
@@ -27,7 +72,6 @@
      :class="useThemeComposable() ? ''
      :''"
     >   <AnimatePresence> 
-
             <motion.div 
              :initial="dash_animation.initial"
              :animate="dash_animation.animate"
@@ -74,17 +118,21 @@
                         </motion.div>
                     </button>
 
-                    <motion.div
-                     :initial="staggered_animation(0.2,2,0,-10).initial"
-                     :animate="staggered_animation(0.8,2,0,-10).animate"
-                     :exit="staggered_animation(0.6,2,0,-10).exit"
-                     class="flex justify-center items-center p-2 rounded-2xl text-center space-x-4 border cursor-pointer"
-                     :class="useThemeComposable() ? 'bg-Dark border-teal-950'
-                     :'bg-white border-teal-300'"
+                    <button
+                     @click="get_data('media')"
                     >
-                        <h2>Total # Media : </h2> 
-                        <h2 class="text-5xl font-light">{{ media_amout }}</h2>
-                    </motion.div>
+                        <motion.div
+                        :initial="staggered_animation(0.2,2,0,-10).initial"
+                        :animate="staggered_animation(0.8,2,0,-10).animate"
+                        :exit="staggered_animation(0.6,2,0,-10).exit"
+                        class="flex justify-center items-center p-2 rounded-2xl text-center space-x-4 border cursor-pointer"
+                        :class="useThemeComposable() ? 'bg-Dark border-teal-950'
+                        :'bg-white border-teal-300'"
+                        >
+                            <h2>Total # Media : </h2> 
+                            <h2 class="text-5xl font-light">{{ media_amout }}</h2>
+                        </motion.div>
+                    </button>
 
                 </motion.div>
 
@@ -94,7 +142,50 @@
                  :'bg-off_white border-teal-100'"
                 >
 
-                    <div class="w-full p-2 flex">
+                    <motion.div 
+                     v-if="show_delegate_info"
+                     :initial="staggered_animation(0.2,1,-100,0).initial"
+                     :animate="staggered_animation(0.4,1,0,0).animate"
+                     :exit="staggered_animation(0.2,1,100,0).exit"
+                     class="w-full flex flex-col space-y-1 "
+                    >
+
+                        <motion.div
+                         :initial="staggered_animation(0.1,1,0,-100).initial"
+                         :animate="staggered_animation(0.3,1,0,0).animate"
+                         :exit="staggered_animation(0.2,1,1,100).exit"
+                         class="flex flex-col space-y-4 p-2.5 rounded-md justify-center items-center"
+                         :class="useThemeComposable() ? 'bg-Dark'
+                         :'bg-white'"
+                        >
+                            <h2 class="text-2xl">Delegates Information</h2>
+
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium ullam quod nesciunt magnam animi mollitia in a possimus, beatae deserunt qui suscipit esse.</p>
+                        </motion.div>
+
+                        <motion.div
+                         :initial="staggered_animation(0.1,1,-100,0).initial"
+                         :animate="staggered_animation(0.4,1.5,0,0).animate"
+                         :exit="staggered_animation(0.2,1,100,0).exit"
+                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-3 p-1"
+                        >
+                            <div
+                             class="flex flex-col space-y-2 rounded-md w-full h-96 py-8 px-2"
+                             :class="useThemeComposable() ? 'bg-Dark'
+                             :'bg-white'"
+                            >   
+                                <h2 class="font-semibold text-center">Gender</h2>
+                                <Pie class="cursor-pointer" :data="usePieChartData()" :options="useChartOptions()"/>
+                            </div>
+
+                            <div
+                             class="flex flex-col space-y-2 rounded-md w-full h-96 py-8 px-2"
+                             :class="useThemeComposable() ? 'bg-Dark'
+                             :'bg-white'"
+                            >   
+                                <Bar class="cursor-pointer" :data="useBarChartData()" :options="useChartOptions()"/>
+                            </div>
+                        </motion.div>
 
                         <table
                          class="table-auto border-separate lg:border-spacing-2 border-spacing-1 border-2 rounded-lg w-full"
@@ -136,15 +227,108 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </motion.div>
+                    
+                    <motion.div 
+                     v-if="show_exhibitor_info"
+                     :initial="staggered_animation(0.2,1,100,0).initial"
+                     :animate="staggered_animation(0.4,1,0,10).animate"
+                     :exit="staggered_animation(0.2,1,-100,0).exit"
+                     class="w-full p-2 flex"
+                    >
+                        <table
+                         class="table-auto border-separate lg:border-spacing-2 border-spacing-1 border-2 rounded-lg w-full"
+                         :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
+                         : 'bg-white border-gray-100'"
+                        >
+                            <thead>
+                                <tr>
+                                    <th 
+                                    v-for="header in e_table_head"
+                                    :key="header"
+                                    class="border rounded-md p-0.5 text-sm font-semibold"
+                                    :class="useThemeComposable() ? 'bg-Dark border-gray-700'
+                                    : 'border-light_text_colour bg-white'"
+                                    >
+                                    {{ header }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(item,index) in exhibitor_info"
+                                    :key="index"
+                                    :class="useThemeComposable() ? {
+                                    'bg-Dark': index%2 === 0,
+                                    'bg-teal-950': index%2 === 1
+                                    }:{
+                                    'bg-primary': index%2 === 0,
+                                    'bg-gray-50': index%2 === 1
+                                    }"
+                                >
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_full_name }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.email_address }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_job_title }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_organization_name }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.email_address }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_country }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_product }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </motion.div>
 
-                    </div>
-                   
-                    {{ exhibitor_info }}
+                    <motion.div 
+                     v-if="show_media_info"
+                     :initial="staggered_animation(0.2,1,0,-100).initial"
+                     :animate="staggered_animation(0.4,1,0,0).animate"
+                     :exit="staggered_animation(0.2,1,0,100).exit"
+                     class="w-full p-2 flex"
+                    >
+                        <table
+                         class="table-auto border-separate lg:border-spacing-2 border-spacing-1 border-2 rounded-lg w-full"
+                         :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
+                         : 'bg-white border-gray-100'"
+                        >
+                            <thead>
+                                <tr>
+                                    <th 
+                                    v-for="header in m_table_head"
+                                    :key="header"
+                                    class="border rounded-md p-0.5 text-sm font-semibold"
+                                    :class="useThemeComposable() ? 'bg-Dark border-gray-700'
+                                    : 'border-light_text_colour bg-white'"
+                                    >
+                                    {{ header }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(item,index) in media_info"
+                                    :key="index"
+                                    :class="useThemeComposable() ? {
+                                    'bg-Dark': index%2 === 0,
+                                    'bg-teal-950': index%2 === 1
+                                    }:{
+                                    'bg-primary': index%2 === 0,
+                                    'bg-gray-50': index%2 === 1
+                                    }"
+                                >
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_full_name }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_email }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_position }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_organization_name }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_category_options }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_address }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_country }}</td>
+                                    <td class="text-center rounded-md px-2 py-2">{{ item.media_nationality }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </motion.div>
                 </motion.div>
-
             </motion.div>
-
-            
         </AnimatePresence>
     </section>
 </template>
