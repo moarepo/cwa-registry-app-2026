@@ -93,7 +93,7 @@
         :'bg-off_white'"
       >
         <p class="text-center font-semibold text-xs">
-          © Copyright 2025 Ministry of Agriculture, Fisheries & Mining ICT Branch
+          © Copyright 2026 Ministry of Agriculture, Fisheries & Mining ICT Branch
         </p>
       </div>
 

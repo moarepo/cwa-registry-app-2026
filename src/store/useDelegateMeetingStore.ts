@@ -1,8 +1,6 @@
 import {defineStore} from "pinia"
 import {supabase} from "../supabase_config/supabaseConfig"
 import {useAlertModalComposable} from "../Composables/useComposables"
-//import type {Database} from '../utils/database.types'
-
 
 export const useDelegateMeetingStore = defineStore('useDelegateMeetingStore',{
     state:()=>({

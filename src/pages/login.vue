@@ -85,6 +85,12 @@
                          type="password"
                          required
                         >
+                        <router-link
+                          to="/registry"
+                          class="transition-all ease-in-out duration-700 font-medium hover:underline hover:text-indigo-500"
+                        >
+                         Registration
+                        </router-link>
                     </div>
     
                     <div class="flex justify-center items-center">
