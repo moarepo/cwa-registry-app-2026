@@ -167,3 +167,20 @@ export const dash_animation = {
         opacity:0
     }
 }
+
+export const page_indcator_animation = {
+    initial:{
+        y:-25,
+        opacity:0
+    },
+    animate:{
+        y:0,
+        opacity:1
+    },
+    transition:{
+        duration: 0.8,
+        ease: 'easeInOut',
+        type:'spring',
+        stiffness: 75
+    }
+}

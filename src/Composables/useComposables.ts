@@ -71,3 +71,48 @@ export function useBarChartData(){
 
 }
 
+export function useEXPieChartData(){
+  let store = useStore() 
+
+  let local_count = computed(()=>{ return store.get_exhibitors_local_count})
+  let international_count = computed(()=>{ return store.get_exhibitors_international_count})
+  
+  return{
+    labels: ["Local","International"],
+    datasets: [
+      {
+        backgroundColor: ["#00c950","#9810fa"],
+        data: [Number(local_count.value),Number(international_count.value)]
+      }
+    ]
+  }
+}
+
+export function useEXBarChartData(){
+  let store = useStore() 
+
+  let optionOne = computed(()=>{ return store.get_booth_option_one}) 
+  let optionTwo = computed(()=>{ return store.get_booth_option_two})
+  let optionThree = computed(()=>{ return store.get_booth_option_three})
+ 
+  return{
+    labels: [
+      "Option One",
+      "Option Two",
+      "Option Three"
+    ],
+    datasets:[
+      {
+        label: 'Booth Selection',
+        backgroundColor: '#ff6900',
+        data:[
+          Number(optionOne.value),
+          Number(optionTwo.value),
+          Number(optionThree.value),
+        ]
+      }
+    ]
+  }
+
+}
+

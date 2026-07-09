@@ -5,17 +5,25 @@ import type {Database} from '../utils/database.types'
 
 export const useStore = defineStore('useStore',{
     state:()=>({
-        d_limit:9 as number,
+        d_limit:4 as number,
         d_offset: 0 as number,
         d_page: 1,
+
+        e_limit:4 as number,
+        e_offset: 0 as number,
+        e_page: 1,
+
+        booth_option_one: 0 as number | null,
+        booth_option_two: 0 as number | null,
+        booth_option_three: 0 as number | null,
 
         delegate_count: 0 as number | null,
         delegate_male_count: 0 as number | null,
         delegate_female_count: 0 as number | null,
 
         exhibitors_count: 0 as number | null,
-        exhibitors_male_count: 0 as number | null,
-        exhibitors_female_count: 0 as number | null,
+        exhibitors_local_count: 0 as number | null,
+        exhibitors_international_count: 0 as number | null,
 
         media_count: 0 as number | null,
         Total_country_count: 0 as number | null,
@@ -29,10 +37,15 @@ export const useStore = defineStore('useStore',{
         get_exhibitors_count: (state) => state.exhibitors_count,
         get_media_count: (state) => state.media_count,
 
+        get_exhibitors_local_count: (state) => state.exhibitors_local_count,
+        get_exhibitors_international_count: (state) => state.exhibitors_international_count,
+        get_booth_option_one: (state) => state.booth_option_one,
+        get_booth_option_two: (state) => state.booth_option_two,
+        get_booth_option_three: (state) => state.booth_option_three,
+
         get_Delegates: (state) => state.Delegates,
         get_delegate_male_count: (state) => state.delegate_male_count,
         get_delegate_female_count: (state) => state.delegate_female_count,
-
 
         get_Exhibitor: (state) => state.Exhibitor,
         get_Media_info: (state) => state.Media,
@@ -117,10 +130,43 @@ export const useStore = defineStore('useStore',{
                     .from('exhibitor_table')
                     .select()
 
-                    if(request.error){
-                        useAlertModalComposable(`${request.error.message}`)
+                    const international_count = await supabase
+                    .from('exhibitor_table')
+                    .select('*',{ count: 'exact', head: true })
+                    .ilike('exhibitor_type','local')
+
+                    const local_count = await supabase
+                    .from('exhibitor_table')
+                    .select('*',{ count: 'exact', head: true })
+                    .ilike('exhibitor_type','international')
+
+                    const booth1_count = await supabase
+                    .from('exhibitor_table')
+                    .select('*',{ count: 'exact', head: true })
+                    .eq('booth_option',1)
+
+                    const booth2_count = await supabase
+                    .from('exhibitor_table')
+                    .select('*',{ count: 'exact', head: true })
+                    .eq('booth_option',2)
+
+                    const booth3_count = await supabase
+                    .from('exhibitor_table')
+                    .select('*',{ count: 'exact', head: true })
+                    .eq('booth_option',3)
+
+                    if(
+                        request.error != null || international_count.error != null || local_count.error != null ||
+                        booth1_count.error != null || booth2_count.error != null || booth3_count.error != null
+                    ){
+                        useAlertModalComposable("Error!!")
                     }else{
                         this.Exhibitor = request.data
+                        this.exhibitors_international_count = international_count.count
+                        this.exhibitors_local_count = local_count.count
+                        this.booth_option_one = booth1_count.count
+                        this.booth_option_two = booth2_count.count
+                        this.booth_option_three = booth3_count.count
                     }
                     break; 
                 case "media":
@@ -135,6 +181,10 @@ export const useStore = defineStore('useStore',{
                     }
                     break;   
             }
+        },
+
+        async fetch_exhibitor_gender_count(){
+
         },
 
         async next_from_data(option:string){

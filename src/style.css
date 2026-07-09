@@ -7,6 +7,7 @@
   --color-off_white: #fafafa;
   --shadow-ind: 4px 4px oklch(58.5% 0.233 277.117);
   --shadow-gre: 4px 4px oklch(0.6955 0.1575 135.35);
+  --shadow-grel: 2px 2px oklch(58.5% 0.233 277.117);
   --shadow-yel: 4px 4px oklch(79.5% 0.184 86.047);
   --shadow-dar: 4px 4px oklch(21.3% 0 0);
 }

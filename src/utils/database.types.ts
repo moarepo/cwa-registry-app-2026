@@ -101,13 +101,45 @@ export type Database = {
           },
         ]
       }
+      exhibitor_category: {
+        Row: {
+          created_at: string
+          email_address: string | null
+          id: number
+          main_category: string | null
+          sub_category: string | null
+        }
+        Insert: {
+          created_at?: string
+          email_address?: string | null
+          id?: number
+          main_category?: string | null
+          sub_category?: string | null
+        }
+        Update: {
+          created_at?: string
+          email_address?: string | null
+          id?: number
+          main_category?: string | null
+          sub_category?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exhibitor_category_email_address_fkey"
+            columns: ["email_address"]
+            isOneToOne: false
+            referencedRelation: "exhibitor_table"
+            referencedColumns: ["email_address"]
+          },
+        ]
+      }
       exhibitor_table: {
         Row: {
           any_declarations: string | null
           any_import_permit: string | null
+          booth_option: number | null
           created_at: string
-          demonstration_options: boolean | null
-          electricity_options: boolean | null
+          demonstration_options: string | null
           email_address: string | null
           exhibitor_category_options: string | null
           exhibitor_company_address: string | null
@@ -116,19 +148,18 @@ export type Database = {
           exhibitor_job_title: string | null
           exhibitor_organization_name: string | null
           exhibitor_phone_number: string | null
+          exhibitor_photo: string | null
           exhibitor_product: string | null
           exhibitor_registration_id: number
           exhibitor_trn: string | null
-          sponsorship_opportunities: boolean | null
-          water_options: boolean | null
-          wifi_options: boolean | null
+          exhibitor_type: string | null
         }
         Insert: {
           any_declarations?: string | null
           any_import_permit?: string | null
+          booth_option?: number | null
           created_at?: string
-          demonstration_options?: boolean | null
-          electricity_options?: boolean | null
+          demonstration_options?: string | null
           email_address?: string | null
           exhibitor_category_options?: string | null
           exhibitor_company_address?: string | null
@@ -137,19 +168,18 @@ export type Database = {
           exhibitor_job_title?: string | null
           exhibitor_organization_name?: string | null
           exhibitor_phone_number?: string | null
+          exhibitor_photo?: string | null
           exhibitor_product?: string | null
           exhibitor_registration_id?: number
           exhibitor_trn?: string | null
-          sponsorship_opportunities?: boolean | null
-          water_options?: boolean | null
-          wifi_options?: boolean | null
+          exhibitor_type?: string | null
         }
         Update: {
           any_declarations?: string | null
           any_import_permit?: string | null
+          booth_option?: number | null
           created_at?: string
-          demonstration_options?: boolean | null
-          electricity_options?: boolean | null
+          demonstration_options?: string | null
           email_address?: string | null
           exhibitor_category_options?: string | null
           exhibitor_company_address?: string | null
@@ -158,12 +188,11 @@ export type Database = {
           exhibitor_job_title?: string | null
           exhibitor_organization_name?: string | null
           exhibitor_phone_number?: string | null
+          exhibitor_photo?: string | null
           exhibitor_product?: string | null
           exhibitor_registration_id?: number
           exhibitor_trn?: string | null
-          sponsorship_opportunities?: boolean | null
-          water_options?: boolean | null
-          wifi_options?: boolean | null
+          exhibitor_type?: string | null
         }
         Relationships: []
       }
@@ -210,7 +239,9 @@ export type Database = {
           media_nationality: string | null
           media_organization_name: string | null
           media_phone_number: string | null
+          media_photo: string | null
           media_position: string | null
+          media_type: string | null
         }
         Insert: {
           created_at?: string
@@ -225,7 +256,9 @@ export type Database = {
           media_nationality?: string | null
           media_organization_name?: string | null
           media_phone_number?: string | null
+          media_photo?: string | null
           media_position?: string | null
+          media_type?: string | null
         }
         Update: {
           created_at?: string
@@ -240,7 +273,9 @@ export type Database = {
           media_nationality?: string | null
           media_organization_name?: string | null
           media_phone_number?: string | null
+          media_photo?: string | null
           media_position?: string | null
+          media_type?: string | null
         }
         Relationships: []
       }

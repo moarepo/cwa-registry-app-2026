@@ -27,7 +27,7 @@
         :animate="side_nav_animation.animate"
         :transition="side_nav_animation.transition"
         :exit="side_nav_animation.exist"
-        class="flex flex-col justify-between items-center p-1.5 text-center rounded-2xl border min-h-full w-1/5 overflow-hidden"
+        class="lg:flex hidden flex-col justify-between items-center p-1.5 text-center rounded-2xl border min-h-full w-1/5 overflow-hidden"
         :class="useThemeComposable() ? 'bg-Dark border-teal-900'
         :'bg-white border-teal-300 '" 
       >
