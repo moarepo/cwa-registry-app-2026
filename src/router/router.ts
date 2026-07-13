@@ -21,6 +21,20 @@ const routes:Array<RouteRecordRaw> =[
         component: function(){
             return import("../pages/Dashborad.vue")
         }
+    },
+    {
+        path:'/exhibitor',
+        name:"Exhibitor",
+        component: function(){
+            return import("../pages/exhibitor.vue")
+        }
+    },
+    {
+        path:'/media',
+        name:"Media",
+        component: function(){
+            return import("../pages/MediaPage.vue")
+        }
     }
 ]
 

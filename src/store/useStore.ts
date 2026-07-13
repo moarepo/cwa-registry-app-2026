@@ -128,7 +128,7 @@ export const useStore = defineStore('useStore',{
                 case "exhibitor":
                     const request = await supabase
                     .from('exhibitor_table')
-                    .select()
+                    .select().range(this.e_offset,this.e_limit)
 
                     const international_count = await supabase
                     .from('exhibitor_table')

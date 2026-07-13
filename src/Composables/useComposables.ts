@@ -103,7 +103,7 @@ export function useEXBarChartData(){
     ],
     datasets:[
       {
-        label: 'Booth Selection',
+        label: 'Booth',
         backgroundColor: '#ff6900',
         data:[
           Number(optionOne.value),
