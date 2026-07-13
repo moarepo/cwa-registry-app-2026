@@ -104,9 +104,9 @@
       </div>
 
       <motion.div
-       class="flex justify-center items-center p-1.5 flex-col space-y-2 w-full"
-       :class="useThemeComposable() ? ''
-       :''"
+       class="flex justify-center items-center flex-col space-y-2 w-full p-2 rounded-md"
+       :class="useThemeComposable() ? 'bg-innerDark'
+       :'bg-off_white'"
       >
         <router-link
         v-for="nav in navigationLinks"
@@ -114,7 +114,7 @@
          :to="nav.path"
          class="w-full border flex justify-center items-center rounded-md p-1 cursor-pointer mt-2
          transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100 text-center space-x-2.5"
-         :class="useThemeComposable() ? 'bg-innerDark border-teal-900 hover:text-green-500 hover:border-green-500 hover:shadow-gre'
+         :class="useThemeComposable() ? 'bg-Dark border-teal-900 hover:text-green-500 hover:border-green-500 hover:shadow-gre'
          :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
         >
           <svg  
