@@ -32,10 +32,22 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
             >
 
                 <motion.div
-                  class="border w-full flex p-1.5 rounded-md"
+                  class="border w-full flex justify-start items-center py-1.5 px-8 rounded-md"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
+                    <motion.div
+                     class="p-0.5 flex space-x-2.5 justify-center items-center"
+                    >
+                        <h2>Search</h2>
+                        <input 
+                         class="lg:w-80 rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
+                         :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
+                         :'bg-white border-gray-300 focus:border-green-500 focus:shadow-gre'"
+                         type="text"
+                         placeholder="Search by Exhibitor Name"
+                        >
+                    </motion.div>
                 </motion.div>
 
                 <motion.div

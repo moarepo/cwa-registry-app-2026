@@ -30,7 +30,18 @@ export const useStore = defineStore('useStore',{
 
         Delegates: [] as Database['public']['Tables']['registration_table']['Row'][],
         Exhibitor: [] as Database['public']['Tables']['exhibitor_table']['Row'][],
-        Media: [] as Database['public']['Tables']['media_table']['Row'][]
+        Media: [] as Database['public']['Tables']['media_table']['Row'][],
+
+        exhibitor_category_1: 0 as number | null,
+        exhibitor_category_2: 0 as number | null,
+        exhibitor_category_3: 0 as number | null,
+        exhibitor_category_4: 0 as number | null,
+        exhibitor_category_5: 0 as number | null,
+        exhibitor_category_6: 0 as number | null,
+        exhibitor_category_7: 0 as number | null,
+        exhibitor_category_8: 0 as number | null,
+        exhibitor_category_9: 0 as number | null,
+        exhibitor_category_10: 0 as number | null,
     }),
     getters:{
         get_delegate_count: (state) => state.delegate_count,
@@ -49,6 +60,18 @@ export const useStore = defineStore('useStore',{
 
         get_Exhibitor: (state) => state.Exhibitor,
         get_Media_info: (state) => state.Media,
+        get_exhibitor_categories: (state) => [
+            state.exhibitor_category_1,
+            state.exhibitor_category_2,
+            state.exhibitor_category_3,
+            state.exhibitor_category_4,
+            state.exhibitor_category_5,
+            state.exhibitor_category_6,
+            state.exhibitor_category_7,
+            state.exhibitor_category_8,
+            state.exhibitor_category_9,
+            state.exhibitor_category_10
+        ]
     },
     actions:{
         async fetch_registion_count(){
@@ -183,8 +206,30 @@ export const useStore = defineStore('useStore',{
             }
         },
 
-        async fetch_exhibitor_gender_count(){
+        async fetch_categories(){
+            const [agriculture, manufacturing, agro_services, b_services,tourism,retail,non_profit,ngo,education,other] = await Promise.all([
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Agriculture"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Manufacturing"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Agro-Services"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Business Services"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Tourism"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Retail"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Non-Profit"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","NGO"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Education"),
+             supabase.from('exhibitor_category').select("*",{ count: 'exact', head: true }).ilike("main_category","Other"),
+            ]);
 
+            this.exhibitor_category_1 = Number(agriculture.count)
+            this.exhibitor_category_2 = Number(manufacturing.count)
+            this.exhibitor_category_3 = Number(agro_services.count)
+            this.exhibitor_category_4 = Number(b_services.count)
+            this.exhibitor_category_5 = Number(tourism.count)
+            this.exhibitor_category_6 = Number(retail.count)
+            this.exhibitor_category_7 = Number(non_profit.count)
+            this.exhibitor_category_8 = Number(ngo.count)
+            this.exhibitor_category_9 = Number(education.count)
+            this.exhibitor_category_10 = Number(other.count) 
         },
 
         async next_from_data(option:string){

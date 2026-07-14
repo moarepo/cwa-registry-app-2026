@@ -10,7 +10,7 @@
         LinearScale
     } from 'chart.js'
     import { computed, ref } from "vue"
-    import { useThemeComposable, useChartOptions, useEXPieChartData, useEXBarChartData } from '../Composables/useComposables'
+    import { useThemeComposable, useChartOptions, useEXPieChartData, useEXBarChartData, use_bar_chart_data } from '../Composables/useComposables'
     import { motion, AnimatePresence } from 'motion-v';
     import { dash_animation,staggered_animation, page_indcator_animation } from "../animations_config/anime_def"
     import { useStore } from "../store/useStore"
@@ -22,6 +22,7 @@
     const meet = useDelegateMeetingStore()
 
     _store_.fetch_registion_count() 
+    _store_.fetch_categories()
     meet.fetch_meetings_count() 
     
     setInterval(()=>{
@@ -169,7 +170,7 @@
                      :initial="staggered_animation(0.2,1,100,0).initial"
                      :animate="staggered_animation(0.4,1,0,10).animate"
                      :exit="staggered_animation(0.2,1,-100,0).exit"
-                     class="w-full flex flex-col space-y-1 "
+                     class="w-full flex flex-col space-y-1"
                     >
                         <motion.div
                          :initial="staggered_animation(0.1,1,0,-100).initial"
@@ -181,7 +182,7 @@
                         >
                             <h2 class="text-2xl">Exhibitor Information</h2>
 
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium ullam quod nesciunt magnam animi mollitia in a possimus, beatae deserunt qui suscipit esse.</p>
+                            <p>In this section contains</p>
                         </motion.div>
 
                         <motion.div
@@ -210,7 +211,23 @@
 
                         </motion.div>
 
-                        
+                        <motion.div
+                         :initial="staggered_animation(0.1,1,0,-100).initial"
+                         :animate="staggered_animation(0.3,1,0,0).animate"
+                         :exit="staggered_animation(0.2,1,1,100).exit"
+                         class="flex flex-col space-y-1 p-1.5 rounded-md justify-center items-center h-full"
+                         :class="useThemeComposable() ? 'bg-Dark'
+                         :'bg-white'"
+                        >
+                            <div
+                             class="flex flex-col space-y-0.5 rounded-md w-full h-96 py-4 px-2"
+                             :class="useThemeComposable() ? 'bg-Dark'
+                             :'bg-white'"
+                            >   
+                                <h2 class="font-semibold text-center">Exhibitor Category</h2>
+                                <Bar class="cursor-pointer" :data="use_bar_chart_data()" :options="useChartOptions()"/>
+                            </div>
+                        </motion.div>
 
                     </motion.div>
 

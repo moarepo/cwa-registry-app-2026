@@ -113,6 +113,34 @@ export function useEXBarChartData(){
       }
     ]
   }
+}
 
+
+export function use_bar_chart_data(){
+  let store = useStore() 
+
+  let _data = computed(()=>{ return store.get_exhibitor_categories}) 
+ 
+  return{
+    labels: [
+      "Agriculture",
+      "Manufacturing",
+      "Agro-Services",
+      "Business Services",
+      "Tourism",
+      "Retail",
+      "Non-Profit",
+      "NGO",
+      "Education",
+      "Other"
+    ],
+    datasets:[
+      {
+        label: 'Category',
+        backgroundColor: '#8200db',
+        data:[..._data.value]
+      }
+    ]
+  }
 }
 
