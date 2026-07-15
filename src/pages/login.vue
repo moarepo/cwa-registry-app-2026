@@ -29,7 +29,7 @@
              :animate="log_box1.animate"
              :transition="log_box1.transition"
              :exit="log_box1.exist"
-             class="rounded-md border  w-full flex flex-col justify-center items-center space-y-8 shadow-md"
+             class="rounded-md border w-full flex flex-col justify-center items-center space-y-8 shadow-md"
               :class="useThemeComposable() ? 'text-white border-teal-950 bg-Dark'
              :'border-gray-100 w-full bg-off_white shadow-md'"
             >

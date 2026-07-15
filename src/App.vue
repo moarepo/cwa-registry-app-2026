@@ -21,7 +21,7 @@
      :'text-stone-800 bg-[url(https://images.unsplash.com/photo-1686061593213-98dad7c599b9?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)]'"
     >
 
-      <motion.div 
+      <motion.aside
         v-if="show"
         :initial="side_nav_animation.initial"
         :animate="side_nav_animation.animate"
@@ -32,7 +32,7 @@
         :'bg-white border-teal-300 '" 
       >
         <sideNav/>
-      </motion.div>
+      </motion.aside>
   
       <router-view/>
   
