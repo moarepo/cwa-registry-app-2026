@@ -42,6 +42,15 @@ export const useStore = defineStore('useStore',{
         exhibitor_category_8: 0 as number | null,
         exhibitor_category_9: 0 as number | null,
         exhibitor_category_10: 0 as number | null,
+
+        m_press: 0 as number | null,
+        m_television: 0 as number | null,
+        m_radio: 0 as number | null,
+        m_print: 0 as number | null,
+        m_agency: 0 as number | null,
+        m_other: 0 as number | null,
+        m_local: 0 as number | null,
+        m_International: 0 as number | null
     }),
     getters:{
         get_delegate_count: (state) => state.delegate_count,
@@ -71,7 +80,19 @@ export const useStore = defineStore('useStore',{
             state.exhibitor_category_8,
             state.exhibitor_category_9,
             state.exhibitor_category_10
-        ]
+        ],
+
+        get_media_types: (state) => [
+            state.m_press,
+            state.m_television,
+            state.m_radio,
+            state.m_print,
+            state.m_agency,
+            state.m_other
+        ],
+
+        get_media_m_local: (state) => state.m_local,
+        get_media_m_international: (state) => state.m_International
     },
     actions:{
         async fetch_registion_count(){
@@ -230,6 +251,28 @@ export const useStore = defineStore('useStore',{
             this.exhibitor_category_8 = Number(ngo.count)
             this.exhibitor_category_9 = Number(education.count)
             this.exhibitor_category_10 = Number(other.count) 
+        },
+
+        async fetch_media_types_for_pieChart(){
+            const [press,television,radio,print,agency,other, local, international] = await Promise.all([
+                supabase.from('media_meetings').select("*",{ count: 'exact', head: true }).ilike("meeting_name","Press"),
+                supabase.from('media_meetings').select("*",{ count: 'exact', head: true }).ilike("meeting_name","Television"),
+                supabase.from('media_meetings').select("*",{ count: 'exact', head: true }).ilike("meeting_name","Radio"),
+                supabase.from('media_meetings').select("*",{ count: 'exact', head: true }).ilike("meeting_name","Print"),
+                supabase.from('media_meetings').select("*",{ count: 'exact', head: true }).ilike("meeting_name","Agency"),
+                supabase.from('media_meetings').select("*",{ count: 'exact', head: true }).ilike("meeting_name","Other"),
+                supabase.from('media_table').select("*",{ count: 'exact', head: true }).ilike("media_type","Local"),
+                supabase.from('media_table').select("*",{ count: 'exact', head: true }).ilike("media_type","International")
+            ])
+
+            this.m_press = Number(press.count)
+            this.m_television = Number(television.count)
+            this.m_radio = Number(radio.count)
+            this.m_print = Number(print.count)
+            this.m_agency = Number(agency.count)
+            this.m_other = Number(other.count)
+            this.m_local = Number(local.count)
+            this.m_International = Number(international.count)
         },
 
         async next_from_data(option:string){

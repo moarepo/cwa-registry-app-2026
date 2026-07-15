@@ -10,7 +10,7 @@
         LinearScale
     } from 'chart.js'
     import { computed, ref } from "vue"
-    import { useThemeComposable, useChartOptions, useEXPieChartData, useEXBarChartData, use_bar_chart_data } from '../Composables/useComposables'
+    import { useThemeComposable, useChartOptions, useEXPieChartData, useEXBarChartData, use_bar_chart_data,useMediaBarChartData, useMediaPieChartData } from '../Composables/useComposables'
     import { motion, AnimatePresence } from 'motion-v';
     import { dash_animation,staggered_animation, page_indcator_animation } from "../animations_config/anime_def"
     import { useStore } from "../store/useStore"
@@ -23,6 +23,7 @@
 
     _store_.fetch_registion_count() 
     _store_.fetch_categories()
+    _store_.fetch_media_types_for_pieChart()
     meet.fetch_meetings_count() 
     
     setInterval(()=>{
@@ -179,7 +180,7 @@
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.3,1.2,0,0).animate"
                          :exit="staggered_animation(0.2,1,100,0).exit"
-                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-3"
+                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
                         >
                             <div
                              class="flex flex-col space-y-0.5 rounded-md w-full lg:h-64 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
@@ -245,27 +246,36 @@
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.4,1.6,0,0).animate"
                          :exit="staggered_animation(0.2,1,100,0).exit"
-                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-3"
+                         class="w-full flex space-x-1"
                         >
                             <div
-                             class="flex flex-col space-y-0.5 rounded-md w-full h-96 py-7 px-4"
+                             class="flex flex-col space-y-0.5 rounded-md w-full h-124 py-8 px-4"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
                                 <h2 class="font-semibold text-center">Media Types</h2>
-                                <!-- <Pie class="cursor-pointer" :data="useEXPieChartData()" :options="useChartOptions()"/> -->
+                                <Pie class="cursor-pointer" :data="useMediaPieChartData()" :options="useChartOptions()"/>
                             </div>
 
                             <div
-                             class="flex flex-col space-y-2 rounded-md w-full h-96 py-7 px-4"
+                             class="flex flex-col space-y-2 rounded-md w-full h-124 py-8 px-4"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
-                                <h2 class="font-semibold text-center">Events</h2>
-                                <!-- <Bar class="cursor-pointer" :data="useEXBarChartData()" :options="useChartOptions()"/> -->
+                                <h2 class="font-semibold text-center">Media Category</h2>
+                                <Bar class="cursor-pointer" :data="useMediaBarChartData()" :options="useChartOptions()"/>
                             </div>
 
                         </motion.div>
+
+                        <motion.div
+                         :initial="staggered_animation(0.1,1,0,-100).initial"
+                         :animate="staggered_animation(0.4,0.2,0,0).animate"
+                         :exit="staggered_animation(0.2,1,1,100).exit"
+                         class="flex flex-col space-y-1 p-1.5 rounded-md justify-center items-center h-44"
+                         :class="useThemeComposable() ? 'bg-Dark'
+                         :'bg-white'"
+                        ></motion.div>
                     </motion.div>
 
                 </motion.div>

@@ -115,6 +115,47 @@ export function useEXBarChartData(){
   }
 }
 
+export function useMediaBarChartData(){
+  let store = useStore() 
+
+  let _data_ = computed(()=>{ return store.get_media_types}) 
+ 
+  return{
+    labels: [
+      "Press",
+      "Television",
+      "Radio",
+      "Print",
+      "Agency",
+      "Other"
+    ],
+    datasets:[
+      {
+        label: 'Types',
+        backgroundColor: '#00bc7d',
+        data:[..._data_.value]
+      }
+    ]
+  }
+}
+
+export function useMediaPieChartData(){
+  let store = useStore() 
+
+  let l_count = computed(()=>{ return store.get_media_m_local})
+  let In_count = computed(()=>{return store.get_media_m_international})
+  
+  return{
+    labels: ["Local","International"],
+    datasets: [
+      {
+        backgroundColor: ["#00c950","#9810fa"],
+        data: [Number(l_count.value),Number(In_count.value)]
+      }
+    ]
+  }
+}
+
 
 export function use_bar_chart_data(){
   let store = useStore() 
