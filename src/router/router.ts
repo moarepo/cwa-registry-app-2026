@@ -35,6 +35,13 @@ const routes:Array<RouteRecordRaw> =[
         component: function(){
             return import("../pages/MediaPage.vue")
         }
+    },
+    {
+        path:'/forgot',
+        name:"Forgot",
+        component: function(){
+            return import("../pages/Forget.vue")
+        }
     }
 ]
 

@@ -1,6 +1,6 @@
 import {defineStore} from "pinia"
 import {supabase} from "../supabase_config/supabaseConfig"
-import {useAlertModalComposable} from "../Composables/useComposables"
+import {useAlertModalComposable,useSuccessModalComposable} from "../Composables/useComposables"
 import {useDisplayStore} from "./useDisplayStore"
 import type{user} from "../utils/Types"
 import router from "../router/router"
@@ -66,6 +66,30 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
                 this.User = {} as user
                 display.change_layout_display()
                 router.push("/")
+            }
+        },
+
+        async reset_password(new_password:string){
+            const { data, error } = await supabase.auth.updateUser({password: new_password})
+
+            if(error){
+
+            }
+
+            if(data){
+
+            }
+        },
+
+        async reset_email(email:string){
+            const { data, error } = await supabase.auth.resetPasswordForEmail(email,{redirectTo:'http://localhost:5173/forgot'})
+
+            if(error){
+                useAlertModalComposable(error.message)
+            }
+
+            if(data){
+                useSuccessModalComposable("Reset email has been sent, please check your email.")
             }
         }
     }

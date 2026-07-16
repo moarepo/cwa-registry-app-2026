@@ -8,6 +8,7 @@
  import sideNav from "./components/sideNav.vue";
 
  const alerModal = defineAsyncComponent(()=> ( import("./components/aleretMoadal.vue")  ) )
+ const succesModal = defineAsyncComponent(()=>( import("./components/successModal.vue")  ))
  const Showstore = useDisplayStore()
 
  let show = computed<boolean>(()=>{ return Showstore.show_side_nav})
@@ -27,7 +28,7 @@
         :animate="side_nav_animation.animate"
         :transition="side_nav_animation.transition"
         :exit="side_nav_animation.exist"
-        class="lg:flex hidden flex-col justify-between items-center p-1.5 text-center rounded-2xl border min-h-full w-1/5 overflow-hidden"
+        class="xl:flex hidden flex-col justify-between items-center p-1.5 text-center rounded-2xl border min-h-full w-1/5 overflow-hidden"
         :class="useThemeComposable() ? 'bg-Dark border-teal-900'
         :'bg-white border-teal-300 '" 
       >
@@ -38,6 +39,7 @@
   
       <!--- Modals -->
       <alerModal/>
+      <succesModal/>
   
     </motion.section>
   </AnimatePresence>

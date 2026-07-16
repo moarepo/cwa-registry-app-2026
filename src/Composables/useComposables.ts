@@ -15,6 +15,12 @@ export function useAlertModalComposable(meassage:string){
   display.change_status(meassage)
 }
 
+export function useSuccessModalComposable(meassage:string){
+  const display = useDisplayStore()
+  display.change_success_status(meassage)
+}
+
+
 export const useChartOptions = ()=>{
   return { responsive: true, maintainAspectRatio: false }
 }

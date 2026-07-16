@@ -103,13 +103,13 @@ export const button_animation = {
         scale:1
     },
     hover:{ 
-        scale: 1.1,
+        scale: 1.01,
     },
     pressed:{ 
         scale: 0.4
     },
     transition:{
-        duration: 0.15,
+        duration: 0.12,
         ease: 'easeInOut'
     }
 }

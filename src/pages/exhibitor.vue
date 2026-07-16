@@ -84,7 +84,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                     </motion.div>
                     <div class="lg:flex hidden w-full">
                             <table
-                             class="table-auto border-separate lg:border-spacing-2 border-spacing-1 border-2 rounded-lg w-full"
+                             class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm"
                              :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                              : 'bg-white border-gray-100'"
                             >
