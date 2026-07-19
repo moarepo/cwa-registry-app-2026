@@ -1,4 +1,4 @@
-import {useThemeStore} from "../store/useThemeStore"
+import {useThemeStore} from "../store/usethemeStore"
 import {useDisplayStore} from "../store/useDisplayStore"
 import {useStore} from "../store/useStore"
 import {useDelegateMeetingStore} from "../store/useDelegateMeetingStore"

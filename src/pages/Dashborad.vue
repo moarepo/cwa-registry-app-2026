@@ -10,7 +10,15 @@
         LinearScale
     } from 'chart.js'
     import { computed, ref } from "vue"
-    import { useThemeComposable, useChartOptions, useEXPieChartData, useEXBarChartData, use_bar_chart_data,useMediaBarChartData, useMediaPieChartData } from '../Composables/useComposables'
+    import { 
+        useThemeComposable, 
+        useChartOptions, 
+        useEXPieChartData, 
+        useEXBarChartData, 
+        use_bar_chart_data,
+        useMediaBarChartData, 
+        useMediaPieChartData 
+    } from '../Composables/useComposables'
     import { motion, AnimatePresence } from 'motion-v';
     import { dash_animation,staggered_animation, page_indcator_animation } from "../animations_config/anime_def"
     import { useStore } from "../store/useStore"
@@ -30,26 +38,35 @@
         _store_.fetch_registion_count() 
         meet.fetch_meetings_count() 
     },5500)
-    
+
+
+    let show_delegates_info = ref<boolean>(false)
     let show_exhibitor_info = ref<boolean>(false)
     let show_media_info =  ref<boolean>(false)
 
     let exhibitor_amout = computed<number|null>(()=>{ return _store_.get_exhibitors_count})
     let media_amout = computed<number|null>(()=>{ return _store_.get_media_count })
+    let delegates_amout = computed<number|null>(()=>{ return _store_.get_delegate_count })
 
     
     function get_data(option:string){ 
 
-        if(option === 'exhibitor'){
-            show_exhibitor_info.value = true
-        }else{
-            show_exhibitor_info.value = false
-        }
-
-        if(option === 'media'){
-            show_media_info.value = true
-        }else{
-            show_media_info.value = false
+       switch (option) {
+            case 'delegates':
+                show_delegates_info.value = true;
+                show_exhibitor_info.value = false;
+                show_media_info.value = false;
+                break;
+            case 'exhibitor':
+                show_delegates_info.value = false;
+                show_exhibitor_info.value = true;
+                show_media_info.value = false;
+                break;
+            case 'media':
+                show_delegates_info.value = false;
+                show_exhibitor_info.value = false;
+                show_media_info.value = true;
+                break;
         }
         
         _store_.fetch_from_data(option)
@@ -57,11 +74,7 @@
     }
 
     let showDispaly = computed<boolean>(()=>{ 
-        if(show_exhibitor_info.value === false && show_media_info.value === false){
-            return true
-        }else{
-            return false
-        }
+       return show_exhibitor_info.value && show_media_info.value && show_delegates_info.value;
     })
 </script>
 
@@ -81,13 +94,13 @@
              :'bg-white border-teal-300'"
             >
                 <motion.div
-                  class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 p-1.5 rounded-2xl w-full gap-1 border"
+                  class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-1.5 rounded-2xl w-full gap-1 border"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
 
                     <motion.div
-                     class="flex justify-center items-center p-2.5 rounded-2xl lg:col-span-2 md:col-span-2 col-span-1"
+                     class="flex justify-center items-center p-2.5 rounded-2xl lg:col-span-3 md:col-span-2 col-span-1"
                      :class="useThemeComposable() ? 'bg-Dark border-teal-950':'bg-white border-teal-300'"
                     >
                         <p>
@@ -95,6 +108,31 @@
                         </p>
                     </motion.div>
 
+                    <button
+                     @click="get_data('delegates')"
+                    >
+                        <motion.div
+                            :initial="staggered_animation(0.4,2,0,-10).initial"
+                            :animate="staggered_animation(0.6,1.5,0,-10).animate"
+                            :exit="staggered_animation(0.6,2,0,-10).exit"
+                            class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer "
+                            :class="useThemeComposable() ? 'bg-Dark border-teal-950'
+                            :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
+                        >   
+                            <motion.div
+                                v-if="show_delegates_info"
+                                :initial="page_indcator_animation.initial"
+                                :animate="page_indcator_animation.animate"
+                                :transition="page_indcator_animation.transition"
+                                class="animate-pulse p-2.5 rounded-full"
+                                :class="useThemeComposable() ? 'bg-teal-500'
+                                :'bg-indigo-500 '"
+                            ></motion.div>
+
+                            <h2>Total # Registartion : </h2> 
+                            <h2 class="text-5xl font-light">{{ delegates_amout }}</h2>
+                        </motion.div>
+                    </button>
 
                     <button
                      @click="get_data('exhibitor')"
@@ -151,7 +189,7 @@
                 </motion.div>
 
                 <motion.div
-                 v-if="!showDispaly"
+                 v-if="showDispaly === false"
                  class="flex flex-col space-y-4 w-full p-2 rounded-2xl border h-full"
                  :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                  :'bg-off_white border-teal-100'"
@@ -276,6 +314,68 @@
                          :class="useThemeComposable() ? 'bg-Dark'
                          :'bg-white'"
                         ></motion.div>
+                    </motion.div>
+
+                    <motion.div 
+                     v-if="show_delegates_info"
+                     :initial="staggered_animation(0.2,1,100,0).initial"
+                     :animate="staggered_animation(0.3,0.8,0,10).animate"
+                     :exit="staggered_animation(0.2,1,-100,0).exit"
+                     class="w-full flex flex-col space-y-1"
+                    >
+                        <motion.div
+                         :initial="staggered_animation(0.1,1,0,-100).initial"
+                         :animate="staggered_animation(0.3,1,0,0).animate"
+                         :exit="staggered_animation(0.2,1,1,100).exit"
+                         class="flex flex-col space-y-1 p-1.5 rounded-md justify-center items-center"
+                         :class="useThemeComposable() ? 'bg-Dark'
+                         :'bg-white'"
+                        >
+                            <h2 class="text-2xl">Registartion Information</h2>
+
+                            <p>In this section contains informstional charts on the Registartion from.</p>
+                        </motion.div>
+
+                        <motion.div
+                         :initial="staggered_animation(0.1,1,-100,0).initial"
+                         :animate="staggered_animation(0.3,1.2,0,0).animate"
+                         :exit="staggered_animation(0.2,1,100,0).exit"
+                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
+                        >
+                            <div
+                             class="flex flex-col space-y-0.5 rounded-md w-full lg:h-64 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
+                             :class="useThemeComposable() ? 'bg-Dark'
+                             :'bg-white'"
+                            >   
+                               
+                            </div>
+
+                            <div
+                             class="flex flex-col space-y-2 rounded-md w-full lg:h-64 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
+                             :class="useThemeComposable() ? 'bg-Dark'
+                             :'bg-white'"
+                            >   
+                               
+                            </div>
+
+                        </motion.div>
+
+                        <motion.div
+                         :initial="staggered_animation(0.1,1,0,-100).initial"
+                         :animate="staggered_animation(0.3,1,0,0).animate"
+                         :exit="staggered_animation(0.2,1,1,100).exit"
+                         class="flex flex-col space-y-1 p-1.5 rounded-md justify-center items-center h-full"
+                         :class="useThemeComposable() ? 'bg-Dark'
+                         :'bg-white'"
+                        >
+                            <div
+                             class="flex flex-col space-y-0.5 rounded-md w-full h-96 py-4 px-2"
+                             :class="useThemeComposable() ? 'bg-Dark'
+                             :'bg-white'"
+                            >   
+                               
+                            </div>
+                        </motion.div>
                     </motion.div>
 
                 </motion.div>
