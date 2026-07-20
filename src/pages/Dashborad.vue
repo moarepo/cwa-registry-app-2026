@@ -17,7 +17,8 @@
         useEXBarChartData, 
         use_bar_chart_data,
         useMediaBarChartData, 
-        useMediaPieChartData 
+        useMediaPieChartData,
+        use_regisration_bar_chart
     } from '../Composables/useComposables'
     import { motion, AnimatePresence } from 'motion-v';
     import { dash_animation,staggered_animation, page_indcator_animation } from "../animations_config/anime_def"
@@ -153,7 +154,9 @@
                                 class="animate-pulse p-2.5 rounded-full"
                                 :class="useThemeComposable() ? 'bg-teal-500'
                                 :'bg-indigo-500 '"
-                            ></motion.div>
+                            >
+
+                            </motion.div>
 
                             <h2>Total # Exhibitor : </h2> 
                             <h2 class="text-5xl font-light">{{ exhibitor_amout }}</h2>
@@ -347,7 +350,7 @@
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
-                               
+                               <Bar class="cursor-pointer" :data="use_regisration_bar_chart()" :options="useChartOptions()"/>
                             </div>
 
                             <div
@@ -355,7 +358,7 @@
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
-                               
+                                <!-- <Pie class="cursor-pointer" :data="use_regisration_bar_chart()" :options="useChartOptions()"/> -->
                             </div>
 
                         </motion.div>

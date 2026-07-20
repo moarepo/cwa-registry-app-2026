@@ -9,6 +9,13 @@ const routes:Array<RouteRecordRaw> =[
         },
     },
     {
+        path:'/delegates',
+        name:'Delegate Registration',
+        component: function(){
+            return import("../pages/delegate_registration.vue")
+        }
+    },
+    {
         path:'/registry',
         name:"Registry",
         component: function(){

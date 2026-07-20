@@ -27,6 +27,10 @@ export const staggered_animation = (
                 ease: [0, 0.71, 0.2, 1.01]
             }
         },
+        transition: {
+            duration: 0.2,
+            ease: 'easeInOut'
+        },
         exit: { // Fixed typo from 'exist'
             x,
             y,

@@ -9,7 +9,7 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
         exhibitor: {} as Database['public']['Tables']['exhibitor_table']['Row'],
         limit: 10 as number,
         offset: 0 as number,
-        current_page: 1 as number,
+        current_page: 1 as number
     }),
     getters:{
         get_list_Exhibitors: (state) => state.Exhibitors,
@@ -29,7 +29,7 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
             } catch (error:any) {
                 useAlertModalComposable(error.message)
             }
-        },
+        }, 
 
         async next_in_list(){
             try {

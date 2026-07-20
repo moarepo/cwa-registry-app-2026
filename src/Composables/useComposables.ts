@@ -1,6 +1,7 @@
-import {useThemeStore} from "../store/usethemeStore"
+import {useThemeStore} from "../store/useThemeStore"
 import {useDisplayStore} from "../store/useDisplayStore"
 import {useStore} from "../store/useStore"
+import {useDelegateStore} from "../store/useDelegateStore"
 import {useDelegateMeetingStore} from "../store/useDelegateMeetingStore"
 import {computed} from "vue"
 
@@ -162,7 +163,6 @@ export function useMediaPieChartData(){
   }
 }
 
-
 export function use_bar_chart_data(){
   let store = useStore() 
 
@@ -191,3 +191,28 @@ export function use_bar_chart_data(){
   }
 }
 
+
+export function use_regisration_bar_chart(){
+  let store = useDelegateStore()
+  store.fetch_barChart_data()
+
+  let _data = computed(()=>{ return store.get_BarChatData}) 
+ 
+  return{
+    labels: [
+      "Government",
+      "NGO",
+      "Private Sector",
+      "Farmer",
+      "Academic",
+      "Regional Body"
+    ],
+    datasets:[
+      {
+        label: 'Organization Type',
+        backgroundColor: '#00c950',
+        data:[..._data.value]
+      }
+    ]
+  }
+}
