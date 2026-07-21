@@ -194,7 +194,6 @@ export function use_bar_chart_data(){
 
 export function use_regisration_bar_chart(){
   let store = useDelegateStore()
-  store.fetch_barChart_data()
 
   let _data = computed(()=>{ return store.get_BarChatData}) 
  
@@ -210,9 +209,66 @@ export function use_regisration_bar_chart(){
     datasets:[
       {
         label: 'Organization Type',
-        backgroundColor: '#00c950',
+        backgroundColor: ['#00c950','#ff6900','#00b8db','#7008e7','#c70036','#7c6d67'],
         data:[..._data.value]
       }
     ]
   }
+}
+
+export function use_regisration_pie_chart(){
+  let store = useDelegateStore()
+
+  let _data = computed(()=>{ return store.get_PieChatData}) 
+
+  return{                                                                                                  
+    labels:  [
+      'Antigua and Barbuda',
+      'Bahamas',
+      'Barbados',
+      'Belize',
+      'Dominica',
+      'Grenada',
+      'Guyana',
+      'Haiti',
+      'Jamaica',
+      'Montserrat',
+      'Saint Kitts and Nevis',
+      'Saint Lucia',
+      'Saint Vincent and the Grenadines',
+      'Suriname',
+      'Trinidad and Tobago',
+      'United States of America',
+      'Canada',
+      'Mexico',
+      'United Kingdom of Great Britain and Northern Ireland'
+    ],
+    datasets: [
+      {
+        backgroundColor:[
+          '#00b8db', // cyan
+          '#f54900', // oragne
+          '#432dd7', // indigo
+          '#ffa1ad', // rose
+          '#1c398e', // blue
+          '#efb100', // yellow
+          '#abab9c', // stone
+          'EC6044',
+          '#00c950', // green
+          '#EC44D0',
+          '#B105AE',
+          '#A35E50',
+          '#EDC48B',
+          '#17A19A',
+          '#F44C99',
+          '#efb100',
+          '#C039FE',
+          '#8200db', // bone white
+          '#c10007' // red
+        ],
+        data: [..._data.value]
+      }
+    ]
+  }
+ 
 }

@@ -19,7 +19,8 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         get_delegate: (state) => state.delegate,
         get_current_page: (state) => state.page,
         get_total_pages: (state) => state.number_of_pages,
-        get_BarChatData: (state) => state.BarChatData
+        get_BarChatData: (state) => state.BarChatData,
+        get_PieChatData: (state) => state.PieChatData
     },
     actions:{
         async fetch_all_delegates(){
@@ -77,8 +78,8 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             this.BarChatData=chartSeries;
         },
 
-        async fetch_caricom_chart_data() {
-            // 1. The 15 Full CARICOM Member States
+        async fetch_pie_chart_data() {
+           
             const caricomStates = [
                 'Antigua and Barbuda',
                 'Bahamas',
@@ -99,19 +100,17 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                 'Canada',
                 'Mexico',
                 'United Kingdom of Great Britain and Northern Ireland'
-            ];
+            ]
 
-            // 2. Fetch the country column from Supabase
             const { data, error } = await supabase
                 .from('registration_table')
-                .select('nationality'); // Replace 'nationality' with your exact column name
+                .select('nationality');
 
             if (error) {
                 useAlertModalComposable(error.message);
                 return;
             }
 
-            // 3. Count occurrences normalized to lower case to prevent casing issues
             const countsMap: Record<string, number> = {};
 
             if (data) {
@@ -123,10 +122,12 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                 });
             }
 
-            // 4. Map back to the CARICOM list to produce the final array [0, 4, 12, ...]
+          
             const chartSeries: number[] = caricomStates.map(
                 (country) => countsMap[country.toLowerCase()] || 0
             );
+
+            console.log(chartSeries)
 
             this.PieChatData = chartSeries;
         },

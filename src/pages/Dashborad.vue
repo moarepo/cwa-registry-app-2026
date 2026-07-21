@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import { Pie, Bar } from 'vue-chartjs'
+    import { Pie, Bar, Doughnut } from 'vue-chartjs'
     import { Chart as 
         ChartJS, 
         ArcElement, 
@@ -18,18 +18,23 @@
         use_bar_chart_data,
         useMediaBarChartData, 
         useMediaPieChartData,
-        use_regisration_bar_chart
+        use_regisration_bar_chart,
+        use_regisration_pie_chart
     } from '../Composables/useComposables'
     import { motion, AnimatePresence } from 'motion-v';
     import { dash_animation,staggered_animation, page_indcator_animation } from "../animations_config/anime_def"
     import { useStore } from "../store/useStore"
+    import {useDelegateStore} from "../store/useDelegateStore"
     import { useDelegateMeetingStore } from "../store/useDelegateMeetingStore"
 
     ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale,LinearScale,)
 
     const _store_ = useStore()
+    const d_store = useDelegateStore()
     const meet = useDelegateMeetingStore()
 
+    d_store.fetch_barChart_data()
+    d_store.fetch_pie_chart_data()
     _store_.fetch_registion_count() 
     _store_.fetch_categories()
     _store_.fetch_media_types_for_pieChart()
@@ -346,7 +351,7 @@
                          class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
                         >
                             <div
-                             class="flex flex-col space-y-0.5 rounded-md w-full lg:h-64 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
+                             class="flex flex-col space-y-0.5 rounded-md w-full lg:h-120 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
@@ -354,16 +359,16 @@
                             </div>
 
                             <div
-                             class="flex flex-col space-y-2 rounded-md w-full lg:h-64 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
+                             class="flex flex-col space-y-2 rounded-md w-full lg:h-120 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
-                                <!-- <Pie class="cursor-pointer" :data="use_regisration_bar_chart()" :options="useChartOptions()"/> -->
+                                <Doughnut class="cursor-pointer" :data="use_regisration_pie_chart()" :options="useChartOptions()"/>
                             </div>
 
                         </motion.div>
 
-                        <motion.div
+                        <!-- <motion.div
                          :initial="staggered_animation(0.1,1,0,-100).initial"
                          :animate="staggered_animation(0.3,1,0,0).animate"
                          :exit="staggered_animation(0.2,1,1,100).exit"
@@ -378,7 +383,7 @@
                             >   
                                
                             </div>
-                        </motion.div>
+                        </motion.div> -->
                     </motion.div>
 
                 </motion.div>
