@@ -21,7 +21,7 @@
         use_regisration_bar_chart,
         use_regisration_pie_chart
     } from '../Composables/useComposables'
-    import { motion, AnimatePresence } from 'motion-v';
+    import { motion } from 'motion-v';
     import { dash_animation,staggered_animation, page_indcator_animation } from "../animations_config/anime_def"
     import { useStore } from "../store/useStore"
     import {useDelegateStore} from "../store/useDelegateStore"
@@ -85,11 +85,11 @@
 </script>
 
 <template>
-    <mian
+    <motion.section
      class="flex w-full overflow-hidden justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
-    >   <AnimatePresence> 
+    >  
             <motion.div 
              :initial="dash_animation.initial"
              :animate="dash_animation.animate"
@@ -362,7 +362,8 @@
                              class="flex flex-col space-y-2 rounded-md w-full lg:h-120 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
-                            >   
+                            >       
+                                <h2>Nationality</h2>
                                 <Doughnut class="cursor-pointer" :data="use_regisration_pie_chart()" :options="useChartOptions()"/>
                             </div>
 
@@ -402,6 +403,5 @@
                 </motion.div>
                 
             </motion.div>
-        </AnimatePresence>
-    </mian>
+    </motion.section>
 </template>

@@ -1,4 +1,5 @@
 import { createMemoryHistory, createRouter, type RouteRecordRaw} from 'vue-router'
+import OptionsPage from '../pages/OptionsPage.vue'
 
 const routes:Array<RouteRecordRaw> =[
     {
@@ -7,6 +8,13 @@ const routes:Array<RouteRecordRaw> =[
         component:function(){
             return import("../pages/login.vue")
         },
+    },
+    {
+        path:'/dashborad',
+        name:"Dashborad",
+        component: function(){
+            return import("../pages/Dashborad.vue")
+        }
     },
     {
         path:'/delegates',
@@ -23,13 +31,6 @@ const routes:Array<RouteRecordRaw> =[
         }
     },
     {
-        path:'/dashborad',
-        name:"Dashborad",
-        component: function(){
-            return import("../pages/Dashborad.vue")
-        }
-    },
-    {
         path:'/exhibitor',
         name:"Exhibitor",
         component: function(){
@@ -42,6 +43,11 @@ const routes:Array<RouteRecordRaw> =[
         component: function(){
             return import("../pages/MediaPage.vue")
         }
+    },
+    {
+        path:'/options',
+        name:'settings',
+        component: OptionsPage
     },
     {
         path:'/forgot',

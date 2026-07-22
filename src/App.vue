@@ -22,7 +22,7 @@
      :'text-stone-800 bg-teal-100'"
     >
 
-      <motion.aside
+      <motion.div
         v-if="show"
         :initial="side_nav_animation.initial"
         :animate="side_nav_animation.animate"
@@ -33,7 +33,7 @@
         :'bg-white border-teal-300 '" 
       >
         <sideNav/>
-      </motion.aside>
+      </motion.div>
   
       <router-view/>
   

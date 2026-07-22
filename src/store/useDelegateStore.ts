@@ -126,9 +126,6 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             const chartSeries: number[] = caricomStates.map(
                 (country) => countsMap[country.toLowerCase()] || 0
             );
-
-            console.log(chartSeries)
-
             this.PieChatData = chartSeries;
         },
 
