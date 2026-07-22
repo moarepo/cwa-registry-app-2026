@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {motion} from 'motion-v'
-import {useThemeComposable} from '../Composables/useComposables'
+import {useThemeComposable} from '../composables/useComposables'
 import {dash_animation} from '../animations_config/anime_def'
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
  import {ref} from 'vue'
  import { motion } from 'motion-v';
- import { useThemeComposable, useAlertModalComposable } from '../Composables/useComposables'
+ import { useThemeComposable, useAlertModalComposable } from '../composables/useComposables'
  import {button_animation} from '../animations_config/anime_def'
  import {useAuthencationStore} from '../store/useAuthencationStore'
 

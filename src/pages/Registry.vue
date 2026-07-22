@@ -2,7 +2,7 @@
  import { motion } from 'motion-v';
  import {ref} from "vue"
  import {useAuthencationStore} from "../store/useAuthencationStore"
- import {useAlertModalComposable} from "../Composables/useComposables"
+ import {useAlertModalComposable} from "../composables/useComposables"
 
  const authStore = useAuthencationStore()
 

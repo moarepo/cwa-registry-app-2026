@@ -2,7 +2,7 @@
  import { computed } from "vue"
  import { useDelegateStore } from "../store/useDelegateStore"
  import { motion, AnimatePresence } from "motion-v";
- import { useThemeComposable } from "../Composables/useComposables"
+ import { useThemeComposable } from "../composables/useComposables"
  import { dash_animation, staggered_animation } from '../animations_config/anime_def'
 
  const store = useDelegateStore()

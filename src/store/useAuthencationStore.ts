@@ -1,6 +1,6 @@
 import {defineStore} from "pinia"
 import {supabase} from "../supabase_config/supabaseConfig"
-import {useAlertModalComposable,useSuccessModalComposable} from "../Composables/useComposables"
+import {useAlertModalComposable,useSuccessModalComposable} from "../composables/useComposables"
 import {useDisplayStore} from "./useDisplayStore"
 import type{user} from "../utils/Types"
 import router from "../router/router"

@@ -2,7 +2,7 @@
  import { motion, AnimatePresence } from "motion-v";
  import { useDisplayStore } from "../store/useDisplayStore"
  import {modal_movement} from "../animations_config/anime_def"
- import { useThemeComposable } from "../Composables/useComposables"
+ import { useThemeComposable } from "../composables/useComposables"
  import { computed } from "vue"
 
  const store = useDisplayStore()

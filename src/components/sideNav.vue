@@ -1,7 +1,7 @@
 <script lang="ts" setup>
  import { motion } from "motion-v";
  import {staggered_animation,button_animation_normal} from "../animations_config/anime_def"
- import {useThemeComposable} from "../Composables/useComposables"
+ import {useThemeComposable} from "../composables/useComposables"
  import {useAuthencationStore} from "../store/useAuthencationStore"
  import {useThemeStore} from "../store/useThemeStore"
 

@@ -20,7 +20,7 @@
         useMediaPieChartData,
         use_regisration_bar_chart,
         use_regisration_pie_chart
-    } from '../Composables/useComposables'
+    } from '../composables/useComposables'
     import { motion } from 'motion-v';
     import { dash_animation,staggered_animation, page_indcator_animation } from "../animations_config/anime_def"
     import { useStore } from "../store/useStore"

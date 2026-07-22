@@ -1,7 +1,7 @@
 import {defineStore} from "pinia"
 import {supabase} from "../supabase_config/supabaseConfig"
 import type {Database} from '../utils/database.types'
-import {useAlertModalComposable} from '../Composables/useComposables'
+import {useAlertModalComposable} from '../composables/useComposables'
 export const useDelegateStore = defineStore("useDelegateStore",{
     state:()=>({
         Delegates: [] as Database['public']['Tables']['registration_table']['Row'][],

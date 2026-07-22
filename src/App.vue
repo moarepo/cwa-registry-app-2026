@@ -2,7 +2,7 @@
  import { computed } from "vue"
  import { motion,AnimatePresence } from "motion-v";
  import {defineAsyncComponent} from "vue"
- import {useThemeComposable} from "./Composables/useComposables"
+ import {useThemeComposable} from "./composables/useComposables.ts"
  import {side_nav_animation} from "./animations_config/anime_def"
  import {useDisplayStore} from "./store/useDisplayStore"
  import sideNav from "./components/sideNav.vue";

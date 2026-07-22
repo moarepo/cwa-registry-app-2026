@@ -1,6 +1,5 @@
 import {defineStore} from "pinia"
 
-
 export const useThemeStore = defineStore("useThemeStore",{
     state:()=>({
         theme: false as boolean

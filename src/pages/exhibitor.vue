@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed} from "vue"
-import {useThemeComposable} from '../Composables/useComposables'
+import {useThemeComposable} from '../composables/useComposables'
 import { motion, AnimatePresence } from 'motion-v';
 import {dash_animation} from '../animations_config/anime_def'
 import {useExhibitorStore} from '../store/useExhibitorStore'

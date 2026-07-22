@@ -3,7 +3,7 @@
     import {log_box1,log_box2,button_animation} from '../animations_config/anime_def'
     import {ref} from 'vue'
     import {useAuthencationStore} from "../store/useAuthencationStore"
-    import {useAlertModalComposable, useThemeComposable} from "../Composables/useComposables"
+    import {useAlertModalComposable, useThemeComposable} from "../composables/useComposables"
 
     const authStore = useAuthencationStore()
 

@@ -1,7 +1,7 @@
 import {defineStore} from "pinia"
 import type {Database} from '../utils/database.types'
 import {supabase} from "../supabase_config/supabaseConfig"
-import {useAlertModalComposable} from "../Composables/useComposables"
+import {useAlertModalComposable} from "../composables/useComposables"
 
 export const useExhibitorStore = defineStore('useExhibitorStore',{
     state:()=>({
