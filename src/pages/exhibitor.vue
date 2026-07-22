@@ -117,7 +117,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                                         <td class="text-center rounded-md px-2 py-2">{{ item.email_address }}</td>
                                         <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_job_title }}</td>
                                         <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_organization_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.email_address }}</td>
+                                        <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_company_address }}</td>
                                         <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_country }}</td>
                                         <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_product }}</td>
                                     </tr>
