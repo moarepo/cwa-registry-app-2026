@@ -1,8 +1,8 @@
-import {computed} from 'vue'
 import { createMemoryHistory, createRouter, type RouteRecordRaw, type RouteLocationNormalized} from 'vue-router'
 import {useDisplayStore} from "../store/useDisplayStore"
 import {useAuthencationStore} from "../store/useAuthencationStore"
 import OptionsPage from '../pages/OptionsPage.vue'
+
 
 const routes:Array<RouteRecordRaw> =[
     {
@@ -60,16 +60,16 @@ const routes:Array<RouteRecordRaw> =[
         meta:{ auth:true }
     },
     {
-        path:'/forgot',
+        path:'/email_forget_password',
         name:"Forgot",
         component: function(){
             return import("../pages/Forget.vue")
         },
-        meta:{ auth:true }
+        meta:{ auth:false }
     },
     {
         path:'/reset',
-        name:'Password Reset',
+        name:'Password_Reset',
         component: function(){
             return import("../pages/ResetPassword.vue")
         },
@@ -90,17 +90,44 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to:RouteLocationNormalized, _from:RouteLocationNormalized) => {
-    const auth = useAuthencationStore()
-    const show = useDisplayStore()
+// router.beforeEach((to:RouteLocationNormalized, _from:RouteLocationNormalized) => {
+//     const auth = useAuthencationStore()
+//     const show = useDisplayStore()
 
-    let is_authenicated = computed<boolean>(()=>{ return auth.get_user_info.is_authenicated})
+//     let is_authenicated = computed<boolean>(()=>{ return auth.get_user_info.is_authenicated})
 
-    show.nav = !["Login", "Confirmation", "Registry", "Forgot"].includes(to.name as string);
+//     show.nav = !["Login", "Confirmation", "Registry", "Forgot","Password_Reset"].includes(to.name as string);
 
-    if(!is_authenicated.value && to.name !== "Login" && to.meta?.auth === true){
-        return { name:'Login'}
-    }
+//     if(!is_authenicated.value && to.name !== "Login" && to.meta?.auth === true){
+//         return { name:'Login'}
+//     }
+// })
+
+router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized) => {
+  const auth = useAuthencationStore()
+  const show = useDisplayStore()
+
+  // 1. Check if the URL contains Supabase password recovery tokens/codes
+  const isRecoveryCode = to.query.code !== undefined
+  const isRecoveryHash = to.hash.includes('type=recovery')
+
+  // 2. If it's a recovery link and not already on the reset route, redirect to Password_Reset
+  if ((isRecoveryCode || isRecoveryHash) && to.name !== 'Password_Reset') {
+    return { name: 'Password_Reset' }
+  }
+
+  // Define public routes (including Password_Reset) where non-authenticated users are allowed
+  const publicRoutes = ["Login", "Confirmation", "Registry", "Forgot", "Password_Reset"]
+
+  // Adjust navbar display logic
+  show.nav = !publicRoutes.includes(to.name as string)
+
+  // 3. Simple auth check (avoid wrapping store getters in computed inside guards)
+  const isAuthenticated = auth.get_user_info.is_authenicated
+
+  if (!isAuthenticated && !publicRoutes.includes(to.name as string) && to.meta?.auth === true) {
+    return { name: 'Login' }
+  }
 })
 
 export default router

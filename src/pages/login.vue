@@ -86,12 +86,12 @@
                          required
                         >
                         <router-link
-                          to="/forgot"
+                          to="/email_forget_password"
                           class="transition-all ease-in-out duration-700 underline text-sm font-semibold"
                           :class="useThemeComposable() ? ''
                           :'hover:text-indigo-500 text-teal-700'"
                         >
-                         Forget Password?
+                          Forget Password?
                         </router-link>
                     </div>
     

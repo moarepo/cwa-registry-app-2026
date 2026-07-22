@@ -43,7 +43,7 @@ export const useAuthencationStore = defineStore("useAuthencationStore",{
             })
 
             if(error){
-                
+                useAlertModalComposable(error.message)
             }
 
             if(data != null){ 
@@ -70,16 +70,17 @@ export const useAuthencationStore = defineStore("useAuthencationStore",{
             const { data, error } = await supabase.auth.updateUser({password: new_password})
 
             if(error){
-
+              useAlertModalComposable(error.message)
             }
 
-            if(data){
-
+            if(data != null){
+               router.push("/")
+               useSuccessModalComposable("Password reset succefully.")
             }
         },
 
         async reset_email(email:string){
-            const { data, error } = await supabase.auth.resetPasswordForEmail(email,{redirectTo:'http://localhost:5173/forgot'})
+            const { data, error } = await supabase.auth.resetPasswordForEmail(email,{redirectTo:'https://cwa-dashboard-2026.netlify.app/reset'})
 
             if(error){
                 useAlertModalComposable(error.message)
