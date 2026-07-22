@@ -47,7 +47,7 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
                 
             }
 
-            if(data){ 
+            if(data != null){ 
                 this.User.email_address = data.session?.user.email as string
                 this.User.is_authenicated = data.user?.aud === "authenticated" ? true : false
                 this.User.session_token = data.session?.access_token as string

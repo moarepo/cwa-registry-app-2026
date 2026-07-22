@@ -1,9 +1,9 @@
 <script lang="ts" setup>
  import { motion } from "motion-v";
- import {staggered_animation,button_animation_normal} from "../animations_config/anime_def.ts"
- import {useThemeComposable} from "../Composables/useComposables.ts"
- import {useAuthencationStore} from "../store/useAuthencationStore.ts"
- import {useThemeStore} from "../store/useThemeStore.ts"
+ import {staggered_animation,button_animation_normal} from "../animations_config/anime_def"
+ import {useThemeComposable} from "../Composables/useComposables"
+ import {useAuthencationStore} from "../store/useAuthencationStore"
+ import {useThemeStore} from "../store/useThemeStore"
 
  const auth = useAuthencationStore()
  const theme =  useThemeStore()
