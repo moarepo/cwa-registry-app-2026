@@ -26,6 +26,6 @@ export const useDisplayStore = defineStore("useDisplayStore",{
             this.successModal = !this.successModal
             this.success_message = message
         },
-        change_layout_display(){ this.nav = !this.nav }
+        change_layout_display(){ this.nav = !this.nav; console.log("called..") }
     }
 })

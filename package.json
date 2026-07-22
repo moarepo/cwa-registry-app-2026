@@ -10,7 +10,7 @@
     "types": "npx supabase gen types typescript --project-id nmsrgybymxwxajnhrqbu > src/utils/database.types.ts"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.110.7",
+    "@supabase/supabase-js": "^2.110.8",
     "@tailwindcss/vite": "^4.3.3",
     "chart.js": "^4.5.1",
     "motion-v": "^2.3.0",

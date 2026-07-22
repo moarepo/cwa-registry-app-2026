@@ -5,7 +5,7 @@ import {useDisplayStore} from "./useDisplayStore"
 import type{user} from "../utils/Types"
 import router from "../router/router"
 
-export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
+export const useAuthencationStore = defineStore("useAuthencationStore",{
     state:()=>({
        User: {} as user
     }),
@@ -37,7 +37,6 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
         },
 
         async registerUserWithEmail(emailAddress:string,password:string){
-
             const {data,error} = await supabase.auth.signUp({
                 email: emailAddress,
                 password: password
@@ -48,10 +47,8 @@ export const useAuthencationStore = defineStore("useAuthencationStore.ts",{
             }
 
             if(data != null){ 
-                this.User.email_address = data.session?.user.email as string
-                this.User.is_authenicated = data.user?.aud === "authenticated" ? true : false
-                this.User.session_token = data.session?.access_token as string
-                router.push("/dashborad")
+                this.User.is_authenicated = false
+                router.push("/conformation")
             }
         },
 
