@@ -111,6 +111,8 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
   const isRecoveryCode = to.query.code !== undefined
   const isRecoveryHash = to.hash.includes('type=recovery')
 
+  console.log(isRecoveryCode,to.hash)
+
   // 2. If it's a recovery link and not already on the reset route, redirect to Password_Reset
   if ((isRecoveryCode || isRecoveryHash) && to.name !== 'Password_Reset') {
     return { name: 'Password_Reset' }
