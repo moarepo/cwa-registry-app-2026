@@ -11,8 +11,6 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         page: 1 as number,
         total: 0 as number,
         number_of_pages: 0 as number,
-        limit: 11 as number,
-        offset: 0 as number
     }),
     getters:{
         getDelegates: (state) => state.Delegates,
@@ -24,7 +22,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
     },
     actions:{
         async fetch_all_delegates(){
-           const page_size:number = 12;
+           const page_size:number = 10;
            const start:number = (this.page - 1) * page_size;
            const end = start + page_size -1
 
@@ -129,6 +127,9 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             this.PieChatData = chartSeries;
         },
 
+        // async filter_by_frist_name(frist_name:string){
+
+        // },
 
         async next(){
             if(this.page < this.number_of_pages){

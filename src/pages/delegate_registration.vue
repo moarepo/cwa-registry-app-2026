@@ -7,12 +7,209 @@
 
  const store = useDelegateStore()
  store.fetch_all_delegates()
+ 
+ const organization_types = [ 'Government', 'NGO', 'Private Sector', 'Farmer', 'Academic', 'Regional Body'];
+ const Countries:string[] = [
+ "Afghanistan",
+ "Albania",
+ "Algeria",
+ "Andorra",
+ "Angola",
+ "Antigua and Barbuda",
+ "Argentina",
+ "Armenia",
+ "Australia",
+ "Austria",
+ "Azerbaijan",
+ "Bahamas",
+ "Bahrain",
+ "Bangladesh",
+ "Barbados",
+ "Belarus",
+ "Belgium",
+ "Belize",
+ "Benin",
+ "Bhutan",
+ "Bolivia",
+ "Bosnia and Herzegovina",
+ "Botswana",
+ "Brazil",
+ "Brunei",
+ "Bulgaria",
+ "Burkina Faso",
+ "Burundi",
+ "Cabo Verde",
+ "Cambodia",
+ "Cameroon",
+ "Canada",
+ "Central African Republic",
+ "Chad",
+ "Chile",
+ "China",
+ "Colombia",
+ "Comoros",
+ "Congo (Congo-Brazzaville)",
+ "Costa Rica",
+ "Croatia",
+ "Cuba",
+ "Cyprus",
+ "Czechia (Czech Republic)",
+ "Democratic Republic of the Congo",
+ "Denmark",
+ "Djibouti",
+ "Dominica",
+ "Dominican Republic",
+ "Ecuador",
+ "Egypt",
+ "El Salvador",
+ "Equatorial Guinea",
+ "Eritrea",
+ "Estonia",
+ "Eswatini",
+ "Ethiopia",
+ "Fiji",
+ "Finland",
+ "France",
+ "Gabon",
+ "Gambia",
+ "Georgia",
+ "Germany",
+ "Ghana",
+ "Greece",
+ "Grenada",
+ "Guatemala",
+ "Guinea",
+ "Guinea-Bissau",
+ "Guyana",
+ "Haiti",
+ "Holy See",
+ "Honduras",
+ "Hungary",
+ "Iceland",
+ "India",
+ "Indonesia",
+ "Iran",
+ "Iraq",
+ "Ireland",
+ "Israel",
+ "Italy",
+ "Jamaica",
+ "Japan",
+ "Jordan",
+ "Kazakhstan",
+ "Kenya",
+ "Kiribati",
+ "Kuwait",
+ "Kyrgyzstan",
+ "Laos",
+ "Latvia",
+ "Lebanon",
+ "Lesotho",
+ "Liberia",
+ "Libya",
+ "Liechtenstein",
+ "Lithuania",
+ "Luxembourg",
+ "Madagascar",
+ "Malawi",
+ "Malaysia",
+ "Maldives",
+ "Mali",
+ "Malta",
+ "Marshall Islands",
+ "Mauritania",
+ "Mauritius",
+ "Mexico",
+ "Micronesia",
+ "Moldova",
+ "Monaco",
+ "Mongolia",
+ "Montenegro",
+ "Morocco",
+ "Mozambique",
+ "Myanmar (Burma)",
+ "Namibia",
+ "Nauru",
+ "Nepal",
+ "Netherlands",
+ "New Zealand",
+ "Nicaragua",
+ "Niger",
+ "Nigeria",
+ "North Korea",
+ "North Macedonia",
+ "Norway",
+ "Oman",
+ "Pakistan",
+ "Palau",
+ "Palestine State",
+ "Panama",
+ "Papua New Guinea",
+ "Paraguay",
+ "Peru",
+ "Philippines",
+ "Poland",
+ "Portugal",
+ "Qatar",
+ "Romania",
+ "Russia",
+ "Rwanda",
+ "Saint Kitts and Nevis",
+ "Saint Lucia",
+ "Saint Vincent and the Grenadines",
+ "Samoa",
+ "San Marino",
+ "Sao Tome and Principe",
+ "Saudi Arabia",
+ "Senegal",
+ "Serbia",
+ "Seychelles",
+ "Sierra Leone",
+ "Singapore",
+ "Slovakia",
+ "Slovenia",
+ "Solomon Islands",
+ "Somalia",
+ "South Africa",
+ "South Korea",
+ "South Sudan",
+ "Spain",
+ "Sri Lanka",
+ "Sudan",
+ "Suriname",
+ "Sweden",
+ "Switzerland",
+ "Syria",
+ "Tajikistan",
+ "Tanzania",
+ "Thailand",
+ "Timor-Leste",
+ "Togo",
+ "Tonga",
+ "Trinidad and Tobago",
+ "Tunisia",
+ "Turkey",
+ "Turkmenistan",
+ "Tuvalu",
+ "Uganda",
+ "Ukraine",
+ "United Arab Emirates",
+ "United Kingdom",
+ "United States of America",
+ "Uruguay",
+ "Uzbekistan",
+ "Vanuatu",
+ "Venezuela",
+ "Vietnam",
+ "Yemen",
+ "Zambia",
+ "Zimbabwe"
+ ]
 
  const table_head:string[] = ["Title","First Name","Last Name","Email","Work Phone Number","Nationality","Country Of Residence","Organization Name","Organization Type"]
  let Delegates = computed(()=>{ return store.getDelegates})
  let Page = computed(()=>{ return store.get_current_page})
  let TotalPages = computed(()=>{ return store.get_total_pages})
-
 </script>
 
 <template>
@@ -32,24 +229,156 @@
              :'bg-white border-teal-300'"
             >
 
-                <!-- <motion.div
-                  class="border w-full flex justify-start items-center py-1 px-8 rounded-md"
+                <motion.div
+                  class="border w-full p-1.5 rounded-md grid lg:grid-cols-3 md:grid-cols-2 gap-2"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
-                    <motion.div
-                     class="p-0.5 flex space-x-2.5 justify-center items-center"
+                    <!-- Nationality -->
+                    <div 
+                     class="w-full p-1.5 rounded-2xl flex flex-col space-y-2.5 border"
+                     :class="useThemeComposable() ? 'bg-teal-950 border-teal-900'
+                     :'bg-white border-teal-100'"
                     >
-                        <h2>Search</h2>
-                        <input 
-                         class="lg:w-80 rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
-                         :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
-                         :'bg-white border-gray-300 focus:border-green-500 focus:shadow-gre'"
-                         type="text"
-                         placeholder="..."
+                        <div 
+                        class="flex justify-center items-center p-1 rounded-md"
+                        :class="useThemeComposable() ? 'bg-innerDark'
+                        :'bg-off_white'"
                         >
-                    </motion.div>
-                </motion.div> -->
+                        <h2>Search by Nationality</h2>
+                        </div>
+
+                        <div class="w-full flex lg:flex-row flex-col lg:space-x-4 lg:space-y-0 space-y-4 space-x-0">
+
+                            <div class="flex flex-col justify-center items-start space-y-2 w-full">
+                                <select
+                                    class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
+                                    :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
+                                    :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
+                                    required="true"
+                                >
+                                    <option value="">Please select a Nationality</option>
+                                    <option 
+                                        v-for="country in Countries"
+                                        :key="country"
+                                        :value="country"
+                                    >
+                                        {{ country }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="w-full px-2">
+                            <button
+                                class="border flex justify-center items-center rounded-md p-1.5 cursor-pointer w-full
+                                transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100"
+                                :class="useThemeComposable() ? 
+                                'bg-innerDark text-teal-500 hover:text-white border-teal-900 hover:border-teal-500 hover:shadow-9xl'
+                                :'bg-off_white hover:shadow-green hover:border-green-500 hover:text-green-500 border-teal-400'"
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <!--  Country Of Residence -->
+                    <div 
+                     class="w-full p-1.5 rounded-2xl flex flex-col space-y-2.5 border"
+                     :class="useThemeComposable() ? 'bg-teal-950 border-teal-900'
+                     :'bg-white border-teal-100'"
+                    >
+                        <div 
+                         class="flex justify-center items-center p-1 rounded-md"
+                         :class="useThemeComposable() ? 'bg-innerDark'
+                         :'bg-off_white'"
+                        >
+                        <h2>Search by Country Of Residence</h2>
+                        </div>
+
+                        <div class="w-full flex lg:flex-row flex-col lg:space-x-4 lg:space-y-0 space-y-4 space-x-0">
+
+                            <div class="flex flex-col justify-center items-start space-y-2 p-0.5 w-full">
+                                <select
+                                    class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
+                                    :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
+                                    :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
+                                    required="true"
+                                >
+                                    <option value="">Please select a Country</option>
+                                    <option 
+                                        v-for="country in Countries"
+                                        :key="country"
+                                        :value="country"
+                                    >
+                                        {{ country }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="w-full px-2">
+                            <button
+                                class="border flex justify-center items-center rounded-md p-1.5 cursor-pointer w-full
+                                transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100"
+                                :class="useThemeComposable() ? 
+                                'bg-innerDark text-teal-500 hover:text-white border-teal-900 hover:border-teal-500 hover:shadow-9xl'
+                                :'bg-off_white hover:shadow-green hover:border-green-500 hover:text-green-500 border-teal-400'"
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Organization Type -->
+                    <div 
+                     class="w-full p-1.5 rounded-2xl flex flex-col space-y-2.5 border"
+                     :class="useThemeComposable() ? 'bg-teal-950 border-teal-900'
+                     :'bg-white border-teal-100'"
+                    >
+                        <div 
+                         class="flex justify-center items-center p-1 rounded-md"
+                         :class="useThemeComposable() ? 'bg-innerDark'
+                         :'bg-off_white'"
+                        >
+                         <h2>Search by Organization Type</h2>
+                        </div>
+
+                        <div class="w-full flex lg:flex-row flex-col lg:space-x-4 lg:space-y-0 space-y-4 space-x-0">
+
+                            <div class="flex flex-col justify-center items-start space-y-2 p-0.5 w-full">
+                                <select
+                                    class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
+                                    :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
+                                    :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
+                                    required="true"
+                                >
+                                    <option value="">Please select an organization type</option>
+                                    <option 
+                                        v-for="types in organization_types"
+                                        :key="types"
+                                        :value="types"
+                                    >
+                                       {{ types }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="w-full px-2">
+                            <button
+                                class="border flex justify-center items-center rounded-md p-1.5 cursor-pointer w-full
+                                transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100"
+                                :class="useThemeComposable() ? 
+                                'bg-innerDark text-teal-500 hover:text-white border-teal-900 hover:border-teal-500 hover:shadow-9xl'
+                                :'bg-off_white hover:shadow-green hover:border-green-500 hover:text-green-500 border-teal-400'"
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                </motion.div>
 
                 <motion.div
                  class="flex flex-col space-y-0.5 w-full p-1.5 rounded-2xl border h-full"
@@ -57,7 +386,7 @@
                  :'bg-off_white border-teal-100'"
                 > 
                     <motion.div
-                      class="flex w-full justify-between items-center py-1.5 px-8 rounded-lg border"
+                      class="flex w-full justify-between items-center py-2 px-8 rounded-lg border"
                       :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                       :'bg-white border-teal-200'"
                     >
@@ -87,7 +416,7 @@
                     </motion.div>
                     <div class="lg:flex hidden w-full">
                             <motion.table
-                             class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm"
+                             class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm p-2"
                              :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                              : 'bg-white border-gray-100'"
                             >
@@ -96,11 +425,11 @@
                                         <th 
                                         v-for="header in table_head"
                                         :key="header"
-                                        class="border rounded-md p-0.5 text-sm font-semibold"
-                                        :class="useThemeComposable() ? 'bg-Dark border-gray-700'
-                                        : 'border-light_text_colour bg-white'"
+                                        class="border-2 rounded-md p-2 text-sm font-semibold border-dashed"
+                                        :class="useThemeComposable() ? 'bg-teal-900 border-teal-900'
+                                        : 'border-teal-200 bg-off_white'"
                                         >
-                                        {{ header }}
+                                         <span>{{ header }}</span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -110,7 +439,7 @@
                                         :key="index"
                                         :class="useThemeComposable() ? {
                                         'bg-Dark': index%2 === 0,
-                                        'bg-teal-950': index%2 === 1
+                                        'bg-innerDark': index%2 === 1
                                         }:{
                                         'bg-primary': index%2 === 0,
                                         'bg-gray-50': index%2 === 1
