@@ -82,7 +82,7 @@
                             Password
                         </label>
                         <input
-                        id="_password_"
+                         id="_password_"
                          v-model="password"
                          class="w-full rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
                          :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
