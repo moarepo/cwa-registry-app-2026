@@ -100,10 +100,6 @@ router.beforeEach((to:RouteLocationNormalized, _from:RouteLocationNormalized) =>
 
     if(!is_authenicated && to.name !== "Login" && to.meta?.auth === true){
         return { name:'Login'}
-    }else{
-        if(to.path === '/reset'){
-            return { name:'Password_Reset'}
-        }
     }
 })
 

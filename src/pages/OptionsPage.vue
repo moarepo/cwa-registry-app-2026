@@ -1,7 +1,41 @@
 <script lang="ts" setup>
-import {motion} from 'motion-v'
-import {useThemeComposable} from '../composables/useComposables'
-import {dash_animation} from '../animations_config/anime_def'
+import {ref} from 'vue'
+import {motion,AnimatePresence} from 'motion-v'
+import {useThemeComposable,useAlertModalComposable} from '../composables/useComposables'
+import {dash_animation,button_animation} from '../animations_config/anime_def'
+import {useAuthencationStore} from '../store/useAuthencationStore'
+
+
+  const auth = useAuthencationStore()
+
+  let show_password_reset = ref<boolean>(false)
+  let show_user_profile = ref<boolean>(false)
+  let new_password = ref<string>("")
+  let retyped_new_password = ref<string>("")
+
+  function showOptions(options:string){
+    switch(options){
+      case "password_reset":
+        show_password_reset.value = !show_password_reset.value
+        show_user_profile.value = false
+        break;
+      case "user_profile":
+        show_password_reset.value = false
+        show_user_profile.value = !show_user_profile.value
+        break;
+      default:
+        show_password_reset.value = false
+        show_user_profile.value = false
+    }
+  }
+
+  function PasswordRest(){
+    if(new_password.value != retyped_new_password.value){
+      useAlertModalComposable("Please ensure that password match.")
+    }else{
+      auth.reset_password(new_password.value)
+    }
+  }
 </script>
 
 <template>
@@ -21,9 +55,9 @@ import {dash_animation} from '../animations_config/anime_def'
         >
 
             <motion.div
-                class="border w-full flex flex-col space-y-2 justify-start items-center py-1.5 px-4 rounded-2xl"
-                :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
-                :'bg-off_white border-teal-100'"
+              class="border w-full flex flex-col space-y-2 justify-start items-center py-1.5 px-4 rounded-2xl"
+              :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
+              :'bg-off_white border-teal-100'"
             >
              <div class="flex space-x-1 w-full justify-start items-center lg:text-2xl text-lg font-medium p-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
@@ -46,27 +80,30 @@ import {dash_animation} from '../animations_config/anime_def'
             </motion.div>
 
             <motion.div
-                class="flex flex-col space-y-2 w-full rounded-2xl border h-full"
-                :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
-                :'bg-off_white border-teal-100'"
+              class="flex flex-col space-y-2 w-full rounded-2xl border h-full"
+              :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
+              :'bg-off_white border-teal-100'"
             >
               <div
-                class="w-full grid lg:grid-cols-5 md:grid-cols-2 grid-cols-1 gap-4 rounded-2xl p-1.5"
+                class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4 rounded-2xl p-1.5"
                 :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                 :'bg-off_white'"
               >
                   <div 
-                    class="w-full lg:col-span-5 md:col-span-2 col-span-1 flex justify-center items-center p-2 rounded-2xl border text-lg"
+                    class="w-full lg:col-span-2 md:col-span-2 col-span-1 flex justify-center items-center p-2 rounded-2xl border text-lg"
                     :class="useThemeComposable() ? 'bg-innerDark border-teal-900 border-dashed'
                     :'bg-white border-gray-100'"
                   >
                     <h2>Options:</h2>
                   </div>
 
-                  <button
-                    class="xl:w-56 lg:w-44 md:w-full w-full border flex justify-center items-center rounded-2xl py-2.5 cursor-pointer transition-all ease-in-out duration-500 hover:-translate-y-2 hover:scale-100"
+                  <motion.button
+                    @click="showOptions('user_profile')"
+                    :whilePress="{ scale: 0.6 }"
+                    :transition="{ type:'spring',duration: 0.1, ease:'easeInOut' }"
+                    class="w-full border flex justify-center items-center rounded-2xl py-2 cursor-pointer transition-all ease-in-out duration-500"
                     :class="useThemeComposable() ? 'bg-innerDark text-teal-500 hover:text-white border-teal-900 hover:border-teal-500 hover:shadow-9xl'
-                    :'bg-white hover:shadow-green hover:border-green-500 hover:text-green-500 border-teal-300'"
+                    :'bg-white hover:shadow-green hover:border-green-500 hover:shadow-gre hover:text-green-500 border-teal-300'"
                   > 
                     <div class="w-full flex flex-col justify-center items-center space-y-2">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
@@ -77,12 +114,15 @@ import {dash_animation} from '../animations_config/anime_def'
                             User Profile
                         </h1>
                     </div>
-                  </button>
+                  </motion.button>
 
-                   <button
-                     class="xl:w-56 lg:w-44 md:w-full w-full border flex justify-center items-center rounded-2xl py-2.5 cursor-pointer transition-all ease-in-out duration-500 hover:-translate-y-2 hover:scale-100"
+                  <motion.button
+                     @click="showOptions('password_reset')"
+                     :whilePress="{ scale: 0.6 }"
+                     :transition="{ type:'spring',duration: 0.1, ease:'easeInOut' }"
+                     class="w-full border flex justify-center items-center rounded-2xl py-2 cursor-pointer transition-all ease-in-out duration-500"
                      :class="useThemeComposable() ? 'bg-innerDark text-teal-500 hover:text-white border-teal-900 hover:border-teal-500 hover:shadow-9xl'
-                     :'bg-white hover:shadow-green hover:border-green-500 hover:text-green-500 border-teal-300'"
+                     :'bg-white hover:shadow-green hover:border-green-500 hover:shadow-gre hover:text-green-500 border-teal-300'"
                    > 
                     <div class="w-full flex flex-col justify-center items-center space-y-2">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
@@ -93,9 +133,100 @@ import {dash_animation} from '../animations_config/anime_def'
                             Password Reset
                         </h1>
                     </div>
-                   </button>
-
+                  </motion.button>
               </div>
+
+              <AnimatePresence>
+                <!-- Password Reset -->
+                <motion.div
+                  v-if="show_password_reset"
+                  :initial="{ y:-100, opacity:0.2}"
+                  :animate="{ y:0, opacity:1 }"
+                  :transition="{ duration: 0.4, ease:'easeInOut',}"
+                  :exit="{y:-100, opacity:0}"
+                  class="w-full h-full flex p-1 rounded-2xl border flex-col justify-center items-center"
+                  :class="useThemeComposable() ? 'border-teal-950 bg-Dark'
+                  :'border-teal-200 bg-white'"
+                >
+                  <form
+                    @submit.prevent="PasswordRest()"
+                    class="p-2.5 flex flex-col space-y-4 w-full h-full rounded-2xl"
+                    :class="useThemeComposable() ? 'bg-innerDark'
+                    :'bg-off_white'"
+                  >
+
+                    <img class="w-full lg:h-64 md:h-56" src="/scure_password.svg" alt="scure_password">
+
+                    <motion.div class="flex flex-col space-y-2 px-4">
+                      <label for="_new_password">
+                        New Password
+                      </label>
+
+                      <input 
+                       id="_new_password"
+                       v-model="new_password"
+                       class="w-full rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
+                       :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
+                       :'bg-white border-gray-300 focus:border-green-500 focus:shadow-gre'"
+                       autocomplete="current-password"
+                       placeholder="Plese type your new password"
+                       type="password"
+                       required
+                      >
+
+                    </motion.div>
+
+                    <motion.div class="flex flex-col space-y-2 px-4">
+                      <label for="_retyped_new_password">
+                        Retype Password
+                      </label>
+
+                      <input 
+                       id="_retyped_new_password"
+                       v-model="retyped_new_password"
+                       class="w-full rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
+                       :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
+                       :'bg-white border-gray-300 focus:border-green-500 focus:shadow-gre'"
+                       autocomplete="retyped-current-password"
+                       placeholder="Plese retype your password"
+                       type="password"
+                       required
+                      >
+                    </motion.div>
+
+                    <motion.div class="w-full p-2 flex justify-center items-center">
+                      <motion.button
+                        type="submit" 
+                        :initial="button_animation.initial"
+                        class="rounded-md w-1/4 py-1 px-8 border-2  font-semibold cursor-pointer
+                        duration-500 ease-in-out "
+                        :class="useThemeComposable() ? ''
+                        :' bg-white border-teal-200 hover:text-green-500 hover:border-green-500'"
+                        :whileHover="button_animation.hover"
+                        :while-press="button_animation.pressed" 
+                        :transition="button_animation.transition"
+                      >
+                        <span>Reset Password</span>
+                      </motion.button>
+                    </motion.div>
+                  </form>
+                </motion.div>
+  
+                <!-- User Profile -->
+                <motion.div
+                  v-if="show_user_profile"
+                  :initial="{ y:-100, opacity:0.2}"
+                  :animate="{ y:0, opacity:1 }"
+                  :transition="{ duration: 0.4, delay:0.1, ease:'easeInOut',}"
+                  :exit="{y:-100, opacity:0}"
+                  class="w-full h-full flex p-2 rounded-2xl border"
+                  :class="useThemeComposable() ? 'border-teal-950 bg-Dark'
+                  :'border-teal-200 bg-white'"
+                >
+  
+                </motion.div>
+              </AnimatePresence>
+
             </motion.div>
          
         </motion.div>

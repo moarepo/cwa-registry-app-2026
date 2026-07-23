@@ -55,8 +55,11 @@
                     <img class="h-28" src="/Caribbean-Week-of-Agriculture-2026.png" alt="logo">
                 </div>
     
-                <div class="w-full flex flex-col space-y-8 py-2 px-12">
-    
+                <form 
+                 @submit.prevent="login()"
+                 class="w-full flex flex-col space-y-8 py-2 px-12"
+                >
+                    <!-- Usename/ Email -->
                     <div class="flex flex-col space-y-2 p-0.5 max-w-full">
                         <label for="_username_">
                             Username
@@ -67,11 +70,13 @@
                          class="w-full rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
                          :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
                          :'bg-white border-gray-300 focus:border-green-500 focus:shadow-gre'"
+                         placeholder="Please type your username eg. jhondoe@gmail.com"
                          type="email"
                          required
                         >
                     </div>
-    
+                    
+                    <!-- Password -->
                     <div class="flex flex-col space-y-2 p-0.5 max-w-full">
                         <label for="_password_">
                             Password
@@ -82,7 +87,10 @@
                          class="w-full rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
                          :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
                          :'bg-white border-gray-300 focus:border-green-500 focus:shadow-gre'"
+                         autocomplete="current-password"
+                         placeholder="Plese type your password"
                          type="password"
+                         @keyup.enter="login()"
                          required
                         >
                         <router-link
@@ -94,10 +102,11 @@
                           Forget Password?
                         </router-link>
                     </div>
-    
+                    
+                    <!-- Login Button -->
                     <div class="flex justify-center items-center w-full">
                         <motion.button 
-                         @click="login()"
+                         type="submit"
                          :initial="button_animation.initial"
                          class="rounded-md w-1/2 py-1 px-8 border-2  font-semibold cursor-pointer
                          duration-500 ease-in-out "
@@ -111,6 +120,7 @@
                         </motion.button>
                     </div>
 
+                    <!-- Register Link -->
                     <motion.div
                      class="flex w-full p-1.5 justify-center items-center"
                      :class="useThemeComposable() ? ''
@@ -131,8 +141,8 @@
                           </svg>
                         </router-link>
                     </motion.div>
-    
-                </div>
+                </form>
+                
             </motion.div>
             
         </motion.section>
