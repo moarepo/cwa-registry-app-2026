@@ -90,46 +90,21 @@ const router = createRouter({
     routes
 })
 
-// router.beforeEach((to:RouteLocationNormalized, _from:RouteLocationNormalized) => {
-//     const auth = useAuthencationStore()
-//     const show = useDisplayStore()
+router.beforeEach((to:RouteLocationNormalized, _from:RouteLocationNormalized) => {
+    const auth = useAuthencationStore()
+    const show = useDisplayStore()
 
-//     let is_authenicated = computed<boolean>(()=>{ return auth.get_user_info.is_authenicated})
+    let is_authenicated = auth.get_user_info.is_authenicated
 
-//     show.nav = !["Login", "Confirmation", "Registry", "Forgot","Password_Reset"].includes(to.name as string);
+    show.nav = !["Login", "Confirmation", "Registry", "Forgot","Password_Reset"].includes(to.name as string);
 
-//     if(!is_authenicated.value && to.name !== "Login" && to.meta?.auth === true){
-//         return { name:'Login'}
-//     }
-// })
-
-router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized) => {
-  const auth = useAuthencationStore()
-  const show = useDisplayStore()
-
-  // 1. Check if the URL contains Supabase password recovery tokens/codes
-  const isRecoveryCode = to.query.code !== undefined
-  const isRecoveryHash = to.hash.includes('type=recovery')
-
-  console.log(isRecoveryCode,to.hash)
-
-  // 2. If it's a recovery link and not already on the reset route, redirect to Password_Reset
-  if ((isRecoveryCode || isRecoveryHash) && to.name !== 'Password_Reset') {
-    return { name: 'Password_Reset' }
-  }
-
-  // Define public routes (including Password_Reset) where non-authenticated users are allowed
-  const publicRoutes = ["Login", "Confirmation", "Registry", "Forgot", "Password_Reset"]
-
-  // Adjust navbar display logic
-  show.nav = !publicRoutes.includes(to.name as string)
-
-  // 3. Simple auth check (avoid wrapping store getters in computed inside guards)
-  const isAuthenticated = auth.get_user_info.is_authenicated
-
-  if (!isAuthenticated && !publicRoutes.includes(to.name as string) && to.meta?.auth === true) {
-    return { name: 'Login' }
-  }
+    if(!is_authenicated && to.name !== "Login" && to.meta?.auth === true){
+        return { name:'Login'}
+    }else{
+        if(to.path === '/reset'){
+            return { name:'Password_Reset'}
+        }
+    }
 })
 
 export default router
