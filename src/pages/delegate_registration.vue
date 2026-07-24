@@ -232,17 +232,17 @@
         store.reset_page()
     }
 
-    function Filter_Seacrh(){
-        if(is_nationality_search.value){
+    // function Filter_Seacrh(){
+    //     if(is_nationality_search.value){
 
-        }
-        if(is_country_search.value){
+    //     }
+    //     if(is_country_search.value){
 
-        }
-        if(is_organization_type.value){
+    //     }
+    //     if(is_organization_type.value){
 
-        }
-    }
+    //     }
+    // }
 </script>
 
 <template>
