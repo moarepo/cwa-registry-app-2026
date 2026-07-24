@@ -128,10 +128,16 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             this.PieChatData = chartSeries;
         },
 
-        // async reset_page(){
-        //     this.page = 1
-        //     this.
-        // },
+        async reset_page(){
+            this.page = 1
+            this.number_of_pages = 0
+            await this.fetch_all_delegates()
+        },
+
+        reset_search(){
+            this.page = 1
+            this.number_of_pages = 0
+        },
 
         async filter_by_nationality(nationality:string){
            const page_size:number = 10;

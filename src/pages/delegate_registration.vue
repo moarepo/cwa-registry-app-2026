@@ -5,219 +5,244 @@
  import { useThemeComposable } from "../composables/useComposables"
  import { dash_animation, staggered_animation } from '../animations_config/anime_def'
 
- const store = useDelegateStore()
- store.fetch_all_delegates()
- 
- const organization_types = [ 'Government', 'NGO', 'Private Sector', 'Farmer', 'Academic', 'Regional Body'];
- const Countries:string[] = [
- "Afghanistan",
- "Albania",
- "Algeria",
- "Andorra",
- "Angola",
- "Antigua and Barbuda",
- "Argentina",
- "Armenia",
- "Australia",
- "Austria",
- "Azerbaijan",
- "Bahamas",
- "Bahrain",
- "Bangladesh",
- "Barbados",
- "Belarus",
- "Belgium",
- "Belize",
- "Benin",
- "Bhutan",
- "Bolivia",
- "Bosnia and Herzegovina",
- "Botswana",
- "Brazil",
- "Brunei",
- "Bulgaria",
- "Burkina Faso",
- "Burundi",
- "Cabo Verde",
- "Cambodia",
- "Cameroon",
- "Canada",
- "Central African Republic",
- "Chad",
- "Chile",
- "China",
- "Colombia",
- "Comoros",
- "Congo (Congo-Brazzaville)",
- "Costa Rica",
- "Croatia",
- "Cuba",
- "Cyprus",
- "Czechia (Czech Republic)",
- "Democratic Republic of the Congo",
- "Denmark",
- "Djibouti",
- "Dominica",
- "Dominican Republic",
- "Ecuador",
- "Egypt",
- "El Salvador",
- "Equatorial Guinea",
- "Eritrea",
- "Estonia",
- "Eswatini",
- "Ethiopia",
- "Fiji",
- "Finland",
- "France",
- "Gabon",
- "Gambia",
- "Georgia",
- "Germany",
- "Ghana",
- "Greece",
- "Grenada",
- "Guatemala",
- "Guinea",
- "Guinea-Bissau",
- "Guyana",
- "Haiti",
- "Holy See",
- "Honduras",
- "Hungary",
- "Iceland",
- "India",
- "Indonesia",
- "Iran",
- "Iraq",
- "Ireland",
- "Israel",
- "Italy",
- "Jamaica",
- "Japan",
- "Jordan",
- "Kazakhstan",
- "Kenya",
- "Kiribati",
- "Kuwait",
- "Kyrgyzstan",
- "Laos",
- "Latvia",
- "Lebanon",
- "Lesotho",
- "Liberia",
- "Libya",
- "Liechtenstein",
- "Lithuania",
- "Luxembourg",
- "Madagascar",
- "Malawi",
- "Malaysia",
- "Maldives",
- "Mali",
- "Malta",
- "Marshall Islands",
- "Mauritania",
- "Mauritius",
- "Mexico",
- "Micronesia",
- "Moldova",
- "Monaco",
- "Mongolia",
- "Montenegro",
- "Morocco",
- "Mozambique",
- "Myanmar (Burma)",
- "Namibia",
- "Nauru",
- "Nepal",
- "Netherlands",
- "New Zealand",
- "Nicaragua",
- "Niger",
- "Nigeria",
- "North Korea",
- "North Macedonia",
- "Norway",
- "Oman",
- "Pakistan",
- "Palau",
- "Palestine State",
- "Panama",
- "Papua New Guinea",
- "Paraguay",
- "Peru",
- "Philippines",
- "Poland",
- "Portugal",
- "Qatar",
- "Romania",
- "Russia",
- "Rwanda",
- "Saint Kitts and Nevis",
- "Saint Lucia",
- "Saint Vincent and the Grenadines",
- "Samoa",
- "San Marino",
- "Sao Tome and Principe",
- "Saudi Arabia",
- "Senegal",
- "Serbia",
- "Seychelles",
- "Sierra Leone",
- "Singapore",
- "Slovakia",
- "Slovenia",
- "Solomon Islands",
- "Somalia",
- "South Africa",
- "South Korea",
- "South Sudan",
- "Spain",
- "Sri Lanka",
- "Sudan",
- "Suriname",
- "Sweden",
- "Switzerland",
- "Syria",
- "Tajikistan",
- "Tanzania",
- "Thailand",
- "Timor-Leste",
- "Togo",
- "Tonga",
- "Trinidad and Tobago",
- "Tunisia",
- "Turkey",
- "Turkmenistan",
- "Tuvalu",
- "Uganda",
- "Ukraine",
- "United Arab Emirates",
- "United Kingdom",
- "United States of America",
- "Uruguay",
- "Uzbekistan",
- "Vanuatu",
- "Venezuela",
- "Vietnam",
- "Yemen",
- "Zambia",
- "Zimbabwe"
- ]
- 
- let _nationality = ref<string>("")
- let nationality_is_search = ref<boolean>(false)
+    const store = useDelegateStore()
+    store.fetch_all_delegates()
+    
+    const organization_types = [ 'Government', 'NGO', 'Private Sector', 'Farmer', 'Academic', 'Regional Body'];
+    const Countries:string[] = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Antigua and Barbuda",
+    "Argentina",
+    "Armenia",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia and Herzegovina",
+    "Botswana",
+    "Brazil",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cabo Verde",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Central African Republic",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Comoros",
+    "Congo (Congo-Brazzaville)",
+    "Costa Rica",
+    "Croatia",
+    "Cuba",
+    "Cyprus",
+    "Czechia (Czech Republic)",
+    "Democratic Republic of the Congo",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Dominican Republic",
+    "Ecuador",
+    "Egypt",
+    "El Salvador",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Eswatini",
+    "Ethiopia",
+    "Fiji",
+    "Finland",
+    "France",
+    "Gabon",
+    "Gambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Greece",
+    "Grenada",
+    "Guatemala",
+    "Guinea",
+    "Guinea-Bissau",
+    "Guyana",
+    "Haiti",
+    "Holy See",
+    "Honduras",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran",
+    "Iraq",
+    "Ireland",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Laos",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Marshall Islands",
+    "Mauritania",
+    "Mauritius",
+    "Mexico",
+    "Micronesia",
+    "Moldova",
+    "Monaco",
+    "Mongolia",
+    "Montenegro",
+    "Morocco",
+    "Mozambique",
+    "Myanmar (Burma)",
+    "Namibia",
+    "Nauru",
+    "Nepal",
+    "Netherlands",
+    "New Zealand",
+    "Nicaragua",
+    "Niger",
+    "Nigeria",
+    "North Korea",
+    "North Macedonia",
+    "Norway",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Palestine State",
+    "Panama",
+    "Papua New Guinea",
+    "Paraguay",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Qatar",
+    "Romania",
+    "Russia",
+    "Rwanda",
+    "Saint Kitts and Nevis",
+    "Saint Lucia",
+    "Saint Vincent and the Grenadines",
+    "Samoa",
+    "San Marino",
+    "Sao Tome and Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leone",
+    "Singapore",
+    "Slovakia",
+    "Slovenia",
+    "Solomon Islands",
+    "Somalia",
+    "South Africa",
+    "South Korea",
+    "South Sudan",
+    "Spain",
+    "Sri Lanka",
+    "Sudan",
+    "Suriname",
+    "Sweden",
+    "Switzerland",
+    "Syria",
+    "Tajikistan",
+    "Tanzania",
+    "Thailand",
+    "Timor-Leste",
+    "Togo",
+    "Tonga",
+    "Trinidad and Tobago",
+    "Tunisia",
+    "Turkey",
+    "Turkmenistan",
+    "Tuvalu",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "United States of America",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Venezuela",
+    "Vietnam",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe"
+    ]
+    
+    let _nationality = ref<string>("")
 
- const table_head:string[] = ["Title","First Name","Last Name","Email","Work Phone Number","Nationality","Country Of Residence","Organization Name","Organization Type"]
- let Delegates = computed(()=>{ return store.getDelegates})
- let Page = computed(()=>{ return store.get_current_page})
- let TotalPages = computed(()=>{ return store.get_total_pages})
+    let is_nationality_search = ref<boolean>(false)
+    let is_country_search = ref<boolean>(false)
+    let is_organization_type = ref<boolean>(false)
 
- function fliterByNotionality(){
-    nationality_is_search.value = true
-    store.filter_by_nationality(_nationality.value)
- }
+    const table_head:string[] = ["Title","First Name","Last Name","Email","Work Phone Number","Nationality","Country Of Residence","Organization Name","Organization Type"]
+    let Delegates = computed(()=>{ return store.getDelegates})
+    let Page = computed(()=>{ return store.get_current_page})
+    let TotalPages = computed(()=>{ return store.get_total_pages})
+
+    function fliterByNotionality(){
+        store.reset_search()
+        is_nationality_search.value = true
+        is_country_search.value = false
+        is_organization_type.value = false
+        store.filter_by_nationality(_nationality.value)
+    }
+
+    function Reset(){ 
+        is_nationality_search.value = false
+        is_country_search.value = false
+        is_organization_type.value = false
+        store.reset_page()
+    }
+
+    function Filter_Seacrh(){
+        if(is_nationality_search.value){
+
+        }
+        if(is_country_search.value){
+
+        }
+        if(is_organization_type.value){
+
+        }
+    }
 </script>
 
 <template>
@@ -394,7 +419,9 @@
                      :class="useThemeComposable() ? 'bg-teal-950 border-teal-900'
                      :'bg-white border-teal-100'"
                     >
-                        <button>
+                        <button
+                         @click="Reset()"
+                        >
                             <span>Reset</span>
                         </button>
                     </div>
@@ -412,6 +439,7 @@
                       :'bg-white border-teal-200'"
                     >
                         <button
+                         :disabled="Page === 1"
                          @click="store.pervious()"
                          class="flex border justify-center items-center space-x-1 rounded-md py-1 px-4 cursor-pointer"
                         >   
@@ -421,9 +449,10 @@
                             <h2>Pervious</h2>
                         </button>
 
-                        <h2>Page {{ Page }} of {{ TotalPages }}</h2>
+                        <h2>Page {{ Page }} of {{ TotalPages === 0 ? 1:TotalPages }}</h2>
 
                         <button
+                          :disabled="TotalPages === 1"
                           @click="store.next()"
                           class="flex border justify-center items-center space-x-1 rounded-md py-0.5 px-4 cursor-pointer"
                         >
@@ -435,7 +464,7 @@
                         </button>
 
                     </motion.div>
-                    <div class="lg:flex hidden w-full">
+                    <div class="flex w-full">
                             <motion.table
                              class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm p-2"
                              :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
