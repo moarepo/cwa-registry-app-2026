@@ -29,6 +29,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
            const { data, count, error } = await supabase
            .from('registration_table')
            .select('*',{ count:'exact'})
+           .order('first_name',{ ascending: true })
            .range(start,end)
 
            if(!error && data !== null){
@@ -127,9 +128,32 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             this.PieChatData = chartSeries;
         },
 
-        // async filter_by_frist_name(frist_name:string){
-
+        // async reset_page(){
+        //     this.page = 1
+        //     this.
         // },
+
+        async filter_by_nationality(nationality:string){
+           const page_size:number = 10;
+           const start:number = (this.page - 1) * page_size;
+           const end = start + page_size -1
+
+           const { data, count, error } = await supabase
+                .from('registration_table')
+                .select('*',{ count:'exact'})
+                .ilike('nationality',nationality)
+                .order('first_name',{ ascending: true })
+                .range(start,end)
+            
+            if(!error && data !== null){
+              this.Delegates = data
+              this.total = Number(count)
+              this.number_of_pages = Math.ceil(this.total / page_size)
+           }else{
+               const error_message = error?.message ?? 'Failed to fetch delegates';
+               useAlertModalComposable(error_message); 
+           }
+        },
 
         async next(){
             if(this.page < this.number_of_pages){
@@ -142,6 +166,28 @@ export const useDelegateStore = defineStore("useDelegateStore",{
            if(this.page > 1){
              this.page -= 1
              await this.fetch_all_delegates()
+           }
+        },
+
+        async search_next(serach_option:string,value:string){
+           switch(serach_option){
+                case 'nationality':
+                    if(this.page < this.number_of_pages){
+                        this.page += 1
+                        await this.filter_by_nationality(value)
+                    }
+                    break;
+           }
+        },
+
+        async search_pervious(serach_option:string,value:string){
+            switch(serach_option){
+                case 'nationality':
+                    if(this.page > 1){
+                        this.page -= 1
+                        await this.filter_by_nationality(value)
+                    }
+                    break;
            }
         }
     }

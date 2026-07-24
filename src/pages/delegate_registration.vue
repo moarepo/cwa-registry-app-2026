@@ -1,5 +1,5 @@
 <script lang="ts" setup>
- import { computed } from "vue"
+ import { computed, ref } from "vue"
  import { useDelegateStore } from "../store/useDelegateStore"
  import { motion, AnimatePresence } from "motion-v";
  import { useThemeComposable } from "../composables/useComposables"
@@ -205,11 +205,19 @@
  "Zambia",
  "Zimbabwe"
  ]
+ 
+ let _nationality = ref<string>("")
+ let nationality_is_search = ref<boolean>(false)
 
  const table_head:string[] = ["Title","First Name","Last Name","Email","Work Phone Number","Nationality","Country Of Residence","Organization Name","Organization Type"]
  let Delegates = computed(()=>{ return store.getDelegates})
  let Page = computed(()=>{ return store.get_current_page})
  let TotalPages = computed(()=>{ return store.get_total_pages})
+
+ function fliterByNotionality(){
+    nationality_is_search.value = true
+    store.filter_by_nationality(_nationality.value)
+ }
 </script>
 
 <template>
@@ -252,6 +260,7 @@
 
                             <div class="flex flex-col justify-center items-start space-y-2 w-full">
                                 <select
+                                    v-model="_nationality"
                                     class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
                                     :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
                                     :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
@@ -271,6 +280,7 @@
 
                         <div class="w-full px-2">
                             <button
+                                @click="fliterByNotionality()"
                                 class="border flex justify-center items-center rounded-md p-1.5 cursor-pointer w-full
                                 transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100"
                                 :class="useThemeComposable() ? 
@@ -378,6 +388,17 @@
                         </div>
                     </div>
 
+                    <!-- Reset Button -->
+                    <div 
+                     class="w-full p-1.5 rounded-2xl flex flex-col space-y-2.5 border lg:col-span-3 md:col-span-2"
+                     :class="useThemeComposable() ? 'bg-teal-950 border-teal-900'
+                     :'bg-white border-teal-100'"
+                    >
+                        <button>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+
                 </motion.div>
 
                 <motion.div
@@ -449,16 +470,15 @@
                                         :transition="staggered_animation(index / 10,0.1,0,-25).transition"
                                         :exit="staggered_animation(index / 10,0.1,0,-25).exit"
                                     >
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.title }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.first_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.last_name }}</td>
-                                        <!-- <td class="text-center rounded-md px-2 py-2">{{ item.middle_initial }}</td> -->
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.title }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.first_name }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.last_name }}</td>
                                         <td class="text-center rounded-md px-2 py-2">{{ item.email_address }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.work_phone_number }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.nationality }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.country_of_residence }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.organization_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.organization_type }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.work_phone_number }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.nationality }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.country_of_residence }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.organization_name }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.organization_type }}</td>
                                     </motion.tr>
                                 </tbody>
                             </motion.table>
