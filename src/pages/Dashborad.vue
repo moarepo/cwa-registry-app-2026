@@ -86,7 +86,7 @@
 
 <template>
     <motion.section
-     class="flex w-full h-full overflow-hidden justify-center items-center"
+     class="flex w-full h-full overflow-y-auto justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >  
@@ -95,7 +95,7 @@
              :animate="dash_animation.animate"
              :transition="dash_animation.transition"
              :exit="dash_animation.exist"
-             class="flex flex-col space-y-1 p-1.5 rounded-2xl border h-full w-full"
+             class="flex flex-col space-y-1 p-1.5 lg:rounded-2xl rounded-t-md border h-full w-full"
              :class="useThemeComposable() ? 'bg-Dark border-teal-900'
              :'bg-white border-teal-300'"
             >
@@ -109,7 +109,7 @@
                      class="flex justify-center items-center p-2.5 rounded-2xl lg:col-span-3 md:col-span-2 col-span-1"
                      :class="useThemeComposable() ? 'bg-Dark border-teal-950':'bg-white border-teal-300'"
                     >
-                        <p>
+                        <p class="lg:text-md xl:text-lg">
                             Please select an option below to review results:
                         </p>
                     </motion.div>
@@ -136,7 +136,7 @@
                             ></motion.div>
 
                             <h2>Total # Registartion : </h2> 
-                            <h2 class="text-5xl font-light">{{ delegates_amout }}</h2>
+                            <h2 class="xl:text-5xl lg:text-3xl font-light">{{ delegates_amout }}</h2>
                         </motion.div>
                     </button>
 
@@ -164,7 +164,7 @@
                             </motion.div>
 
                             <h2>Total # Exhibitor : </h2> 
-                            <h2 class="text-5xl font-light">{{ exhibitor_amout }}</h2>
+                            <h2 class="xl:text-5xl lg:text-3xl font-light">{{ exhibitor_amout }}</h2>
                         </motion.div>
                     </button>
 
@@ -190,7 +190,7 @@
                             ></motion.div>
 
                             <h2>Total # Media : </h2> 
-                            <h2 class="text-5xl font-light">{{ media_amout }}</h2>
+                            <h2 class="xl:text-5xl lg:text-3xl font-light">{{ media_amout }}</h2>
                         </motion.div>
                     </button>
 

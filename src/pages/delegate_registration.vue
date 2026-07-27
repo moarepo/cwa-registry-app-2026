@@ -215,6 +215,7 @@
     let is_organization_type = ref<boolean>(false)
 
     const table_head:string[] = ["Title","First Name","Last Name","Email","Work Phone Number","Nationality","Country Of Residence","Organization Name","Organization Type"]
+      const table_head_lg:string[] = ["Title","First Name","Last Name","Email","Nationality","Organization Type"]
     let Delegates = computed(()=>{ return store.getDelegates})
     let Page = computed(()=>{ return store.get_current_page})
     let TotalPages = computed(()=>{ return store.get_total_pages})
@@ -315,7 +316,7 @@
                      :'bg-white border-teal-100'"
                     >
                         <div 
-                        class="flex justify-center items-center p-1 rounded-md"
+                        class="flex justify-center items-center p-1 rounded-md lg:text-md xl:text-lg"
                         :class="useThemeComposable() ? 'bg-innerDark'
                         :'bg-off_white'"
                         >
@@ -323,11 +324,11 @@
                         </div>
 
                         <div class="w-full flex lg:flex-row flex-col lg:space-x-4 lg:space-y-0 space-y-4 space-x-0">
-
                             <div class="flex flex-col justify-center items-start space-y-2 w-full">
                                 <select
                                     v-model="_nationality"
-                                    class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
+                                    class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700
+                                    w-full lg:text-md xl:text-lg"
                                     :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
                                     :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
                                     required="true"
@@ -348,12 +349,12 @@
                             <button
                                 @click="fliterByNotionality()"
                                 class="border flex justify-center items-center rounded-md p-1.5 cursor-pointer w-full
-                                transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100"
+                                transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100 lg:text-md xl:text-lg"
                                 :class="useThemeComposable() ? 
                                 'bg-innerDark text-teal-500 hover:text-white border-teal-900 hover:border-teal-500 hover:shadow-9xl'
                                 :'bg-off_white hover:shadow-green hover:border-green-500 hover:text-green-500 border-teal-400'"
                             >
-                                Search
+                                <span>Search</span>
                             </button>
                         </div>
                     </div>
@@ -365,7 +366,7 @@
                      :'bg-white border-teal-100'"
                     >
                         <div 
-                         class="flex justify-center items-center p-1 rounded-md"
+                         class="flex justify-center items-center p-1 rounded-md lg:text-md xl:text-lg"
                          :class="useThemeComposable() ? 'bg-innerDark'
                          :'bg-off_white'"
                         >
@@ -377,7 +378,7 @@
                             <div class="flex flex-col justify-center items-start space-y-2 p-0.5 w-full">
                                 <select
                                     v-model="_country"
-                                    class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
+                                    class="py-1.5 px-4 border-2 lg:text-md xl:text-lg border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
                                     :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
                                     :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
                                     required="true"
@@ -410,7 +411,8 @@
 
                     <!-- Organization Type -->
                     <div 
-                     class="w-full p-1.5 rounded-2xl flex flex-col space-y-2.5 border"
+                     class="w-full p-1.5 rounded-2xl flex flex-col space-y-2.5 border 
+                     lg:text-md xl:text-lg"
                      :class="useThemeComposable() ? 'bg-teal-950 border-teal-900'
                      :'bg-white border-teal-100'"
                     >
@@ -427,7 +429,8 @@
                             <div class="flex flex-col justify-center items-start space-y-2 p-0.5 w-full">
                                 <select
                                     v-model="organization_type"
-                                    class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
+                                    class="lg:text-md xl:text-lg py-1.5 px-4 border-2 border-dashed rounded-md outline-none 
+                                    transition-all ease-in-out duration-700 w-full"
                                     :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
                                     :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
                                     required="true"
@@ -479,7 +482,7 @@
                  :'bg-off_white border-teal-100'"
                 > 
                     <motion.div
-                      class="flex w-full justify-between items-center py-2 px-8 rounded-lg border"
+                      class="flex w-full justify-between items-center lx:py-2 lg:py-1.5 lx:px-8 lg:px-4 rounded-lg border"
                       :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                       :'bg-white border-teal-200'"
                     >
@@ -516,11 +519,22 @@
                              : 'bg-white border-gray-100'"
                             >
                                 <thead>
-                                    <tr>
+                                    <tr class="lg:hidden xl:visible">
                                         <th 
                                         v-for="header in table_head"
                                         :key="header"
-                                        class="border-2 rounded-md p-2 text-sm font-semibold border-dashed"
+                                        class="border-2 rounded-md p-2 xl:text-sm lg:text-xs font-semibold border-dashed"
+                                        :class="useThemeComposable() ? 'bg-teal-900 border-teal-900'
+                                        : 'border-teal-200 bg-off_white'"
+                                        >
+                                         <span>{{ header }}</span>
+                                        </th>
+                                    </tr>
+                                     <tr class="xl:collapse lg:visible">
+                                        <th 
+                                        v-for="header in table_head_lg"
+                                        :key="header"
+                                        class="border-2 rounded-md p-2 xl:text-sm lg:text-xs font-semibold border-dashed"
                                         :class="useThemeComposable() ? 'bg-teal-900 border-teal-900'
                                         : 'border-teal-200 bg-off_white'"
                                         >
@@ -544,15 +558,15 @@
                                         :transition="staggered_animation(index / 10,0.1,0,-25).transition"
                                         :exit="staggered_animation(index / 10,0.1,0,-25).exit"
                                     >
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.title }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.first_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.last_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.email_address }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.work_phone_number }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.nationality }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.country_of_residence }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.organization_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.organization_type }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.title }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.first_name }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.last_name }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1">{{ item.email_address }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:visible">{{ item.work_phone_number }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.nationality }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:visible">{{ item.country_of_residence }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:visible">{{ item.organization_name }}</td>
+                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.organization_type }}</td>
                                         <td class="px-8 py-0.5">
                                             <button
                                               class="border rounded-md px-2 py-1"
