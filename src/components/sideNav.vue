@@ -56,7 +56,7 @@
              :initial="staggered_animation(0.4,2,0,-10).initial"
              :animate="staggered_animation(0.4,2,0,-10).animate"
              :exit="staggered_animation(0.6,2,0,-10).exit"
-              class="flex w-full space-x-2 px-4 py-2 justify-center items-center rounded-md"
+              class="flex flex-col w-full space-y-2 px-4 py-2 justify-center items-center rounded-md"
               :class="useThemeComposable() ? 'bg-Dark'
              :'bg-white'"
             >
@@ -69,7 +69,7 @@
                 />
               </svg>
   
-              <h2 class="font-medium overline">{{ userInfo.email_address }}</h2>
+              <h2 class="font-medium overline text-sm">{{ userInfo.email_address }}</h2>
         </motion.div>
   
         <motion.div

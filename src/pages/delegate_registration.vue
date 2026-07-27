@@ -288,7 +288,7 @@
 
 <template>
     <section
-     class="flex w-full min-h-full overflow-hidden justify-center items-center"
+     class="flex w-full overflow-y-auto justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >    
@@ -304,7 +304,7 @@
             >
 
                 <motion.div
-                  class="border w-full p-1.5 rounded-md grid lg:grid-cols-3 md:grid-cols-2 gap-2"
+                  class="border w-full p-1.5 rounded-md rounded-t-2xl grid lg:grid-cols-3 md:grid-cols-2 gap-2"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
@@ -474,7 +474,7 @@
                 </motion.div>
 
                 <motion.div
-                 class="flex flex-col space-y-0.5 w-full p-1.5 rounded-2xl border h-full"
+                 class="flex flex-col space-y-0.5 w-full p-1.5 rounded-2xl rounded-t-md border h-full"
                  :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                  :'bg-off_white border-teal-100'"
                 > 
@@ -509,7 +509,7 @@
                         </button>
 
                     </motion.div>
-                    <div class="flex w-full">
+                    <div class="lg:flex hidden w-full">
                             <motion.table
                              class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm p-2"
                              :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
@@ -553,6 +553,15 @@
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.country_of_residence }}</td>
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.organization_name }}</td>
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.organization_type }}</td>
+                                        <td class="px-8 py-0.5">
+                                            <button
+                                              class="border rounded-md px-2 py-1"
+                                              :class="useThemeComposable() ? ''
+                                              :''"
+                                            >
+                                                <span>view</span>
+                                            </button>
+                                        </td>
                                     </motion.tr>
                                 </tbody>
                             </motion.table>

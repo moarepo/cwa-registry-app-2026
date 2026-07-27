@@ -86,7 +86,7 @@
 
 <template>
     <motion.section
-     class="flex w-full overflow-hidden justify-center items-center"
+     class="flex w-full h-full overflow-hidden justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >  

@@ -16,7 +16,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
 
 <template>
     <section
-     class="flex w-full min-h-full overflow-hidden justify-center items-center"
+     class="flex w-full h-full overflow-y-auto justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >   
@@ -32,7 +32,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
             >
 
                 <motion.div
-                  class="border w-full flex justify-start items-center py-1.5 px-8 rounded-md"
+                  class="border w-full flex justify-start items-center py-1.5 px-8 rounded-md rounded-t-2xl"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
@@ -51,7 +51,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                 </motion.div>
 
                 <motion.div
-                 class="flex flex-col space-y-2 w-full p-1.5 rounded-2xl border h-full"
+                 class="flex flex-col space-y-2 w-full p-1.5 rounded-t-md rounded-2xl border h-full"
                  :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                  :'bg-off_white border-teal-100'"
                 > 
@@ -93,9 +93,9 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                                         <th 
                                         v-for="header in e_table_head"
                                         :key="header"
-                                        class="border rounded-md p-0.5 text-sm font-semibold"
-                                        :class="useThemeComposable() ? 'bg-Dark border-gray-700'
-                                        : 'border-light_text_colour bg-white'"
+                                        class="border-2 rounded-md p-2 text-sm font-semibold border-dashed"
+                                        :class="useThemeComposable() ? 'bg-teal-900 border-teal-900'
+                                        : 'border-teal-200 bg-off_white'"
                                         >
                                         {{ header }}
                                         </th>
@@ -113,13 +113,22 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                                         'bg-gray-50': index%2 === 1
                                         }"
                                     >
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_full_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.email_address }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_job_title }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_organization_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_company_address }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_country }}</td>
-                                        <td class="text-center rounded-md px-2 py-2">{{ item.exhibitor_product }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_full_name }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.email_address }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_job_title }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_organization_name }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_company_address }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_country }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_product }}</td>
+                                        <td class="px-8 py-0.5">
+                                            <button
+                                              class="border rounded-md px-2 py-1"
+                                              :class="useThemeComposable() ? ''
+                                              :''"
+                                            >
+                                                <span>view</span>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
