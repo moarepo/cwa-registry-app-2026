@@ -207,6 +207,8 @@
     ]
     
     let _nationality = ref<string>("")
+    let _country = ref<string>("")
+    let organization_type = ref<string>("")
 
     let is_nationality_search = ref<boolean>(false)
     let is_country_search = ref<boolean>(false)
@@ -225,24 +227,63 @@
         store.filter_by_nationality(_nationality.value)
     }
 
+    function seach_by_country(){
+        store.reset_search()
+        is_nationality_search.value = false
+        is_country_search.value = true
+        is_organization_type.value = false
+        store.filter_by_country(_country.value)
+    }
+
+    function search_by_type(){
+        store.reset_search()
+        is_nationality_search.value = false
+        is_country_search.value = false
+        is_organization_type.value = true
+        store.filter_by_organization_type(organization_type.value)
+    }
+
     function Reset(){ 
+        _country.value = ""
+        _nationality.value = ""
+        organization_type.value = ""
         is_nationality_search.value = false
         is_country_search.value = false
         is_organization_type.value = false
         store.reset_page()
     }
 
-    // function Filter_Seacrh(){
-    //     if(is_nationality_search.value){
+    function next_search_result(){
+        if(is_nationality_search.value === true && _nationality.value != ""){
+            store.search_next('nationality',_nationality.value)
+        }else{
+            if(is_country_search.value === true && _country.value != ""){
+                store.search_next('country',_country.value)
+            }else{
+                if(is_organization_type.value === true && organization_type.value != ""){
+                    store.search_next('type',organization_type.value)
+                }else{
+                    store.next()
+                }
+            }
+        }   
+    }
 
-    //     }
-    //     if(is_country_search.value){
-
-    //     }
-    //     if(is_organization_type.value){
-
-    //     }
-    // }
+    function pervious_search_result(){
+        if(is_nationality_search.value === true && _nationality.value != ""){
+            store.search_pervious('nationality',_nationality.value)
+        }else{
+            if(is_country_search.value === true && _country.value != ""){
+                store.search_pervious('country',_country.value)
+            }else{
+               if(is_organization_type.value === true && organization_type.value != ""){
+                    store.search_pervious('type',organization_type.value)
+                }else{
+                    store.pervious()
+                }
+            }
+        }   
+    }
 </script>
 
 <template>
@@ -335,6 +376,7 @@
 
                             <div class="flex flex-col justify-center items-start space-y-2 p-0.5 w-full">
                                 <select
+                                    v-model="_country"
                                     class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
                                     :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
                                     :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
@@ -354,6 +396,7 @@
 
                         <div class="w-full px-2">
                             <button
+                                @click="seach_by_country()"
                                 class="border flex justify-center items-center rounded-md p-1.5 cursor-pointer w-full
                                 transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100"
                                 :class="useThemeComposable() ? 
@@ -383,6 +426,7 @@
 
                             <div class="flex flex-col justify-center items-start space-y-2 p-0.5 w-full">
                                 <select
+                                    v-model="organization_type"
                                     class="py-1.5 px-4 border-2 border-dashed rounded-md outline-none transition-all ease-in-out duration-700 w-full"
                                     :class="useThemeComposable() ? 'bg-innerDark border-teal-900 focus:border-indigo-500  focus:bg-Dark'
                                     :'bg-white border-teal-200 focus:border-indigo-500 focus:bg-white focus:shadow-5xl'"
@@ -402,6 +446,7 @@
 
                         <div class="w-full px-2">
                             <button
+                                @click="search_by_type()"
                                 class="border flex justify-center items-center rounded-md p-1.5 cursor-pointer w-full
                                 transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100"
                                 :class="useThemeComposable() ? 
@@ -440,7 +485,7 @@
                     >
                         <button
                          :disabled="Page === 1"
-                         @click="store.pervious()"
+                         @click="pervious_search_result()"
                          class="flex border justify-center items-center space-x-1 rounded-md py-1 px-4 cursor-pointer"
                         >   
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
@@ -453,7 +498,7 @@
 
                         <button
                           :disabled="TotalPages === 1"
-                          @click="store.next()"
+                          @click="next_search_result()"
                           class="flex border justify-center items-center space-x-1 rounded-md py-0.5 px-4 cursor-pointer"
                         >
                             <h2>Next</h2>

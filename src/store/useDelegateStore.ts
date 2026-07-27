@@ -161,6 +161,50 @@ export const useDelegateStore = defineStore("useDelegateStore",{
            }
         },
 
+        async filter_by_country(country:string){
+           const page_size:number = 10;
+           const start:number = (this.page - 1) * page_size;
+           const end = start + page_size -1
+
+           const { data, count, error } = await supabase
+                .from('registration_table')
+                .select('*',{ count:'exact'})
+                .ilike('country_of_residence',country)
+                .order('first_name',{ ascending: true })
+                .range(start,end)
+            
+            if(!error && data !== null){
+              this.Delegates = data
+              this.total = Number(count)
+              this.number_of_pages = Math.ceil(this.total / page_size)
+           }else{
+               const error_message = error?.message ?? 'Failed to fetch delegates';
+               useAlertModalComposable(error_message); 
+           }
+        },
+
+        async filter_by_organization_type(type:string){
+            const page_size:number = 10;
+           const start:number = (this.page - 1) * page_size;
+           const end = start + page_size -1
+
+           const { data, count, error } = await supabase
+                .from('registration_table')
+                .select('*',{ count:'exact'})
+                .ilike('organization_type',type)
+                .order('first_name',{ ascending: true })
+                .range(start,end)
+            
+            if(!error && data !== null){
+              this.Delegates = data
+              this.total = Number(count)
+              this.number_of_pages = Math.ceil(this.total / page_size)
+           }else{
+               const error_message = error?.message ?? 'Failed to fetch delegates';
+               useAlertModalComposable(error_message); 
+           }
+        },
+
         async next(){
             if(this.page < this.number_of_pages){
                 this.page += 1
@@ -183,6 +227,18 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                         await this.filter_by_nationality(value)
                     }
                     break;
+                case 'country':
+                    if(this.page < this.number_of_pages){
+                        this.page += 1
+                        await this.filter_by_country(value)
+                    }
+                    break;
+                case 'type':
+                    if(this.page < this.number_of_pages){
+                        this.page += 1
+                        await this.filter_by_organization_type(value)
+                    }
+                    break;
            }
         },
 
@@ -192,6 +248,18 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                     if(this.page > 1){
                         this.page -= 1
                         await this.filter_by_nationality(value)
+                    }
+                    break;
+                case 'country':
+                    if(this.page > 1){
+                        this.page -= 1
+                        await this.filter_by_country(value)
+                    }
+                    break;
+                case 'type':
+                    if(this.page > 1){
+                        this.page -= 1
+                        await this.filter_by_organization_type(value)
                     }
                     break;
            }
