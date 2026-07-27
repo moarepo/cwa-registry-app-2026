@@ -10,6 +10,7 @@
   --shadow-grel: 2px 2px oklch(58.5% 0.233 277.117);
   --shadow-yel: 4px 4px oklch(79.5% 0.184 86.047);
   --shadow-dar: 4px 4px oklch(21.3% 0 0);
+  --breakpoint-1xl: 90rem
 }
 
 /* width */

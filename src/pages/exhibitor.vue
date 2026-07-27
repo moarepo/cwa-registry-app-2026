@@ -12,6 +12,7 @@ let List = computed(()=>{ return store.get_list_Exhibitors})
 let Page = computed(()=>{ return store.get_current_page})
 
 const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","Address","Country","Exhibitor Product"]
+const e_table_head_lg = ["Exhibitor Name","Email","Job Title","Country"]
 </script>
 
 <template>
@@ -26,7 +27,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
              :animate="dash_animation.animate"
              :transition="dash_animation.transition"
              :exit="dash_animation.exist"
-             class="flex flex-col space-y-1 p-1.5 rounded-2xl border h-full w-full"
+             class="flex flex-col space-y-1 xl:p-1.5 p-1 rounded-2xl border h-full w-full"
              :class="useThemeComposable() ? 'bg-Dark border-teal-900'
              :'bg-white border-teal-300'"
             >
@@ -56,7 +57,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                  :'bg-off_white border-teal-100'"
                 > 
                     <motion.div
-                      class="flex w-full justify-between items-center py-2 px-8 rounded-lg border"
+                      class="flex w-full justify-between items-center xl:py-2 lg:py-1 lx:px-8 lg:px-4 rounded-lg border"
                       :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                       :'bg-white border-teal-200'"
                     >
@@ -69,7 +70,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                             <h2>Pervious</h2>
                         </button>
 
-                        <h2>Page {{ Page }} of 0</h2>
+                        <h2>Page {{ Page }} of 1</h2>
 
                         <button
                           class="flex border justify-center items-center space-x-1 rounded-md py-1.5 px-4 cursor-pointer"
@@ -82,6 +83,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                         </button>
 
                     </motion.div>
+
                     <div class="lg:flex hidden w-full">
                             <table
                              class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm"
@@ -89,9 +91,20 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                              : 'bg-white border-gray-100'"
                             >
                                 <thead>
-                                    <tr>
+                                    <tr class="lg:hidden xl:table-row">
                                         <th 
                                         v-for="header in e_table_head"
+                                        :key="header"
+                                        class="border-2 rounded-md p-2 text-sm font-semibold border-dashed"
+                                        :class="useThemeComposable() ? 'bg-teal-900 border-teal-900'
+                                        : 'border-teal-200 bg-off_white'"
+                                        >
+                                        {{ header }}
+                                        </th>
+                                    </tr>
+                                    <tr class="xl:collapse lg:visible">
+                                        <th 
+                                        v-for="header in e_table_head_lg"
                                         :key="header"
                                         class="border-2 rounded-md p-2 text-sm font-semibold border-dashed"
                                         :class="useThemeComposable() ? 'bg-teal-900 border-teal-900'
@@ -116,10 +129,10 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_full_name }}</td>
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.email_address }}</td>
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_job_title }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_organization_name }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_company_address }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize lg:hidden xl:table-cell">{{ item.exhibitor_organization_name }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize lg:hidden xl:table-cell">{{ item.exhibitor_company_address }}</td>
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_country }}</td>
-                                        <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_product }}</td>
+                                        <td class="text-center rounded-md px-2 py-2 capitalize lg:hidden xl:table-cell">{{ item.exhibitor_product }}</td>
                                         <td class="px-8 py-0.5">
                                             <button
                                               class="border rounded-md px-2 py-1"
@@ -132,7 +145,7 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
                                     </tr>
                                 </tbody>
                             </table>
-                        </div> 
+                    </div> 
                 </motion.div> 
 
             </motion.div>

@@ -519,18 +519,18 @@
                              : 'bg-white border-gray-100'"
                             >
                                 <thead>
-                                    <tr class="lg:hidden xl:visible">
+                                    <tr class="lg:hidden xl:table-row">
                                         <th 
                                         v-for="header in table_head"
                                         :key="header"
-                                        class="border-2 rounded-md p-2 xl:text-sm lg:text-xs font-semibold border-dashed"
+                                        class="border-2 rounded-md p-2 2xl:text-sm lg:text-xs font-semibold border-dashed"
                                         :class="useThemeComposable() ? 'bg-teal-900 border-teal-900'
                                         : 'border-teal-200 bg-off_white'"
                                         >
                                          <span>{{ header }}</span>
                                         </th>
                                     </tr>
-                                     <tr class="xl:collapse lg:visible">
+                                    <tr class="xl:hidden lg:visible">
                                         <th 
                                         v-for="header in table_head_lg"
                                         :key="header"
@@ -558,15 +558,15 @@
                                         :transition="staggered_animation(index / 10,0.1,0,-25).transition"
                                         :exit="staggered_animation(index / 10,0.1,0,-25).exit"
                                     >
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.title }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.first_name }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.last_name }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1">{{ item.email_address }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:visible">{{ item.work_phone_number }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.nationality }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:visible">{{ item.country_of_residence }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:visible">{{ item.organization_name }}</td>
-                                        <td class="text-center lg:text-xs rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.organization_type }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.title }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.first_name }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.last_name }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1">{{ item.email_address }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:table-cell">{{ item.work_phone_number }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.nationality }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:table-cell">{{ item.country_of_residence }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize lg:hidden xl:table-cell">{{ item.organization_name }}</td>
+                                        <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.organization_type }}</td>
                                         <td class="px-8 py-0.5">
                                             <button
                                               class="border rounded-md px-2 py-1"
