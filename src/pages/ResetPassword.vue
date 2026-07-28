@@ -19,7 +19,7 @@
 
 <template>
     <motion.section
-     class="flex justify-center items-center min-h-full w-full p-1.5"
+     class="flex justify-center items-center h-full w-full p-1.5"
      :class="useThemeComposable() ? ''
      :''"
     >

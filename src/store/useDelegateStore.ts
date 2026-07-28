@@ -2,6 +2,7 @@ import {defineStore} from "pinia"
 import {supabase} from "../supabase_config/supabaseConfig"
 import type {Database} from '../utils/database.types'
 import {useAlertModalComposable} from '../composables/useComposables'
+import router from "../router/router"
 export const useDelegateStore = defineStore("useDelegateStore",{
     state:()=>({
         Delegates: [] as Database['public']['Tables']['registration_table']['Row'][],
@@ -86,7 +87,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                 "Opening Ceremony and Reception",
                 "Ministerial Meetings",
                 "Technical Sessions",
-                "Exhibition & Trade Show",
+                "Exhibition and Trade Show",
                 "Field Trips"
             ];
 
@@ -239,6 +240,21 @@ export const useDelegateStore = defineStore("useDelegateStore",{
            }else{
                const error_message = error?.message ?? 'Failed to fetch delegates';
                useAlertModalComposable(error_message); 
+           }
+        },
+
+        async fetch_delegate_by_id(id:string){
+            
+            const { data, error } = await supabase
+           .from('registration_table').select('*')
+           .eq("registration_id",id)
+           .order('first_name',{ ascending: true })
+
+           if(error){
+              useAlertModalComposable(error.message)
+           }else{
+                if(data){this.delegate = data[0]}
+                router.push('/view_info')
            }
         },
 

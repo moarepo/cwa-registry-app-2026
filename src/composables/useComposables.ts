@@ -21,6 +21,25 @@ export function useSuccessModalComposable(meassage:string){
   display.change_success_status(meassage)
 }
 
+export function useDateformat (date:string){
+  let new_date = new Date(date)
+
+  const Months = ["January","Febuary","March","April","May","June","July","August","September","October","November","December"]
+   
+  let _date = new_date.getDate();
+  let month = new_date.getMonth();
+  let year = new_date.getFullYear();
+
+  let format_date:string = `${Months[month]} ${_date} ${year}`
+  let check:string = "Wed Dec 31 1969"
+
+  if(format_date === check || format_date === "December 31 1969"){
+    return "Date not seleted."
+  }else{
+    return format_date
+  }
+}
+
 
 export const useChartOptions = ()=>{
   return { responsive: true, maintainAspectRatio: false }
@@ -256,7 +275,8 @@ export function use_regisration_pie_chart(){
       'United States of America',
       'Canada',
       'Mexico',
-      'United Kingdom of Great Britain and Northern Ireland'
+      'United Kingdom of Great Britain and Northern Ireland',
+      'Italy'
     ],
     datasets: [
       {

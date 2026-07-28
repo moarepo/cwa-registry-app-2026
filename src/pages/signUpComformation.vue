@@ -6,7 +6,7 @@ import {dash_animation} from '../animations_config/anime_def'
 
 <template>
     <motion.section
-     class="flex w-full overflow-hidden justify-center items-center"
+     class="flex w-full lg:h-full overflow-hidden justify-center items-center"
      :class="useThemeComposable() ? '':''"
     >
 

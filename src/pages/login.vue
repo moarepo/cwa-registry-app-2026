@@ -22,7 +22,7 @@
 <template>
     <AnimatePresence>
         <motion.section
-         class="flex w-full min-h-full space-x-2 p-1 overflow-hidden"
+         class="flex w-full lg:min-h-full space-x-2 p-1 overflow-hidden"
         >
             <motion.div
              :initial="log_box1.initial"

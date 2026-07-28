@@ -285,6 +285,10 @@
             }
         }   
     }
+
+    function ViewInfo(Id:string){
+        store.fetch_delegate_by_id(Id)
+    }
 </script>
 
 <template>
@@ -569,6 +573,7 @@
                                         <td class="text-center text-md rounded-md lx:px-2 lg:px-1 xl:py-2 lg:py-1 capitalize">{{ item.organization_type }}</td>
                                         <td class="px-8 py-0.5">
                                             <button
+                                              @click="ViewInfo(item.registration_id)"
                                               class="border rounded-md px-2 py-1"
                                               :class="useThemeComposable() ? ''
                                               :''"

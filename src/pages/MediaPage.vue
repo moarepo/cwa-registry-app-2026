@@ -23,7 +23,7 @@ import { useStore } from "../store/useStore"
              :animate="dash_animation.animate"
              :transition="dash_animation.transition"
              :exit="dash_animation.exist"
-             class="flex flex-col space-y-1 p-1.5 rounded-2xl border h-full w-full"
+             class="flex flex-col space-y-1 p-1.5 rounded-2xl border lg:h-full w-full"
              :class="useThemeComposable() ? 'bg-Dark border-teal-900'
              :'bg-white border-teal-300'"
             >

@@ -25,7 +25,7 @@
 
 <template>
    <section
-     class="flex w-full h-screen space-x-2 p-1 overflow-hidden justify-center items-center"
+     class="flex w-full lg:h-full space-x-2 p-1 overflow-hidden justify-center items-center"
     >
         <motion.div
          class="p-4 rounded-2xl bg-off_white shadow-2xl flex flex-col space-y-4 justify-center items-center w-1/2"

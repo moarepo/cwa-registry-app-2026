@@ -82,13 +82,13 @@
     }
 
     let showDispaly = computed<boolean>(()=>{ 
-       return show_exhibitor_info.value && show_media_info.value && show_delegates_info.value;
+       return show_exhibitor_info.value === false && show_media_info.value === false && show_delegates_info.value === false;
     })
 </script>
 
 <template>
     <motion.section
-     class="flex w-full overflow-y-auto justify-center items-center"
+     class="flex w-full overflow-y-auto justify-center items-center lg:h-full"
      :class="useThemeComposable() ? ''
      :''"
     >  
@@ -103,13 +103,13 @@
             >   
                 
                 <motion.div
-                  class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-1.5 rounded-2xl w-full gap-1 border"
+                  class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-1.5 rounded-t-2xl rounded-b-md w-full gap-1 border"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
 
                     <motion.div
-                     class="flex justify-center items-center p-2.5 rounded-2xl lg:col-span-3 md:col-span-2 col-span-1"
+                     class="flex justify-center items-center p-2.5 rounded-t-2xl rounded-b-md lg:col-span-3 md:col-span-2 col-span-1"
                      :class="useThemeComposable() ? 'bg-Dark border-teal-950':'bg-white border-teal-300'"
                     >
                         <p class="lg:text-md xl:text-lg">
@@ -119,12 +119,14 @@
 
                     <button
                      @click="get_data('delegates')"
+                     class="transition-all ease-in-out duration-500"
                     >
                         <motion.div
                             :initial="staggered_animation(0.4,2,0,-10).initial"
                             :animate="staggered_animation(0.6,1.5,0,-10).animate"
                             :exit="staggered_animation(0.6,2,0,-10).exit"
-                            class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer "
+                            class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer 
+                            rounded-b-2xl rounded-t-md"
                             :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                             :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >   
@@ -150,7 +152,8 @@
                             :initial="staggered_animation(0.4,2,0,-10).initial"
                             :animate="staggered_animation(0.6,1.5,0,-10).animate"
                             :exit="staggered_animation(0.6,2,0,-10).exit"
-                            class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer "
+                            class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer 
+                            rounded-b-2xl rounded-t-md"
                             :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                             :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >   
@@ -178,7 +181,8 @@
                          :initial="staggered_animation(0.2,2,0,-10).initial"
                          :animate="staggered_animation(0.8,2,0,-10).animate"
                          :exit="staggered_animation(0.6,2,0,-10).exit"
-                         class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer w-full"
+                         class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer 
+                         rounded-b-2xl rounded-t-md"
                          :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                          :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >
@@ -201,7 +205,7 @@
 
                 <motion.div
                  v-if="showDispaly === false"
-                 class="flex flex-col space-y-4 w-full p-2 rounded-2xl border h-full"
+                 class="flex flex-col space-y-4 w-full p-2 rounded-md border h-full"
                  :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                  :'bg-off_white border-teal-100'"
                 >  
@@ -296,7 +300,7 @@
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.4,1.6,0,0).animate"
                          :exit="staggered_animation(0.2,1,100,0).exit"
-                         class="w-full flex space-x-1"
+                         class="w-full lg:flex md:flex-col lg:space-x-1 lg:space-y-0 space-x-0 space-y-4"
                         >
                             <div
                              class="flex flex-col space-y-0.5 rounded-md w-full h-124 py-8 px-4"
@@ -339,7 +343,7 @@
                          :initial="staggered_animation(0.1,1,0,-100).initial"
                          :animate="staggered_animation(0.3,1,0,0).animate"
                          :exit="staggered_animation(0.2,1,1,100).exit"
-                         class="flex flex-col space-y-1 p-1.5 rounded-md justify-center items-center"
+                         class="flex flex-col space-y-1 p-1.5 rounded-b-md  rounded-t-2xl justify-center items-center"
                          :class="useThemeComposable() ? 'bg-Dark'
                          :'bg-white'"
                         >
@@ -377,7 +381,7 @@
                          :initial="staggered_animation(0.1,1,0,-100).initial"
                          :animate="staggered_animation(0.3,1,0,0).animate"
                          :exit="staggered_animation(0.2,1,1,100).exit"
-                         class="flex flex-col space-y-1 p-1.5 rounded-md justify-center items-center h-full"
+                         class="flex flex-col space-y-1 p-1.5 rounded-t-md rounded-b-2xl justify-center items-center h-full"
                          :class="useThemeComposable() ? 'bg-Dark'
                          :'bg-white'"
                         >
@@ -393,17 +397,18 @@
                     </motion.div>
                 </motion.div>
 
+               
                 <motion.div
                   v-if="showDispaly"
                   :initial="staggered_animation(0.2,1,0,100).initial"
                   :animate="staggered_animation(0.4,1,0,0).animate"
                   :exit="staggered_animation(0.2,1,0,100).exit"
-                  class="flex w-full h-full flex-col space-y-2  justify-center items-center p-1.5 rounded-2xl border"
+                  class="flex w-full h-full flex-col space-y-2  justify-center items-center p-1.5 rounded-b-2xl rounded-t-md border"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-white border-teal-100'"
                 >   
                     <h1>Welcome</h1>
-                    <img class="h-80 overflow-hidden rounded-lg" src="/loadpage.png" alt="placeholder">
+                    <img class="h-85 overflow-hidden rounded-lg" src="/loadpage.png" alt="placeholder">
                 </motion.div>
                 
             </motion.div>

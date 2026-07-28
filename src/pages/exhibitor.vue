@@ -17,7 +17,7 @@ const e_table_head_lg = ["Exhibitor Name","Email","Job Title","Country"]
 
 <template>
     <section
-     class="flex w-full h-full overflow-y-auto justify-center items-center"
+     class="flex w-full lg:h-full overflow-y-auto justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >   
