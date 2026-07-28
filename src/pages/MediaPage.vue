@@ -13,7 +13,7 @@ import { useStore } from "../store/useStore"
 
 <template>
     <section
-     class="flex w-full min-h-full overflow-hidden justify-center items-center"
+     class="flex w-full h-full overflow-hidden justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >   

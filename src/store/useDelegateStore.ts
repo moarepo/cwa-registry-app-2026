@@ -7,6 +7,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         Delegates: [] as Database['public']['Tables']['registration_table']['Row'][],
         delegate : {} as Database['public']['Tables']['registration_table']['Row'],
         BarChatData: [] as number[],
+        MeetingsBarChatData: [] as number[],
         PieChatData: [] as number[],
         page: 1 as number,
         total: 0 as number,
@@ -18,6 +19,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         get_current_page: (state) => state.page,
         get_total_pages: (state) => state.number_of_pages,
         get_BarChatData: (state) => state.BarChatData,
+        get_meetings_barChart_data: (state) => state.MeetingsBarChatData,
         get_PieChatData: (state) => state.PieChatData
     },
     actions:{
@@ -75,6 +77,41 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             const chartSeries: number[] = categories.map(cat => countsMap[cat] || 0);
 
             this.BarChatData=chartSeries;
+        },
+
+        async fetch_meeting_bar_chart_data(){
+            let countsMap:any
+
+            const categories = [
+                "Opening Ceremony and Reception",
+                "Ministerial Meetings",
+                "Technical Sessions",
+                "Exhibition & Trade Show",
+                "Field Trips"
+            ];
+
+            const { data, error } = await supabase
+                .from('delegate_meetings')
+                .select('meeting_name');
+
+            if (error) {
+                useAlertModalComposable(error.message);
+            }
+
+            if(data != null){
+                countsMap = data.reduce((acc: Record<string, number>, row) => {
+                    if (row.meeting_name) {
+                        acc[row.meeting_name] = (acc[row.meeting_name] || 0) + 1;
+                    }
+                    return acc;
+                }, {});
+            }
+          
+            const chartSeries: number[] = categories.map(cat => countsMap[cat] || 0);
+
+            console.log(chartSeries)
+
+            this.MeetingsBarChatData=chartSeries;
         },
 
         async fetch_pie_chart_data() {

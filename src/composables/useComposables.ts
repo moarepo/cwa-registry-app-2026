@@ -71,7 +71,11 @@ export function useBarChartData(){
           Number(TechnicalSessions.value),
           Number(ExhibitionTradeShow.value),
           Number(Field_Trips_num.value)
-        ]
+        ],
+        barThickness: 60,
+        borderWidth: 1,
+        borderRadius: 6, 
+        borderSkipped: 'bottom' as const
       }
     ]
   }
@@ -116,7 +120,11 @@ export function useEXBarChartData(){
           Number(optionOne.value),
           Number(optionTwo.value),
           Number(optionThree.value),
-        ]
+        ],
+        barThickness: 60,
+        borderWidth: 1,
+        borderRadius: 6, 
+        borderSkipped: 'bottom' as const
       }
     ]
   }
@@ -185,12 +193,15 @@ export function use_bar_chart_data(){
       {
         label: 'Category',
         backgroundColor: '#8200db',
-        data:[..._data.value]
+        data:[..._data.value],
+        barThickness: 60,
+        borderWidth: 1,
+        borderRadius: 6, 
+        borderSkipped: 'bottom' as const,
       }
     ]
   }
 }
-
 
 export function use_regisration_bar_chart(){
   let store = useDelegateStore()
@@ -209,8 +220,12 @@ export function use_regisration_bar_chart(){
     datasets:[
       {
         label: 'Organization Type',
-        backgroundColor: ['#00c950','#ff6900','#00b8db','#7008e7','#c70036','#7c6d67'],
-        data:[..._data.value]
+        backgroundColor: '#615fff',
+        barThickness: 60,
+        borderWidth: 1,
+        borderRadius: 6, 
+        borderSkipped: 'bottom' as const,
+        data:[..._data.value],
       }
     ]
   }
@@ -271,4 +286,30 @@ export function use_regisration_pie_chart(){
     ]
   }
  
+}
+
+export function use_regisration_meeting_bar_chart(){
+  let store = useDelegateStore()
+  let _data = computed(()=>{ return store.get_meetings_barChart_data}) 
+ 
+  return{
+    labels: [
+      "Opening Ceremony and Reception",
+      "Ministerial Meetings",
+      "Technical Sessions",
+      "Exhibition and Trade Show",
+      "Field Trips"
+    ],
+    datasets:[
+      {
+        label: 'Meetings Schedule',
+        backgroundColor: '#00c950',
+        barThickness: 60,
+        borderWidth: 1,
+        borderRadius: 6, 
+        borderSkipped: 'bottom' as const,
+        data:[..._data.value],
+      }
+    ]
+  }
 }

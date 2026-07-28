@@ -19,6 +19,7 @@
         useMediaBarChartData, 
         useMediaPieChartData,
         use_regisration_bar_chart,
+        use_regisration_meeting_bar_chart,
         use_regisration_pie_chart
     } from '../composables/useComposables'
     import { motion } from 'motion-v';
@@ -35,6 +36,7 @@
 
     d_store.fetch_barChart_data()
     d_store.fetch_pie_chart_data()
+    d_store.fetch_meeting_bar_chart_data()
     _store_.fetch_registion_count() 
     _store_.fetch_categories()
     _store_.fetch_media_types_for_pieChart()
@@ -86,7 +88,7 @@
 
 <template>
     <motion.section
-     class="flex w-full h-full overflow-y-auto justify-center items-center"
+     class="flex w-full overflow-y-auto justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >  
@@ -95,10 +97,11 @@
              :animate="dash_animation.animate"
              :transition="dash_animation.transition"
              :exit="dash_animation.exist"
-             class="flex flex-col space-y-1 p-1.5 lg:rounded-2xl rounded-t-md border h-full w-full"
+             class="flex flex-col space-y-1 p-1.5 lg:rounded-2xl rounded-2xl rounded-t-md border h-full w-full"
              :class="useThemeComposable() ? 'bg-Dark border-teal-900'
              :'bg-white border-teal-300'"
-            >
+            >   
+                
                 <motion.div
                   class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-1.5 rounded-2xl w-full gap-1 border"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
@@ -222,6 +225,7 @@
                             <p>In this section contains informstional charts on the Exhibitor registartion from.</p>
                         </motion.div>
 
+                        <!-- Exhibitor -->
                         <motion.div
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.3,1.2,0,0).animate"
@@ -339,9 +343,9 @@
                          :class="useThemeComposable() ? 'bg-Dark'
                          :'bg-white'"
                         >
-                            <h2 class="text-2xl">Registartion Information</h2>
+                            <h2 class="text-2xl">Registration  Information</h2>
 
-                            <p>In this section contains informstional charts on the Registartion from.</p>
+                            <p>This section contains informational charts on the registration form.</p>
                         </motion.div>
 
                         <motion.div
@@ -351,7 +355,7 @@
                          class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
                         >
                             <div
-                             class="flex flex-col space-y-0.5 rounded-md w-full lg:h-120 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
+                             class="flex flex-col space-y-0.5 rounded-md w-full lg:h-80 h-135 sm:px-2 sm:py-8"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
@@ -359,17 +363,17 @@
                             </div>
 
                             <div
-                             class="flex flex-col space-y-2 rounded-md w-full lg:h-120 lg:p-8 md:h-72 md:p-6 h-96 sm:px-2 sm:py-8"
+                             class="flex flex-col space-y-2 rounded-md w-full lg:h-80 h-135 sm:px-2 sm:py-6"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >       
-                                <h2>Nationality</h2>
+                                <h2 class="text-center font-semibold">Nationality Break down</h2>
                                 <Doughnut class="cursor-pointer" :data="use_regisration_pie_chart()" :options="useChartOptions()"/>
                             </div>
 
                         </motion.div>
 
-                        <!-- <motion.div
+                        <motion.div
                          :initial="staggered_animation(0.1,1,0,-100).initial"
                          :animate="staggered_animation(0.3,1,0,0).animate"
                          :exit="staggered_animation(0.2,1,1,100).exit"
@@ -378,15 +382,15 @@
                          :'bg-white'"
                         >
                             <div
-                             class="flex flex-col space-y-0.5 rounded-md w-full h-96 py-4 px-2"
+                             class="lg:flex hidden flex-col space-y-0.5 rounded-md rounded-b-2xl w-full h-85 py-4 px-2"
                              :class="useThemeComposable() ? 'bg-Dark'
                              :'bg-white'"
                             >   
-                               
+                                <Bar class="cursor-pointer " :data="use_regisration_meeting_bar_chart()" :options="useChartOptions()"/>
                             </div>
-                        </motion.div> -->
-                    </motion.div>
 
+                        </motion.div>
+                    </motion.div>
                 </motion.div>
 
                 <motion.div
