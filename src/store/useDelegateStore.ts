@@ -36,7 +36,6 @@ export const useDelegateStore = defineStore("useDelegateStore",{
            .range(start,end)
 
            if(!error && data !== null){
-             console.log(count)
              this.Delegates = data
              this.total = Number(count)
              this.number_of_pages = Math.ceil(this.total / page_size)

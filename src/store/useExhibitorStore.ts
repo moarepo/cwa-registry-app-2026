@@ -7,22 +7,36 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
     state:()=>({
         Exhibitors: [] as [] as Database['public']['Tables']['exhibitor_table']['Row'][],
         exhibitor: {} as Database['public']['Tables']['exhibitor_table']['Row'],
-        limit: 10 as number,
-        offset: 0 as number,
-        current_page: 1 as number
+        page: 1 as number,
+        total: 0 as number,
+        number_of_pages: 0 as number
     }),
     getters:{
         get_list_Exhibitors: (state) => state.Exhibitors,
         get_exhibitor: (state) => state.exhibitor,
-        get_current_page: (state)=> state.current_page
+        get_current_page: (state)=> state.page
     },
     actions:{
         async fetch_all_exhibitors(){
             try {
-                
-                const { error, data } = await supabase.from('exhibitor_table').select().range(this.offset,this.limit)
+                const page_size:number = 10;
+                const start:number = (this.page - 1) * page_size;
+                const end = start + page_size -1
+ 
+                const { error, count, data } = await supabase
+                .from('exhibitor_table')
+                .select('*',{ count:'exact'})
+                .order('exhibitor_full_name',{ ascending: true })
+                .range(start,end)
 
-                if(data){ this.Exhibitors = data }
+                if(data){ 
+                  this.Exhibitors = data
+                  this.total = Number(count)
+                  this.number_of_pages = Math.ceil(this.total / page_size) 
+                }else{
+                    const error_message = error?.message ?? 'Failed to fetch Exhibitors Infomation.';
+                    useAlertModalComposable(error_message); 
+                }
 
                 if(error){ useAlertModalComposable(error.message) }
 
@@ -31,21 +45,18 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
             }
         }, 
 
-        async next_in_list(){
-            try {
-                this.current_page += 1
-                this.offset += 10
-                this.limit += 10
-
-                const { error, data } = await supabase.from('exhibitor_table').select().range(this.offset,this.limit)
-
-                if(data){ this.Exhibitors = data }
-
-                if(error){ useAlertModalComposable(error.message) }
-                
-            } catch (error:any) {
-                useAlertModalComposable(error.message)
+        async next(){
+            if(this.page < this.number_of_pages){
+                this.page += 1
+                await this.fetch_all_exhibitors()
             }
-        }
+        },
+
+        async pervious(){
+           if(this.page > 1){
+             this.page -= 1
+             await this.fetch_all_exhibitors()
+           }
+        },
     }
 })
