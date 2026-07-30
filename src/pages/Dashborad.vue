@@ -300,7 +300,7 @@
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.4,1.6,0,0).animate"
                          :exit="staggered_animation(0.2,1,100,0).exit"
-                         class="w-full lg:flex md:flex-col lg:space-x-1 lg:space-y-0 space-x-0 space-y-4"
+                         class="w-full flex lg:flex-row md:flex-col lg:space-x-1 lg:space-y-0 space-x-0 space-y-4"
                         >
                             <div
                              class="flex flex-col space-y-0.5 rounded-md w-full h-124 py-8 px-4"

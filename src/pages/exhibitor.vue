@@ -13,6 +13,8 @@ let Page = computed(()=>{ return store.get_current_page})
 
 const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","Address","Country","Exhibitor Product"]
 const e_table_head_lg = ["Exhibitor Name","Email","Job Title","Country"]
+
+function view_info(id:number){ store.fetch_exhibitor_by_Id(id) }
 </script>
 
 <template>
@@ -135,6 +137,7 @@ const e_table_head_lg = ["Exhibitor Name","Email","Job Title","Country"]
                                         <td class="text-center rounded-md px-2 py-2 capitalize lg:hidden xl:table-cell">{{ item.exhibitor_product }}</td>
                                         <td class="px-8 py-0.5">
                                             <button
+                                              @click="view_info(item.exhibitor_registration_id)"
                                               class="border rounded-md px-2 py-1"
                                               :class="useThemeComposable() ? ''
                                               :''"
