@@ -57,6 +57,28 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
             }
         },
 
+        async search_exhibitor_by_name(name:string){
+            const page_size:number = 10;
+            const start:number = (this.page - 1) * page_size;
+            const end = start + page_size -1
+
+            const { error, data } = await supabase
+            .from("exhibitor_table")
+            .select("*")
+            .ilike('exhibitor_full_name',name)
+            .range(start,end)
+
+            if(data){ this.Exhibitors = data}
+
+            if(error){ useAlertModalComposable(error.message) }
+        },
+
+        async exhibitor_reset(){
+            this.page = 1
+            this.number_of_pages = 0
+            await this.fetch_all_exhibitors()
+        },
+
         async next(){
             if(this.page < this.number_of_pages){
                 this.page += 1

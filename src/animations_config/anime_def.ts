@@ -126,7 +126,7 @@ export const button_animation_normal = {
         scale: 1.1,
     },
     pressed:{ 
-        scale: 0.4
+        scale: 0.8
     },
     transition:{
         duration: 0.2,

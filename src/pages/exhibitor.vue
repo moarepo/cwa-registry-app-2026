@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-import {computed} from "vue"
-import {useThemeComposable} from '../composables/useComposables'
+import {computed, ref} from "vue"
+import {useThemeComposable,useAlertModalComposable} from '../composables/useComposables'
 import { motion, AnimatePresence } from 'motion-v';
-import {dash_animation} from '../animations_config/anime_def'
+import {dash_animation,button_animation_normal,staggered_animation} from '../animations_config/anime_def'
 import {useExhibitorStore} from '../store/useExhibitorStore'
 
 const store = useExhibitorStore()
 store.fetch_all_exhibitors()
+
+let search_value = ref<string>("")
 
 let List = computed(()=>{ return store.get_list_Exhibitors})
 let Page = computed(()=>{ return store.get_current_page})
@@ -15,11 +17,24 @@ const e_table_head = ["Exhibitor Name","Email","Job Title","Organization Name","
 const e_table_head_lg = ["Exhibitor Name","Email","Job Title","Country"]
 
 function view_info(id:number){ store.fetch_exhibitor_by_Id(id) }
+
+function seach_name(){
+    if(search_value.value === ""){
+        useAlertModalComposable("Please ensure the a name is entered.")
+    }else{
+        store.search_exhibitor_by_name(search_value.value)
+    }
+}
+
+function reset(){ 
+    search_value.value = ""
+    store.exhibitor_reset()
+}
 </script>
 
 <template>
     <section
-     class="flex w-full lg:h-full overflow-y-auto justify-center items-center"
+     class="flex w-full overflow-y-auto justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >   
@@ -35,22 +50,65 @@ function view_info(id:number){ store.fetch_exhibitor_by_Id(id) }
             >
 
                 <motion.div
-                  class="border w-full flex justify-start items-center py-1.5 px-8 rounded-md rounded-t-2xl"
+                  class="border w-full flex justify-between items-center py-1.5 px-8.5 rounded-md rounded-t-2xl"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
                     <motion.div
-                     class="p-0.5 flex space-x-2.5 justify-center items-center"
+                     class="p-0.5 flex space-x-2.5 justify-center items-center w-1/2"
                     >
                         <h2>Search</h2>
                         <input 
-                         class="lg:w-80 rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
+                         v-model="search_value"
+                         class="w-full rounded-md border-2 p-1 transtion-all ease-in duration-500 outline-none focus:border-2" 
                          :class="useThemeComposable() ? 'bg-teal-950 border-teal-900 focus:border-indigo-500'
                          :'bg-white border-gray-300 focus:border-green-500 focus:shadow-gre'"
                          type="text"
                          placeholder="Search by Exhibitor Name"
                         >
+                        <motion.button
+                         @click="seach_name()"
+                         :initial="button_animation_normal.initial"
+                         :whileHover="button_animation_normal.hover"
+                         :while-press="button_animation_normal.pressed" 
+                         :transition="button_animation_normal.transition"
+                         class="flex justify-center items-center border-2 rounded-md p-1 transition-all ease-in-out duration-700 cursor-pointer"
+                         :class="useThemeComposable() ? 'bg-Dark border-teal-900 text-teal-800 hover:text-teal-500 hover:border-teal-500'
+                         :'bg-white border-teal-400 text-teal-400 hover:text-indigo-500 hover:bg-indigo-50 hover:border-indigo-500  hover:shadow-ind'"
+                        >
+                            <svg 
+                             xmlns="http://www.w3.org/2000/svg" 
+                             viewBox="0 0 24 24" 
+                             fill="currentColor" 
+                             class="size-6 transition-all ease-in-out duration-700 hover:rotate-90"
+                            >
+                            <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
+                            </svg>
+                        </motion.button>
                     </motion.div>
+
+                    <motion.button
+                        @click="reset()"
+                        :initial="button_animation_normal.initial"
+                        :whileHover="button_animation_normal.hover"
+                        :while-press="button_animation_normal.pressed" 
+                        :transition="button_animation_normal.transition"
+                        class="flex space-x-1.5 justify-center items-center border-2 rounded-md py-1 px-1.5 transition-all ease-in-out duration-700 cursor-pointer"
+                        :class="useThemeComposable() ? 'bg-Dark border-teal-900 text-teal-800 hover:text-teal-500 hover:border-teal-500'
+                        :'bg-white border-teal-400 text-teal-400 hover:text-indigo-500 hover:bg-indigo-50 hover:border-indigo-500  hover:shadow-ind'"
+                    >
+                        <svg 
+                         xmlns="http://www.w3.org/2000/svg" 
+                         viewBox="0 0 24 24" 
+                         fill="currentColor" 
+                         class="size-6 transition-all ease-in-out duration-700 hover:rotate-180"
+                        >
+                         <path fill-rule="evenodd" d="M12 5.25c1.213 0 2.415.046 3.605.135a3.256 3.256 0 0 1 3.01 3.01c.044.583.077 1.17.1 1.759L17.03 8.47a.75.75 0 1 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l3-3a.75.75 0 0 0-1.06-1.06l-1.752 1.751c-.023-.65-.06-1.296-.108-1.939a4.756 4.756 0 0 0-4.392-4.392 49.422 49.422 0 0 0-7.436 0A4.756 4.756 0 0 0 3.89 8.282c-.017.224-.033.447-.046.672a.75.75 0 1 0 1.497.092c.013-.217.028-.434.044-.651a3.256 3.256 0 0 1 3.01-3.01c1.19-.09 2.392-.135 3.605-.135Zm-6.97 6.22a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.752-1.751c.023.65.06 1.296.108 1.939a4.756 4.756 0 0 0 4.392 4.392 49.413 49.413 0 0 0 7.436 0 4.756 4.756 0 0 0 4.392-4.392c.017-.223.032-.447.046-.672a.75.75 0 0 0-1.497-.092c-.013.217-.028.434-.044.651a3.256 3.256 0 0 1-3.01 3.01 47.953 47.953 0 0 1-7.21 0 3.256 3.256 0 0 1-3.01-3.01 47.759 47.759 0 0 1-.1-1.759L6.97 15.53a.75.75 0 0 0 1.06-1.06l-3-3Z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Reset</span>
+                    </motion.button>
+
+                    <div></div>
                 </motion.div>
 
                 <motion.div
@@ -86,8 +144,8 @@ function view_info(id:number){ store.fetch_exhibitor_by_Id(id) }
 
                     </motion.div>
 
-                    <div class="lg:flex hidden w-full">
-                            <table
+                    <motion.div class="lg:flex hidden w-full">
+                            <motion.table
                              class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm"
                              :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                              : 'bg-white border-gray-100'"
@@ -117,7 +175,7 @@ function view_info(id:number){ store.fetch_exhibitor_by_Id(id) }
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr
+                                    <motion.tr
                                         v-for="(item,index) in List"
                                         :key="index"
                                         :class="useThemeComposable() ? {
@@ -127,6 +185,10 @@ function view_info(id:number){ store.fetch_exhibitor_by_Id(id) }
                                         'bg-primary': index%2 === 0,
                                         'bg-gray-50': index%2 === 1
                                         }"
+                                        :initial="staggered_animation(index / 10,0.1,0,-25).initial"
+                                        :animate="staggered_animation(index / 10,0.1,0,-25).animate"
+                                        :transition="staggered_animation(index / 10,0.1,0,-25).transition"
+                                        :exit="staggered_animation(index / 10,0.1,0,-25).exit"
                                     >
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.exhibitor_full_name }}</td>
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.email_address }}</td>
@@ -145,10 +207,10 @@ function view_info(id:number){ store.fetch_exhibitor_by_Id(id) }
                                                 <span>view</span>
                                             </button>
                                         </td>
-                                    </tr>
+                                    </motion.tr>
                                 </tbody>
-                            </table>
-                    </div> 
+                            </motion.table>
+                    </motion.div> 
                 </motion.div> 
 
             </motion.div>
