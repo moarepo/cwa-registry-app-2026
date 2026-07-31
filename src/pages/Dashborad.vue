@@ -88,7 +88,7 @@
 
 <template>
     <motion.section
-     class="flex w-full overflow-y-auto justify-center items-center lg:h-full"
+     class="flex w-full overflow-y-auto justify-center items-center"
      :class="useThemeComposable() ? ''
      :''"
     >  
