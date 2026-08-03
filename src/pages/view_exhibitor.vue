@@ -122,7 +122,7 @@
                      :class="useThemeComposable() ? 'bg-Dark'
                      :'bg-white'"
                     >
-                        <p>Category Options: <span class="font-semibold">{{ exhibitor.exhibitor_category_options ? exhibitor.exhibitor_category_options:'N/A' }}</span></p>
+                        <p>Category Options: <span class="font-semibold">{{ exhibitor.exhibitor_type ? exhibitor.exhibitor_type:'N/A' }}</span></p>
                     </div>
 
                     <div
