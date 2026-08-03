@@ -7,6 +7,7 @@
 
     const store = useDelegateStore()
     store.fetch_all_delegates()
+    setInterval(()=>{store.fetch_all_delegates()},5500)
     
     const organization_types = [ 'Government', 'NGO', 'Private Sector', 'Farmer', 'Academic', 'Regional Body'];
     const Countries:string[] = [

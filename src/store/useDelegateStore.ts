@@ -10,6 +10,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         BarChatData: [] as number[],
         MeetingsBarChatData: [] as number[],
         PieChatData: [] as number[],
+        PieChatDataDem: [] as number[],
         page: 1 as number,
         total: 0 as number,
         number_of_pages: 0 as number,
@@ -25,14 +26,14 @@ export const useDelegateStore = defineStore("useDelegateStore",{
     },
     actions:{
         async fetch_all_delegates(){
-           const page_size:number = 10;
+           const page_size:number = 20;
            const start:number = (this.page - 1) * page_size;
            const end = start + page_size -1
 
            const { data, count, error } = await supabase
            .from('registration_table')
            .select('*',{ count:'exact'})
-           .order('first_name',{ ascending: true })
+           .order('created_at',{ ascending: false })
            .range(start,end)
 
            if(!error && data !== null){
@@ -116,6 +117,41 @@ export const useDelegateStore = defineStore("useDelegateStore",{
 
         async fetch_pie_chart_data() {
            
+            const Sectors = [
+                'Agriculture',
+                'Fisheries',
+                'Forestry',
+                'Agro Processing'
+            ]
+
+            const { data, error } = await supabase
+                .from('delegate_sectors')
+                .select('sector_name');
+
+            if (error) {
+                useAlertModalComposable(error.message);
+                return;
+            }
+
+            const countsMap: Record<string, number> = {};
+
+            if (data) {
+                data.forEach((row) => {
+                    if (row.sector_name) {
+                        const countryKey = row.sector_name.trim().toLowerCase();
+                        countsMap[countryKey] = (countsMap[countryKey] || 0) + 1;
+                    }
+                });
+            }
+
+            const chartSeries: number[] = Sectors.map(
+                (country) => countsMap[country.toLowerCase()] || 0
+            );
+            this.PieChatData = chartSeries;
+        },
+
+        async fetch_pie_chart_data_demo() {
+           
             const caricomStates = [
                 'Antigua and Barbuda',
                 'Bahamas',
@@ -162,7 +198,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             const chartSeries: number[] = caricomStates.map(
                 (country) => countsMap[country.toLowerCase()] || 0
             );
-            this.PieChatData = chartSeries;
+            this.PieChatDataDem = chartSeries;
         },
 
         async reset_page(){
@@ -177,7 +213,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         },
 
         async filter_by_nationality(nationality:string){
-           const page_size:number = 10;
+           const page_size:number = 20;
            const start:number = (this.page - 1) * page_size;
            const end = start + page_size -1
 
@@ -185,7 +221,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                 .from('registration_table')
                 .select('*',{ count:'exact'})
                 .ilike('nationality',nationality)
-                .order('first_name',{ ascending: true })
+                .order('created_at',{ ascending: false })
                 .range(start,end)
             
             if(!error && data !== null){
@@ -199,7 +235,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         },
 
         async filter_by_country(country:string){
-           const page_size:number = 10;
+           const page_size:number = 20;
            const start:number = (this.page - 1) * page_size;
            const end = start + page_size -1
 
@@ -207,7 +243,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                 .from('registration_table')
                 .select('*',{ count:'exact'})
                 .ilike('country_of_residence',country)
-                .order('first_name',{ ascending: true })
+                .order('created_at',{ ascending: false })
                 .range(start,end)
             
             if(!error && data !== null){
@@ -221,7 +257,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
         },
 
         async filter_by_organization_type(type:string){
-            const page_size:number = 10;
+            const page_size:number = 20;
            const start:number = (this.page - 1) * page_size;
            const end = start + page_size -1
 
@@ -229,7 +265,7 @@ export const useDelegateStore = defineStore("useDelegateStore",{
                 .from('registration_table')
                 .select('*',{ count:'exact'})
                 .ilike('organization_type',type)
-                .order('first_name',{ ascending: true })
+                .order('created_at',{ ascending: false })
                 .range(start,end)
             
             if(!error && data !== null){
@@ -247,7 +283,6 @@ export const useDelegateStore = defineStore("useDelegateStore",{
             const { data, error } = await supabase
            .from('registration_table').select('*')
            .eq("registration_id",id)
-           .order('first_name',{ ascending: true })
 
            if(error){
               useAlertModalComposable(error.message)

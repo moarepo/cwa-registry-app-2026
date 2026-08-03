@@ -19,14 +19,14 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
     },
     actions:{
         async fetch_all_exhibitors(){
-            const page_size:number = 10;
+            const page_size:number = 20;
             const start:number = (this.page - 1) * page_size;
             const end = start + page_size -1
  
             const { error, count, data } = await supabase
             .from('exhibitor_table')
             .select('*',{ count:'exact'})
-            .order('exhibitor_full_name',{ ascending: true })
+            .order('created_at',{ ascending: false })
             .range(start,end)
 
             if(data){ 
@@ -41,11 +41,11 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
             }
         }, 
 
-        async fetch_exhibitor_by_Id(exhibitor_id:number){
+        async fetch_exhibitor_by_Id(exhibitor_id:string){
             const { error, data } = await supabase
             .from("exhibitor_table")
             .select("*")
-            .eq('exhibitor_registration_id',exhibitor_id)
+            .eq('unique_id',exhibitor_id)
 
             if(data){
                 this.exhibitor = data[0]
@@ -58,7 +58,7 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
         },
 
         async search_exhibitor_by_name(name:string){
-            const page_size:number = 10;
+            const page_size:number = 20;
             const start:number = (this.page - 1) * page_size;
             const end = start + page_size -1
 
@@ -66,6 +66,7 @@ export const useExhibitorStore = defineStore('useExhibitorStore',{
             .from("exhibitor_table")
             .select("*")
             .ilike('exhibitor_full_name',name)
+            .order('created_at',{ ascending: false })
             .range(start,end)
 
             if(data){ this.Exhibitors = data}

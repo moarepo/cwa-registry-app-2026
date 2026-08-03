@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import { Pie, Bar, Doughnut } from 'vue-chartjs'
+    import { Pie, Bar } from 'vue-chartjs'
     import { Chart as 
         ChartJS, 
         ArcElement, 
@@ -34,6 +34,8 @@
     const d_store = useDelegateStore()
     const meet = useDelegateMeetingStore()
 
+    _store_.fetch_registion_count() 
+    meet.fetch_meetings_count() 
     d_store.fetch_barChart_data()
     d_store.fetch_pie_chart_data()
     d_store.fetch_meeting_bar_chart_data()
@@ -41,12 +43,18 @@
     _store_.fetch_categories()
     _store_.fetch_media_types_for_pieChart()
     meet.fetch_meetings_count() 
-    
+
     setInterval(()=>{
         _store_.fetch_registion_count() 
         meet.fetch_meetings_count() 
+        d_store.fetch_barChart_data()
+        d_store.fetch_pie_chart_data()
+        d_store.fetch_meeting_bar_chart_data()
+        _store_.fetch_registion_count() 
+        _store_.fetch_categories()
+        _store_.fetch_media_types_for_pieChart()
+        meet.fetch_meetings_count() 
     },5500)
-
 
     let show_delegates_info = ref<boolean>(false)
     let show_exhibitor_info = ref<boolean>(false)
@@ -97,13 +105,13 @@
              :animate="dash_animation.animate"
              :transition="dash_animation.transition"
              :exit="dash_animation.exist"
-             class="flex flex-col space-y-1 p-1.5 lg:rounded-2xl rounded-2xl rounded-t-md border h-full w-full"
+             class="flex flex-col space-y-1 p-1 lg:rounded-2xl rounded-2xl rounded-t-md border h-full w-full"
              :class="useThemeComposable() ? 'bg-Dark border-teal-900'
              :'bg-white border-teal-300'"
             >   
                 
                 <motion.div
-                  class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-1.5 rounded-t-2xl rounded-b-md w-full gap-1 border"
+                  class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-1 rounded-t-2xl rounded-b-md w-full gap-1 border"
                   :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                   :'bg-off_white border-teal-100'"
                 >
@@ -125,8 +133,7 @@
                             :initial="staggered_animation(0.4,2,0,-10).initial"
                             :animate="staggered_animation(0.6,1.5,0,-10).animate"
                             :exit="staggered_animation(0.6,2,0,-10).exit"
-                            class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer 
-                            rounded-b-2xl rounded-t-md"
+                            class="flex justify-center items-center p-1 text-center space-x-4 border cursor-pointer rounded-md"
                             :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                             :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >   
@@ -140,7 +147,7 @@
                                 :'bg-indigo-500 '"
                             ></motion.div>
 
-                            <h2>Total # Registartion : </h2> 
+                            <h2>Total # Registration : </h2> 
                             <h2 class="xl:text-5xl lg:text-3xl font-light">{{ delegates_amout }}</h2>
                         </motion.div>
                     </button>
@@ -152,8 +159,7 @@
                             :initial="staggered_animation(0.4,2,0,-10).initial"
                             :animate="staggered_animation(0.6,1.5,0,-10).animate"
                             :exit="staggered_animation(0.6,2,0,-10).exit"
-                            class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer 
-                            rounded-b-2xl rounded-t-md"
+                            class="flex justify-between items-center p-1 text-center space-x-4 border cursor-pointer rounded-md"
                             :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                             :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >   
@@ -181,8 +187,7 @@
                          :initial="staggered_animation(0.2,2,0,-10).initial"
                          :animate="staggered_animation(0.8,2,0,-10).animate"
                          :exit="staggered_animation(0.6,2,0,-10).exit"
-                         class="flex justify-center items-center p-1 rounded-2xl text-center space-x-4 border cursor-pointer 
-                         rounded-b-2xl rounded-t-md"
+                         class="flex justify-center items-center p-1 text-center space-x-4 border cursor-pointer rounded-md"
                          :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                          :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >
@@ -205,7 +210,7 @@
 
                 <motion.div
                  v-if="showDispaly === false"
-                 class="flex flex-col space-y-4 w-full p-2 rounded-md border h-full"
+                 class="flex flex-col space-y-4 w-full p-1 rounded-t-md rounded-b-2xl border h-full"
                  :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
                  :'bg-off_white border-teal-100'"
                 >  
@@ -229,7 +234,7 @@
                             <p>In this section contains informstional charts on the Exhibitor registartion from.</p>
                         </motion.div>
 
-                        <!-- Exhibitor -->
+                        
                         <motion.div
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.3,1.2,0,0).animate"
@@ -343,11 +348,11 @@
                          :initial="staggered_animation(0.1,1,0,-100).initial"
                          :animate="staggered_animation(0.3,1,0,0).animate"
                          :exit="staggered_animation(0.2,1,1,100).exit"
-                         class="flex flex-col space-y-1 p-1.5 rounded-b-md  rounded-t-2xl justify-center items-center"
+                         class="flex flex-col space-y-1 p-1.5 rounded-md justify-center items-center"
                          :class="useThemeComposable() ? 'bg-Dark'
                          :'bg-white'"
                         >
-                            <h2 class="text-2xl">Registration  Information</h2>
+                            <h2 class="text-2xl">Registration Information</h2>
 
                             <p>This section contains informational charts on the registration form.</p>
                         </motion.div>
@@ -359,40 +364,54 @@
                          class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
                         >
                             <div
-                             class="flex flex-col space-y-0.5 rounded-md w-full lg:h-80 h-135 sm:px-2 sm:py-8"
-                             :class="useThemeComposable() ? 'bg-Dark'
-                             :'bg-white'"
+                             class="lg:flex hidden flex-col space-y-0.5 rounded-md w-full h-85 py-4 px-2"
+                              :class="useThemeComposable() ? 'bg-teal-950'
+                             :'bg-off_white'"
                             >   
                                <Bar class="cursor-pointer" :data="use_regisration_bar_chart()" :options="useChartOptions()"/>
                             </div>
 
                             <div
-                             class="flex flex-col space-y-2 rounded-md w-full lg:h-80 h-135 sm:px-2 sm:py-6"
-                             :class="useThemeComposable() ? 'bg-Dark'
-                             :'bg-white'"
-                            >       
-                                <h2 class="text-center font-semibold">Nationality Break down</h2>
-                                <Doughnut class="cursor-pointer" :data="use_regisration_pie_chart()" :options="useChartOptions()"/>
+                             class="lg:flex hidden flex-col space-y-0.5 rounded-md w-full h-85 py-4 px-2"
+                             :class="useThemeComposable() ? 'bg-teal-950'
+                             :'bg-off_white'"
+                            >   
+                                <Bar class="cursor-pointer " :data="use_regisration_meeting_bar_chart()" :options="useChartOptions()"/>
                             </div>
-
                         </motion.div>
 
                         <motion.div
                          :initial="staggered_animation(0.1,1,0,-100).initial"
                          :animate="staggered_animation(0.3,1,0,0).animate"
                          :exit="staggered_animation(0.2,1,1,100).exit"
-                         class="flex flex-col space-y-1 p-1.5 rounded-t-md rounded-b-2xl justify-center items-center h-full"
-                         :class="useThemeComposable() ? 'bg-Dark'
-                         :'bg-white'"
+                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1 p-1 rounded-md rounded-b-2xl"
+                         :class="useThemeComposable() ? 'bg-Dark':'bg-white'"
                         >
                             <div
-                             class="lg:flex hidden flex-col space-y-0.5 rounded-md rounded-b-2xl w-full h-85 py-4 px-2"
-                             :class="useThemeComposable() ? 'bg-Dark'
-                             :'bg-white'"
+                             class="lg:flex hidden justify-center items-center flex-col space-y-1 rounded-md rounded-b-2xl w-full h-130 p-12"
+                             :class="useThemeComposable() ? 'bg-teal-950'
+                             :'bg-off_white'"
                             >   
-                                <Bar class="cursor-pointer " :data="use_regisration_meeting_bar_chart()" :options="useChartOptions()"/>
+                                <h1>Sectors</h1>
+                                <Pie class="cursor-pointer " :data="use_regisration_pie_chart()" :options="useChartOptions()"/>
+                                <h3 class="text-center text-sm">
+                                   This pie chart illustrates the distribution of registered individuals across four primary sectors: 
+                                   Agriculture, Agro Processing, Fisheries, and Forestry.
+                               </h3>
                             </div>
 
+                            <div
+                             class="lg:flex hidden flex-col space-y-0.5 rounded-md w-full h-130 py-4 px-2"
+                             :class="useThemeComposable() ? 'bg-teal-950'
+                             :'bg-off_white'"
+                            >   
+                                <!-- <h1>Sectors</h1>
+                               
+                                <h3 class="text-center text-sm">
+                                   This pie chart illustrates the distribution of registered individuals across four primary sectors: 
+                                   Agriculture, Agro Processing, Fisheries, and Forestry.
+                               </h3> -->
+                            </div>
                         </motion.div>
                     </motion.div>
                 </motion.div>
@@ -404,7 +423,7 @@
                   :animate="staggered_animation(0.4,1,0,0).animate"
                   :exit="staggered_animation(0.2,1,0,100).exit"
                   class="flex w-full h-full flex-col space-y-2  justify-center items-center p-1.5 rounded-b-2xl rounded-t-md border"
-                  :class="useThemeComposable() ? 'bg-innerDark border-teal-950'
+                  :class="useThemeComposable() ? 'bg-teal-950 border-teal-950'
                   :'bg-white border-teal-100'"
                 >   
                     <h1>Welcome</h1>

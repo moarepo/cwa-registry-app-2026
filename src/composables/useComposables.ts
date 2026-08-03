@@ -238,8 +238,8 @@ export function use_regisration_bar_chart(){
     ],
     datasets:[
       {
-        label: 'Organization Type',
-        backgroundColor: '#615fff',
+        label: 'Colour Rep.',
+        backgroundColor: '#00c950',
         barThickness: 60,
         borderWidth: 1,
         borderRadius: 6, 
@@ -257,55 +257,23 @@ export function use_regisration_pie_chart(){
 
   return{                                                                                                  
     labels:  [
-      'Antigua and Barbuda',
-      'Bahamas',
-      'Barbados',
-      'Belize',
-      'Dominica',
-      'Grenada',
-      'Guyana',
-      'Haiti',
-      'Jamaica',
-      'Montserrat',
-      'Saint Kitts and Nevis',
-      'Saint Lucia',
-      'Saint Vincent and the Grenadines',
-      'Suriname',
-      'Trinidad and Tobago',
-      'United States of America',
-      'Canada',
-      'Mexico',
-      'United Kingdom of Great Britain and Northern Ireland',
-      'Italy'
+      'Agriculture',
+      'Fisheries',
+      'Forestry',
+      'Agro Processing'
     ],
     datasets: [
       {
         backgroundColor:[
-          '#00b8db', // cyan
-          '#f54900', // oragne
-          '#432dd7', // indigo
-          '#ffa1ad', // rose
-          '#1c398e', // blue
-          '#efb100', // yellow
-          '#abab9c', // stone
-          'EC6044',
-          '#00c950', // green
-          '#EC44D0',
-          '#B105AE',
-          '#A35E50',
-          '#EDC48B',
-          '#17A19A',
-          '#F44C99',
-          '#efb100',
-          '#C039FE',
-          '#8200db', // bone white
-          '#c10007' // red
+          "#72A06A",
+          "#66B2E4",
+          "#228B22",
+          "#D9D40C",
         ],
         data: [..._data.value]
       }
     ]
   }
- 
 }
 
 export function use_regisration_meeting_bar_chart(){
@@ -314,16 +282,16 @@ export function use_regisration_meeting_bar_chart(){
  
   return{
     labels: [
-      "Opening Ceremony and Reception",
+      "Opening & Reception",
       "Ministerial Meetings",
       "Technical Sessions",
-      "Exhibition and Trade Show",
+      "Expo ",
       "Field Trips"
     ],
     datasets:[
       {
-        label: 'Meetings Schedule',
-        backgroundColor: '#00c950',
+        label: 'Colour Rep.',
+        backgroundColor: '#efb100',
         barThickness: 60,
         borderWidth: 1,
         borderRadius: 6, 
