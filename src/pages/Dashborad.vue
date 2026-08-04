@@ -133,7 +133,7 @@
                             :initial="staggered_animation(0.4,2,0,-10).initial"
                             :animate="staggered_animation(0.6,1.5,0,-10).animate"
                             :exit="staggered_animation(0.6,2,0,-10).exit"
-                            class="flex justify-center items-center p-1 text-center space-x-4 border cursor-pointer rounded-md"
+                            class="flex justify-center items-center lg:p-1 p-2.5 text-center space-x-4 border cursor-pointer rounded-md"
                             :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                             :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >   
@@ -148,18 +148,19 @@
                             ></motion.div>
 
                             <h2>Total # Registration : </h2> 
-                            <h2 class="xl:text-5xl lg:text-3xl font-light">{{ delegates_amout }}</h2>
+                            <h2 class="xl:text-5xl lg:text-3xl lg:font-light font-medium text-2xl">{{ delegates_amout }}</h2>
                         </motion.div>
                     </button>
 
                     <button
+                     class=""
                      @click="get_data('exhibitor')"
                     >
                         <motion.div
                             :initial="staggered_animation(0.4,2,0,-10).initial"
                             :animate="staggered_animation(0.6,1.5,0,-10).animate"
                             :exit="staggered_animation(0.6,2,0,-10).exit"
-                            class="flex justify-between items-center p-1 text-center space-x-4 border cursor-pointer rounded-md"
+                            class="lg:p-1 p-2.5 flex justify-center items-center text-center space-x-4 border cursor-pointer rounded-md"
                             :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                             :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >   
@@ -176,18 +177,19 @@
                             </motion.div>
 
                             <h2>Total # Exhibitor : </h2> 
-                            <h2 class="xl:text-5xl lg:text-3xl font-light">{{ exhibitor_amout }}</h2>
+                            <h2 class="xl:text-5xl lg:text-3xl lg:font-light font-medium text-2xl">{{ exhibitor_amout }}</h2>
                         </motion.div>
                     </button>
 
                     <button
+                     class="lg:col-span-1 md:col-span-2 col-span-1"
                      @click="get_data('media')"
                     >
                         <motion.div
                          :initial="staggered_animation(0.2,2,0,-10).initial"
                          :animate="staggered_animation(0.8,2,0,-10).animate"
                          :exit="staggered_animation(0.6,2,0,-10).exit"
-                         class="flex justify-center items-center p-1 text-center space-x-4 border cursor-pointer rounded-md"
+                         class="flex justify-center items-center lg:p-1 p-2.5 text-center space-x-4 border cursor-pointer rounded-md"
                          :class="useThemeComposable() ? 'bg-Dark border-teal-950'
                          :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
                         >
@@ -202,7 +204,7 @@
                             ></motion.div>
 
                             <h2>Total # Media : </h2> 
-                            <h2 class="xl:text-5xl lg:text-3xl font-light">{{ media_amout }}</h2>
+                            <h2 class="xl:text-5xl lg:text-3xl lg:font-light font-medium text-2xl">{{ media_amout }}</h2>
                         </motion.div>
                     </button>
 
@@ -342,7 +344,7 @@
                      :initial="staggered_animation(0.2,1,100,0).initial"
                      :animate="staggered_animation(0.3,0.8,0,10).animate"
                      :exit="staggered_animation(0.2,1,-100,0).exit"
-                     class="w-full flex flex-col space-y-1"
+                     class="w-full flex flex-col space-y-1 overflow-hidden"
                     >
                         <motion.div
                          :initial="staggered_animation(0.1,1,0,-100).initial"
@@ -364,19 +366,29 @@
                          class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
                         >
                             <div
-                             class="lg:flex hidden flex-col space-y-0.5 rounded-md w-full h-85 py-4 px-2"
+                             class="lg:flex hidden flex-col justify-center items-center space-y-2 rounded-md w-full h-96 px-8 py-10"
                               :class="useThemeComposable() ? 'bg-teal-950'
                              :'bg-off_white'"
                             >   
+                               <h1>Organizations</h1>
                                <Bar class="cursor-pointer" :data="use_regisration_bar_chart()" :options="useChartOptions()"/>
+                               <h3 class="text-center text-sm">
+                                  This bar chart illustrates the distribution of registered individuals across 
+                                  six (6) type Of Organizations: Government, NGO, Private Sector, Farmer, Academic
+                                  and Regional Body.
+                               </h3>
                             </div>
 
                             <div
-                             class="lg:flex hidden flex-col space-y-0.5 rounded-md w-full h-85 py-4 px-2"
+                              class="lg:flex hidden flex-col justify-center items-center space-y-2 rounded-md w-full h-96 p-8"
                              :class="useThemeComposable() ? 'bg-teal-950'
                              :'bg-off_white'"
                             >   
+                                <h1>Meetings</h1>
                                 <Bar class="cursor-pointer " :data="use_regisration_meeting_bar_chart()" :options="useChartOptions()"/>
+                                <h3 class="text-center text-sm">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, impedit?
+                                </h3>
                             </div>
                         </motion.div>
 
