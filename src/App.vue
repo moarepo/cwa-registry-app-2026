@@ -1,9 +1,9 @@
 <script setup lang="ts">
- import { computed } from "vue"
+ import { computed,ref } from "vue"
  import { motion,AnimatePresence } from "motion-v";
  import {defineAsyncComponent} from "vue"
  import {useThemeComposable} from "./composables/useComposables.ts"
- import {side_nav_animation} from "./animations_config/anime_def"
+ import {side_nav_animation,drop_down_animation} from "./animations_config/anime_def"
  import {useDisplayStore} from "./store/useDisplayStore"
  import sideNav from "./components/sideNav.vue";
 
@@ -12,6 +12,31 @@
  const Showstore = useDisplayStore()
 
  let show = computed<boolean>(()=>{ return Showstore.show_side_nav})
+ let show_drop_down = ref<boolean>(false)
+
+ type Links ={name:string,path:string}
+ let navigationLinks:Links[] = [
+   {
+    name:"Home",
+    path:"/dashborad"
+   },
+   {
+    name:"Registration",
+    path:'/delegates'
+   },
+   {
+    name:"Exhibitor",
+    path:"/exhibitor"
+   },
+  {
+    name:"Media",
+    path:"/media"
+  },
+  {
+    name:"Settings",
+    path:"/options"
+  }
+ ]
 </script>
 
 <template>
@@ -24,22 +49,50 @@
 
       <motion.header
        v-if="show"
-       class="lg:hidden md:flex flex justify-between items-center w-full border rounded-md p-1"
-       :class="useThemeComposable() ? ''
-       :'bg-white border-teal-300 '"
+       class="lg:hidden md:flex-col flex-col space-y-2 justify-center items-center w-full p-0.5"
+       :class="useThemeComposable() ? 'bg-off_white':''"
       >
-        <div
-         class="flex justify-center items-center p-1 space-x-2"
+        <motion.div
+         class="flex justify-between items-center py-1 px-2 rounded-md border"
+         :class="useThemeComposable() ? '':'bg-white border-teal-300 '"
         >
           <img 
            class="rounded-sm h-10"
            src="/logo.jpg" 
            alt="MOAF-LOGO"
+          />
+          <motion.button
+            @click="show_drop_down = !show_drop_down"
           >
-          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+              <path fill-rule="evenodd" d="M2 4.75A.75.75 0 0 1 2.75 4h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 4.75ZM2 10a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 10Zm0 5.25a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+            </svg>
+          </motion.button>
+        </motion.div>
+          <motion.div
+          v-if="show_drop_down"
+          :initial="drop_down_animation.initial"
+          :exit="drop_down_animation.exist"
+          :animate="drop_down_animation.animate"
+          :transition="drop_down_animation.transition"
+          class="flex flex-col justify-center items-center p-1.5 space-y-2 rounded-md border"
+          :class="useThemeComposable() ? '':'bg-white border-teal-300 '"
+          >
+              <router-link
+              v-for="nav in navigationLinks"
+              :key="nav.name"
+              :to="nav.path"
+              class="w-full border flex justify-center items-center rounded-md lx:p-1 lg:p-0.5 cursor-pointer xl:mt-2 lg:mt-1
+              transition-all ease-in-out duration-500 hover:-translate-y-1 hover:scale-100 text-center space-x-2.5"
+              :class="useThemeComposable() ? 'bg-Dark border-teal-900 hover:text-green-500 hover:border-green-500 hover:shadow-gre'
+              :'bg-white border-teal-300 hover:shadow-grel hover:border-indigo-500 hover:text-indigo-500'"
+              >
+                <h2 class="xl:text-lg lg:text-md">{{ nav.name }}</h2>
+              </router-link>
+          </motion.div>
+        <AnimatePresence>
 
-          </button>
-        </div>
+        </AnimatePresence>
       </motion.header>
 
       <motion.section

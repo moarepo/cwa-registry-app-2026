@@ -188,3 +188,24 @@ export const page_indcator_animation = {
         stiffness: 75
     }
 }
+
+export const drop_down_animation = {
+        initial:{
+        x:-25,
+        opacity:0
+    },
+    animate:{
+        x:0,
+        opacity:1
+    },
+    exist:{
+        x:-25,
+        opacity:0
+    },
+    transition:{
+        duration: 0.6,
+        ease: 'easeInOut',
+        type:'spring',
+        stiffness: 75
+    }
+}

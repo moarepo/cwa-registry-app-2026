@@ -285,7 +285,7 @@ export function use_regisration_meeting_bar_chart(){
       "Opening & Reception",
       "Ministerial Meetings",
       "Technical Sessions",
-      "Expo ",
+      "Expo",
       "Field Trips"
     ],
     datasets:[

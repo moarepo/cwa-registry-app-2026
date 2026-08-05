@@ -35,26 +35,14 @@
     const meet = useDelegateMeetingStore()
 
     _store_.fetch_registion_count() 
+    _store_.fetch_categories()
+    _store_.fetch_media_types_for_pieChart()
     meet.fetch_meetings_count() 
     d_store.fetch_barChart_data()
     d_store.fetch_pie_chart_data()
     d_store.fetch_meeting_bar_chart_data()
-    _store_.fetch_registion_count() 
-    _store_.fetch_categories()
-    _store_.fetch_media_types_for_pieChart()
-    meet.fetch_meetings_count() 
-
-    setInterval(()=>{
-        _store_.fetch_registion_count() 
-        meet.fetch_meetings_count() 
-        d_store.fetch_barChart_data()
-        d_store.fetch_pie_chart_data()
-        d_store.fetch_meeting_bar_chart_data()
-        _store_.fetch_registion_count() 
-        _store_.fetch_categories()
-        _store_.fetch_media_types_for_pieChart()
-        meet.fetch_meetings_count() 
-    },5500)
+  
+    setInterval(()=>{ _store_.fetch_registion_count() },5500)
 
     let show_delegates_info = ref<boolean>(false)
     let show_exhibitor_info = ref<boolean>(false)
@@ -283,6 +271,7 @@
 
                     </motion.div>
 
+                    <!-- Media Section -->
                     <motion.div 
                      v-if="show_media_info"
                      :initial="staggered_animation(0.2,1,100,0).initial"
@@ -307,7 +296,7 @@
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.4,1.6,0,0).animate"
                          :exit="staggered_animation(0.2,1,100,0).exit"
-                         class="w-full flex lg:flex-row md:flex-col lg:space-x-1 lg:space-y-0 space-x-0 space-y-4"
+                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
                         >
                             <div
                              class="flex flex-col space-y-0.5 rounded-md w-full h-124 py-8 px-4"
@@ -339,6 +328,7 @@
                         ></motion.div>
                     </motion.div>
 
+                    <!-- Delegate Section -->
                     <motion.div 
                      v-if="show_delegates_info"
                      :initial="staggered_animation(0.2,1,100,0).initial"
@@ -354,24 +344,26 @@
                          :class="useThemeComposable() ? 'bg-Dark'
                          :'bg-white'"
                         >
-                            <h2 class="text-2xl">Registration Information</h2>
+                            <h2 class="lg:text-2xl md:text-lg text-xl">Registration Information</h2>
 
-                            <p>This section contains informational charts on the registration form.</p>
+                            <p class="sm:text-sm text-center">This section contains informational charts on the registration form.</p>
                         </motion.div>
 
                         <motion.div
                          :initial="staggered_animation(0.1,1,-100,0).initial"
                          :animate="staggered_animation(0.3,1.2,0,0).animate"
                          :exit="staggered_animation(0.2,1,100,0).exit"
-                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1"
+                         class="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-1 p-1"
+                         :class="useThemeComposable() ? 'bg-teal-950'
+                         :'bg-off_white'"
                         >
                             <div
-                             class="lg:flex hidden flex-col justify-center items-center space-y-2 rounded-md w-full h-96 px-8 py-10"
-                              :class="useThemeComposable() ? 'bg-teal-950'
+                             class="flex flex-col relative lg:h-96 h-96 justify-center items-center lg:space-y-2 space-y-1 rounded-md lg:px-8 px-2 lg:py-12 py-14"
+                             :class="useThemeComposable() ? 'bg-teal-950'
                              :'bg-off_white'"
                             >   
-                               <h1>Organizations</h1>
-                               <Bar class="cursor-pointer" :data="use_regisration_bar_chart()" :options="useChartOptions()"/>
+                               <h1 class="">Organizations</h1>
+                               <Bar class="cursor-pointer w-full" :data="use_regisration_bar_chart()" :options="useChartOptions()"/>
                                <h3 class="text-center text-sm">
                                   This bar chart illustrates the distribution of registered individuals across 
                                   six (6) type Of Organizations: Government, NGO, Private Sector, Farmer, Academic
@@ -380,9 +372,9 @@
                             </div>
 
                             <div
-                              class="lg:flex hidden flex-col justify-center items-center space-y-2 rounded-md w-full h-96 p-8"
-                             :class="useThemeComposable() ? 'bg-teal-950'
-                             :'bg-off_white'"
+                              class="flex flex-col relative lg:h-96 h-96 justify-center items-center lg:space-y-2 space-y-1 rounded-md lg:px-8 px-2 lg:py-12 py-14"
+                              :class="useThemeComposable() ? 'bg-teal-950'
+                              :'bg-off_white'"
                             >   
                                 <h1>Meetings</h1>
                                 <Bar class="cursor-pointer " :data="use_regisration_meeting_bar_chart()" :options="useChartOptions()"/>
@@ -400,7 +392,8 @@
                          :class="useThemeComposable() ? 'bg-Dark':'bg-white'"
                         >
                             <div
-                             class="lg:flex hidden justify-center items-center flex-col space-y-1 rounded-md rounded-b-2xl w-full h-130 p-12"
+                             class="flex relative justify-center items-center flex-col space-y-1 rounded-md rounded-b-2xl w-full 
+                             lg:h-130 h-102 lg:p-12 py-14"
                              :class="useThemeComposable() ? 'bg-teal-950'
                              :'bg-off_white'"
                             >   

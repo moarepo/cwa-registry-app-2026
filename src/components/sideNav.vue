@@ -117,7 +117,7 @@
        :'bg-off_white'"
       >
         <router-link
-        v-for="nav in navigationLinks"
+         v-for="nav in navigationLinks"
          :key="nav.name"
          :to="nav.path"
          class="w-full border flex justify-center items-center rounded-md lx:p-1 lg:p-0.5 cursor-pointer xl:mt-2 lg:mt-1
