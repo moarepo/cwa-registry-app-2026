@@ -7,7 +7,7 @@
 
     const store = useDelegateStore()
     store.fetch_all_delegates()
-     
+
     const organization_types = [ 'Government', 'NGO', 'Private Sector', 'Farmer', 'Academic', 'Regional Body'];
     const Countries:string[] = [
     "Afghanistan",
@@ -516,6 +516,7 @@
                         </button>
 
                     </motion.div>
+
                     <div class="lg:flex hidden w-full">
                             <motion.table
                              class="table-auto border-separate border-spacing-1 border-2 rounded-lg w-full text-sm p-2"
@@ -585,6 +586,42 @@
                                 </tbody>
                             </motion.table>
                     </div> 
+
+                    <div class="lg:hidden flex w-full">
+                        <motion.div
+                         class="grid grid-cols-1 gap-2 p-1 w-full"
+                         :class="useThemeComposable() ? ''
+                         :''"
+                        >
+                            <div
+                             v-for="(item,index) in Delegates"
+                             :key="index"
+                             :class="useThemeComposable() ? {
+                             'bg-Dark': index%2 === 0,
+                             'bg-innerDark': index%2 === 1
+                             }:{
+                             'bg-green-50': index%2 === 0,
+                             'bg-white': index%2 === 1
+                             }"
+                             :initial="staggered_animation(index / 10,0.1,0,-25).initial"
+                             :animate="staggered_animation(index / 10,0.1,0,-25).animate"
+                             :transition="staggered_animation(index / 10,0.1,0,-25).transition"
+                             :exit="staggered_animation(index / 10,0.1,0,-25).exit"
+                             class="p-4 flex justify-between items-center w-full"
+                            >
+                                <h2>{{ item.first_name }} {{ item.last_name }}</h2>
+
+                                <button
+                                    @click="ViewInfo(item.registration_id)"
+                                    class="border rounded-md px-2 py-1"
+                                    :class="useThemeComposable() ? ''
+                                    :''"
+                                 >
+                                    <span>view</span>
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
                 </motion.div> 
 
             </motion.div>
