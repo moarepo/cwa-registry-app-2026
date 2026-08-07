@@ -3,12 +3,15 @@ import { computed } from "vue"
 import {useThemeComposable} from '../composables/useComposables'
 import { motion, AnimatePresence } from 'motion-v';
 import {dash_animation,staggered_animation} from '../animations_config/anime_def'
-import { useStore } from "../store/useStore"
+import { useMediaStore } from "../store/useMediaStore"
 
- const _store_ = useStore()
+ const media_store = useMediaStore()
+ media_store.Fetch_media_list()
 
  let m_table_head = ["Name","Email","Position","Organization Name","Media Category","Address","Country","Nationality"]
- let media_info =  computed(()=>{ return _store_.get_Media_info })
+ let media_info =  computed(()=>{ return media_store.get_media_list })
+
+ function get_media(media_id:string){ media_store.Fetch_media_by(media_id) }
 </script>
 
 <template>
@@ -87,6 +90,7 @@ import { useStore } from "../store/useStore"
                                         <td class="text-center rounded-md px-2 py-2 capitalize">{{ item.media_nationality }}</td>
                                         <td class="px-8 py-0.5">
                                             <button
+                                             @click="get_media(item.unique_id)"
                                               class="border rounded-md px-2 py-1"
                                               :class="useThemeComposable() ? ''
                                               :''"

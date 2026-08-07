@@ -76,6 +76,14 @@ const routes:Array<RouteRecordRaw> =[
         meta:{ auth:true }
     },
     {
+        path:'/view_media',
+        name:"MediaInfo",
+        component: function(){
+            return import("../pages/view_media_info.vue")
+        },
+        meta:{ auth:true }
+    },
+    {
         path:'/email_forget_password',
         name:"Forgot",
         component: function(){
